@@ -65,10 +65,12 @@ public class Assets {
 			    						new TextureRegion(bunny, bunnyWidth*5, bunnyHeight, bunnyWidth, bunnyHeight),
 			    						new TextureRegion(bunny, bunnyWidth*6, bunnyHeight, bunnyWidth, bunnyHeight));
 		*/
-		//music = Gdx.audio.newMusic(Gdx.files.internal("data/HopHome.wav"));
-		//music.setLooping(true);
-		//music.setVolume(0.5f);
-		//music.play();
+		music = Gdx.audio.newMusic(Gdx.files.internal("data/HopHome.mp3"));
+		music.setLooping(true);
+		music.
+		music.setVolume(0.5f);
+		music.play();
+		
 		
 		jumpsound = Gdx.audio.newSound(Gdx.files.internal("data/highjump.wav"));
 	}
