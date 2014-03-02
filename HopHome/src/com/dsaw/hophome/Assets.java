@@ -67,7 +67,6 @@ public class Assets {
 		*/
 		music = Gdx.audio.newMusic(Gdx.files.internal("data/HopHome.mp3"));
 		music.setLooping(true);
-		music.
 		music.setVolume(0.5f);
 		music.play();
 		
