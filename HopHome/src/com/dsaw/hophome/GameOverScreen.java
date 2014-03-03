@@ -4,7 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -40,7 +40,7 @@ public class GameOverScreen implements Screen{
 	@Override
 	public void render(float delta) {    
 		Gdx.gl.glClearColor(1, 1, 1, 1);
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		//Act & Draw Stage First
 		stage.act();
@@ -52,7 +52,7 @@ public class GameOverScreen implements Screen{
 	    //Set stage to be whole screen
 	    stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
 	    //Create a font style using libgdx font creator to make a .fnt file.
-	    font = new BitmapFont(Gdx.files.internal("font.fnt"), false);
+	    font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"), false);
 	    //Set the BitmapFont color
 	    style = new LabelStyle(font, Color.BLACK);
 	    //Create a label with the style made above.

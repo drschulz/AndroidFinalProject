@@ -25,8 +25,8 @@ public class DynamicGameObject extends GameObject {
 	public static final int STATE_DEAD = 0;
 	public static final int STATE_ALIVE = 1;
 
-	public DynamicGameObject (float x, float y, float z, float width, float height) {
-		super(x, y, z, width, height);
+	public DynamicGameObject (float x, float y, float z, float width, float height, float depth) {
+		super(x, y, z, width, height, depth);
 		velocity = new Vector3();
 		accel = new Vector3();
 	}

@@ -10,13 +10,14 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class Assets {
 
 	public static Texture background;
+	
 	public static Texture bunny;
-	public static Texture bear;
+	public static TextureRegion bear;
 	public static TextureRegion sky;
 	public static Animation bunnyAnim;
 	public static Animation bunnyEyesClosed;
 	public static Texture grass;
-	public static Texture log;
+	public static TextureRegion log;
 	public static Music music;
 	public static Sound jumpsound;
 	private static int bunnyWidth;
@@ -32,16 +33,20 @@ public class Assets {
 	
 	public static void load() {
 		bunnyFrames = new TextureRegion[BUNNY_COLS*BUNNY_ROWS];
+		Texture temp;
 		Texture.setEnforcePotImages(false);
 		//background = loadTexture("data/background.png");
 		bunny = loadTexture("data/Rabbit_Sprite.png");
 		bunnyWidth = bunny.getWidth()/BUNNY_COLS;
 		bunnyHeight = bunny.getHeight()/BUNNY_ROWS;
-		bear = loadTexture("data/Bear.png");
+		
+		temp = loadTexture("data/Bear.png");
+		bear = new TextureRegion(temp);
 		//grass = loadTexture("data/grass.png");
 		//Texture tmpSky = loadTexture("data/sky.png");
 		//sky = new TextureRegion(tmpSky);
-		log = loadTexture("data/log.png");
+		temp = loadTexture("data/log.png");
+		log = new TextureRegion(temp);
 		TextureRegion[][] tmp = TextureRegion.split(bunny, bunnyWidth, bunnyHeight);
 
 		int idx = 0;

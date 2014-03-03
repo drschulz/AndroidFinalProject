@@ -34,7 +34,7 @@ public class World {
 	public int state;
 	
 	public World(WorldListener listener) {
-		this.bunny = new Bunny(Bunny.HORIZ_LIMIT, Bunny.GROUND_LIMIT, 1);
+		this.bunny = new Bunny(Bunny.HORIZ_LIMIT, Bunny.GROUND_LIMIT, -5);
 		this.bear = new Bear(Bear.BEAR_INITIAL_POSITION_X, Bear.BEAR_INITIAL_POSITION_Y, Bear.BEAR_INITIAL_POSITION_Z, Bear.STATE_DEAD);
 		this.log = new Log(Log.LOG_INITIAL_POSITION_X, Log.LOG_INITIAL_POSITION_Y, Log.LOG_INITIAL_POSITION_Z, Log.STATE_DEAD);
 		this.listener = listener;
@@ -51,12 +51,15 @@ public class World {
 	}
 	
 	private void checkCollisions() {
-		if(log.position.z >= bunny.position.z && log.position.z <= bunny.position.z + Bunny.BUNNY_DEPTH ||
+		if(bunny.bound.intersects(log.bound)) {
+			listener.hitLog();
+		}
+		/*if(log.position.z >= bunny.position.z && log.position.z <= bunny.position.z + Bunny.BUNNY_DEPTH ||
 			log.position.z + Log.LOG_DEPTH >= bunny.position.z && log.position.z + Log.LOG_DEPTH <= bunny.position.z + Bunny.BUNNY_DEPTH) {
 			if(log.bounds.overlaps(bunny.bounds)) {
 				log.state = Log.STATE_DEAD;
 			}
-		}
+		}*/
 	}
 	
 	public void update (float deltaTime, int[] actions) {
@@ -75,9 +78,9 @@ public class World {
 			break;
 		}
 		
-		if(log.state != Log.STATE_DEAD) {
+		//if(log.state != Log.STATE_DEAD) {
 			log.update(deltaTime);
-		}
+		//}
 	}
 	
 	private void updateBear(float deltaTime, int bearAction) {

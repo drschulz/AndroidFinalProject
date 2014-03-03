@@ -6,19 +6,19 @@ public class Bear extends DynamicGameObject {
 	public static final float BEAR_DEPTH = 0.5f;
 	public static final int BEAR_STATE_ATTACK = 2;
 	public static final int BEAR_STATE_RETREAT = 3;
-	public static final float BEAR_FORWARD_VELOCITY = 2;
+	public static final float BEAR_FORWARD_VELOCITY = -2;
 	public static final float BEAR_ATTACK_ACCEL = -10;
 	public static final float BEAR_RETURN_VELOCITY = 5;
 	public static final float BEAR_INIT_VEL = -20;
 	public static final float BEAR_INITIAL_POSITION_X = 15f;
-	public static final float BEAR_INITIAL_POSITION_Y = 4;
+	public static final float BEAR_INITIAL_POSITION_Y = 8;
 	public static final float BEAR_INITIAL_POSITION_Z = -2;
 	
 	int state;
 	float stateTime;
 	
 	public Bear(float x, float y, float z, int state) {
-		super(x, y, z, BEAR_WIDTH, BEAR_HEIGHT);
+		super(x, y, z, BEAR_WIDTH, BEAR_HEIGHT, BEAR_DEPTH);
 		this.state = state;
 		velocity.add(BEAR_INIT_VEL, 0, BEAR_FORWARD_VELOCITY);
 	}
@@ -47,8 +47,9 @@ public class Bear extends DynamicGameObject {
 			position.add(velocity.x * deltaTime, 0, velocity.z * deltaTime);
 		}
 		
-		bounds.x = position.x - Bear.BEAR_WIDTH/2;
-		bounds.y = position.y - Bear.BEAR_HEIGHT/2;
+		this.updateBound();
+		//bounds.x = position.x - Bear.BEAR_WIDTH/2;
+		//bounds.y = position.y - Bear.BEAR_HEIGHT/2;
 		
 		stateTime += deltaTime;
 	}

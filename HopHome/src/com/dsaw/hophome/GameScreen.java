@@ -4,7 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Application.ApplicationType;
-import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.GLCommon;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -37,7 +37,7 @@ public class GameScreen implements Screen {
 	WorldRenderer wRenderer;
 	int[] actions;
 	
-	public GameScreen(Game game) {
+	public GameScreen(final Game game) {
 		this.game = game;
 
 		state = GAME_READY;
@@ -73,7 +73,7 @@ public class GameScreen implements Screen {
 
 			@Override
 			public void hitLog() {
-				// TODO Auto-generated method stub
+				game.setScreen(new GameOverScreen(game));
 				
 			}
 			
@@ -173,7 +173,7 @@ public class GameScreen implements Screen {
 	public void draw(){
 		GLCommon gl = Gdx.gl;
 		Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
-		gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		//gl.glClearColor(red, green, blue, alpha);
 		wRenderer.render();
 		guiCam.update();
