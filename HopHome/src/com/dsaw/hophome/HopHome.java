@@ -26,7 +26,7 @@ public class HopHome extends Game implements ApplicationListener {
 		Assets.load();
 		Texture.setEnforcePotImages(false);
 		Gdx.app.debug("OnCreate", "Loaded textures");
-		setScreen(new GameScreen(this));
+		setScreen(new StartMenu(this));
 		
 		/*float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();

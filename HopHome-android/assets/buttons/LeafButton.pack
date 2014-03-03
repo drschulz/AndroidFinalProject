@@ -1,0 +1,12 @@
+
+LeafButton.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Leaf_3a
+  rotate: false
+  xy: 1, 1
+  size: 800, 624
+  orig: 800, 624
+  offset: 0, 0
+  index: -1
