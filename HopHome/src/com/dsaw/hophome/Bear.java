@@ -26,7 +26,7 @@ public class Bear extends DynamicGameObject {
 	public void update(float deltaTime) {
 		switch(state) {
 		case BEAR_STATE_ATTACK:
-			if(position.x + velocity.x * deltaTime < 10) {
+			if(position.x + velocity.x * deltaTime < 9) {
 				state = BEAR_STATE_RETREAT;
 				velocity.x = Bear.BEAR_RETURN_VELOCITY;
 			}
