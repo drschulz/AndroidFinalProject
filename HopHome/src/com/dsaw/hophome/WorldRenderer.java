@@ -55,6 +55,7 @@ public class WorldRenderer {
 			renderBunny();
 			renderLog();
 		}
+		renderBear();
 	}
 	
 	public void renderBackground() {
@@ -112,7 +113,7 @@ public class WorldRenderer {
 		}
 		batch.enableBlending();
 		batch.begin();
-		batch.draw(keyFrame, world.bunny.position.x - world.bunny.BUNNY_WIDTH/2, world.bunny.position.y - world.bunny.BUNNY_HEIGHT/2, Bunny.BUNNY_WIDTH, Bunny.BUNNY_HEIGHT);
+		batch.draw(keyFrame, world.bunny.bounds.x, world.bunny.bounds.y, Bunny.BUNNY_WIDTH, Bunny.BUNNY_HEIGHT);
 		//batch.draw(keyFrame, world.bunny.position.x, world.bunny.position.y);
 		//batch.draw(Assets.bunny, world.bunny.position.x, world.bunny.position.y, Bunny.BUNNY_WIDTH, Bunny.BUNNY_HEIGHT);
 		//TextureRegion keyFrame;
@@ -121,11 +122,20 @@ public class WorldRenderer {
 		batch.end();
 	}
 	
-	public void renderLog() {
-		if(world.log.state == Log.LOG_STATE_ALIVE) {
+	public void renderBear() {
+		if(world.bear.state != Bear.STATE_DEAD) {
 			batch.enableBlending();
 			batch.begin();
-			batch.draw(Assets.log, world.log.position.x, world.log.position.y, Log.LOG_WIDTH, Log.LOG_HEIGHT);
+			batch.draw(Assets.bear, world.bear.bounds.x, world.bear.position.y, Bear.BEAR_WIDTH, Bear.BEAR_HEIGHT);
+			batch.end();
+		}
+	}
+	
+	public void renderLog() {
+		if(world.log.state == Log.STATE_ALIVE) {
+			batch.enableBlending();
+			batch.begin();
+			batch.draw(Assets.log, world.log.bounds.x, world.log.bounds.y, Log.LOG_WIDTH, Log.LOG_HEIGHT);
 			batch.end();
 		}
 	}

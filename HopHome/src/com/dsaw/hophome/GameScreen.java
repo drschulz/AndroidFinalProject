@@ -22,6 +22,10 @@ public class GameScreen implements Screen {
 	static final int ACT_RIGHT = 2;
 	static final int ACT_UP = 3;
 	static final int ACT_DOWN = 4;
+	static final int BUNNY = 0;
+	static final int LOG = 1;
+	static final int BEAR = 2;
+	
 	
 	private Game game;
 	private int state;
@@ -31,6 +35,7 @@ public class GameScreen implements Screen {
 	WorldListener worldListener;
 	World world;
 	WorldRenderer wRenderer;
+	int[] actions;
 	
 	public GameScreen(Game game) {
 		this.game = game;
@@ -77,6 +82,7 @@ public class GameScreen implements Screen {
 		
 		world = new World(worldListener);
 		wRenderer = new WorldRenderer(batcher, world);
+		actions = new int[3];
 		
 		
 	}
@@ -122,32 +128,38 @@ public class GameScreen implements Screen {
 		int changeX;
 		int changeY;
 		
+		actions[BUNNY] = Bunny.ACT_STATIC;
+		actions[LOG] = World.STAY_AS_IS;
+		actions[BEAR] = World.STAY_AS_IS;
+		
 		if (Gdx.input.isTouched()) {
 			//world.update(deltaTime, GameScreen.ACT_UP);
 			changeX = Gdx.input.getDeltaX();
 			changeY = Gdx.input.getDeltaY();
 			System.out.print("x change: " + changeX + ", y change: " + changeY +"\n");
 			
+			
 			if(Math.abs(changeX) > Math.abs(changeY) && Math.abs(changeX) > 15) {
 				if(changeX > 0) {
-					world.update(deltaTime, GameScreen.ACT_RIGHT, World.LOG_STAY_AS_IS);
+					actions[BUNNY] = Bunny.ACT_RIGHT; 
 				}
 				else {
-					world.update(deltaTime, GameScreen.ACT_LEFT, World.LOG_STAY_AS_IS);
+					actions[BUNNY] = Bunny.ACT_LEFT;
+					actions[BEAR] = World.CREATE_NEW;
 				}
 			}
 			else if (Math.abs(changeY) > 15){
 				if(changeY > 0) {
-					world.update(deltaTime, GameScreen.ACT_STATIC, World.LOG_CREATE_NEW);
+					actions[LOG] = World.CREATE_NEW;
 				}
 				else {
-					world.update(deltaTime, GameScreen.ACT_UP, World.LOG_STAY_AS_IS);
+					actions[BUNNY] = Bunny.ACT_UP;
 				}
 			}
 			
 			//world.update(deltaTime, GameScreen.ACT_STATIC);
 		}
-		world.update(deltaTime, GameScreen.ACT_STATIC, World.LOG_STAY_AS_IS);
+		world.update(deltaTime, actions);
 		ApplicationType appType = Gdx.app.getType();
 		
 	}

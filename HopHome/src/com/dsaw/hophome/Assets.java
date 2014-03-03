@@ -11,6 +11,7 @@ public class Assets {
 
 	public static Texture background;
 	public static Texture bunny;
+	public static Texture bear;
 	public static TextureRegion sky;
 	public static Animation bunnyAnim;
 	public static Animation bunnyEyesClosed;
@@ -36,6 +37,7 @@ public class Assets {
 		bunny = loadTexture("data/Rabbit_Sprite.png");
 		bunnyWidth = bunny.getWidth()/BUNNY_COLS;
 		bunnyHeight = bunny.getHeight()/BUNNY_ROWS;
+		bear = loadTexture("data/Bear.png");
 		//grass = loadTexture("data/grass.png");
 		//Texture tmpSky = loadTexture("data/sky.png");
 		//sky = new TextureRegion(tmpSky);

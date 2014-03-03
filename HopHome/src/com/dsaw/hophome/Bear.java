@@ -1,17 +1,16 @@
 package com.dsaw.hophome;
 
 public class Bear extends DynamicGameObject {
-	public static final float BEAR_WIDTH = 3.0f;
-	public static final float BEAR_HEIGHT = 2.0f;
+	public static final float BEAR_WIDTH = 10.0f;
+	public static final float BEAR_HEIGHT = 8.0f;
 	public static final float BEAR_DEPTH = 0.5f;
-	public static final int BEAR_STATE_ATTACK = 0;
-	public static final int BEAR_STATE_RETREAT = 1;
-	public static final int BEAR_STATE_DEAD = 2;
+	public static final int BEAR_STATE_ATTACK = 2;
+	public static final int BEAR_STATE_RETREAT = 3;
 	public static final float BEAR_FORWARD_VELOCITY = 2;
-	public static final float BEAR_ATTACK_ACCEL = -5;
-	public static final float BEAR_RETURN_VELOCITY = 3;
+	public static final float BEAR_ATTACK_ACCEL = -10;
+	public static final float BEAR_RETURN_VELOCITY = 5;
 	public static final float BEAR_INITIAL_POSITION_X = 15f;
-	public static final float BEAR_INITIAL_POSITION_Y = 8;
+	public static final float BEAR_INITIAL_POSITION_Y = 4;
 	public static final float BEAR_INITIAL_POSITION_Z = -2;
 	
 	int state;
@@ -26,7 +25,7 @@ public class Bear extends DynamicGameObject {
 	public void update(float deltaTime) {
 		switch(state) {
 		case BEAR_STATE_ATTACK:
-			if(position.x + velocity.x * deltaTime < 7) {
+			if(position.x + velocity.x * deltaTime < 10) {
 				state = BEAR_STATE_RETREAT;
 				velocity.x = Bear.BEAR_RETURN_VELOCITY;
 			}
@@ -36,14 +35,14 @@ public class Bear extends DynamicGameObject {
 			break;
 		case BEAR_STATE_RETREAT:
 			if(position.x + velocity.x * deltaTime > 15) {
-				state = BEAR_STATE_DEAD;
+				state = STATE_DEAD;
 			}
 			break;
 		default:
 			break;	
 		}
 		
-		if(state != BEAR_STATE_DEAD) {
+		if(state != STATE_DEAD) {
 			position.add(velocity.x * deltaTime, 0, velocity.z * deltaTime);
 		}
 		
@@ -54,7 +53,7 @@ public class Bear extends DynamicGameObject {
 	}
 	
 	public void recreate() {
-		if (state == Bear.BEAR_STATE_DEAD) {
+		if (state == Bear.STATE_DEAD) {
 			state = Bear.BEAR_STATE_ATTACK;
 			position.x = Bear.BEAR_INITIAL_POSITION_X;
 			position.y = Bear.BEAR_INITIAL_POSITION_Y;

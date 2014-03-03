@@ -22,6 +22,8 @@ import com.badlogic.gdx.math.Vector3;
 public class DynamicGameObject extends GameObject {
 	public final Vector3 velocity;
 	public final Vector3 accel;
+	public static final int STATE_DEAD = 0;
+	public static final int STATE_ALIVE = 1;
 
 	public DynamicGameObject (float x, float y, float z, float width, float height) {
 		super(x, y, z, width, height);
