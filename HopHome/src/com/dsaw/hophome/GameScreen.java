@@ -133,7 +133,6 @@ public class GameScreen implements Screen {
 		actions[BEAR] = World.STAY_AS_IS;
 		
 		if (Gdx.input.isTouched()) {
-			//world.update(deltaTime, GameScreen.ACT_UP);
 			changeX = Gdx.input.getDeltaX();
 			changeY = Gdx.input.getDeltaY();
 			System.out.print("x change: " + changeX + ", y change: " + changeY +"\n");
@@ -156,8 +155,6 @@ public class GameScreen implements Screen {
 					actions[BUNNY] = Bunny.ACT_UP;
 				}
 			}
-			
-			//world.update(deltaTime, GameScreen.ACT_STATIC);
 		}
 		world.update(deltaTime, actions);
 		ApplicationType appType = Gdx.app.getType();
@@ -174,7 +171,6 @@ public class GameScreen implements Screen {
 		GLCommon gl = Gdx.gl;
 		Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
 		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		//gl.glClearColor(red, green, blue, alpha);
 		wRenderer.render();
 		guiCam.update();
 		batcher.setProjectionMatrix(guiCam.combined);

@@ -107,6 +107,7 @@ public class GameOverScreen implements Screen{
 	
 	@Override
 	public void hide() {
+		this.dispose();
 	}
 
 	@Override
@@ -118,6 +119,7 @@ public class GameOverScreen implements Screen{
 	}
 
 	@Override
-	public void dispose() {	
+	public void dispose() {
+		stage.dispose();
 	}
 }

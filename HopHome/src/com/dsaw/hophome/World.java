@@ -54,12 +54,9 @@ public class World {
 		if(bunny.bound.intersects(log.bound)) {
 			listener.hitLog();
 		}
-		/*if(log.position.z >= bunny.position.z && log.position.z <= bunny.position.z + Bunny.BUNNY_DEPTH ||
-			log.position.z + Log.LOG_DEPTH >= bunny.position.z && log.position.z + Log.LOG_DEPTH <= bunny.position.z + Bunny.BUNNY_DEPTH) {
-			if(log.bounds.overlaps(bunny.bounds)) {
-				log.state = Log.STATE_DEAD;
-			}
-		}*/
+		else if(bunny.bound.intersects(bear.bound)) {
+			listener.hitLog();
+		}
 	}
 	
 	public void update (float deltaTime, int[] actions) {
@@ -78,9 +75,9 @@ public class World {
 			break;
 		}
 		
-		//if(log.state != Log.STATE_DEAD) {
+		if(log.state != Log.STATE_DEAD) {
 			log.update(deltaTime);
-		//}
+		}
 	}
 	
 	private void updateBear(float deltaTime, int bearAction) {

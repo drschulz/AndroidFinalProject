@@ -51,17 +51,17 @@ public class Bunny extends DynamicGameObject {
 			//velocity.x = -Bunny.BUNNY_MOVE_VELOCITY;
 			//velocity.add(World.gravity.x * deltaTime, 0, 0);
 			velocity.y = 0;
-			if (Math.abs(position.x + velocity.x * deltaTime - prevPos) > 2.5f) {
+			if (Math.abs(position.x + velocity.x * deltaTime - prevPos) > 3.5f) {
 				state = BUNNY_STATE_STATIC;
-				groundPos = prevPos - 2.5f;
+				groundPos = prevPos - 3.5f;
 			}
 			break;
 		case BUNNY_STATE_DODGE_RIGHT:
 			//velocity.add(-World.gravity.x * deltaTime, 0, 0);
 			velocity.y = 0;
-			if (Math.abs(position.x + velocity.x * deltaTime - prevPos) > 2.5f) {
+			if (Math.abs(position.x + velocity.x * deltaTime - prevPos) > 3.5f) {
 				state = BUNNY_STATE_STATIC;
-				groundPos = prevPos + 2.5f;
+				groundPos = prevPos + 3.5f;
 			}
 			break;
 		case BUNNY_STATE_JUMP:

@@ -36,8 +36,6 @@ public class Log extends DynamicGameObject {
 		}
 		
 		this.updateBound();
-		//bounds.x = position.x - Log.LOG_WIDTH/2;
-		//bounds.y = position.y - Log.LOG_HEIGHT/2;
 		
 		stateTime += deltaTime;
 	}

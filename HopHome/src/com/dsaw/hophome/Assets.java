@@ -27,7 +27,6 @@ public class Assets {
 	public static TextureRegion[] bunnyFrames;
 	
 	public static Texture loadTexture (String file) {
-		//Texture.setEnforcePotImages(false);
 		return new Texture(Gdx.files.internal(file));
 	}
 	
@@ -35,16 +34,12 @@ public class Assets {
 		bunnyFrames = new TextureRegion[BUNNY_COLS*BUNNY_ROWS];
 		Texture temp;
 		Texture.setEnforcePotImages(false);
-		//background = loadTexture("data/background.png");
 		bunny = loadTexture("data/Rabbit_Sprite.png");
 		bunnyWidth = bunny.getWidth()/BUNNY_COLS;
 		bunnyHeight = bunny.getHeight()/BUNNY_ROWS;
 		
 		temp = loadTexture("data/Bear.png");
 		bear = new TextureRegion(temp);
-		//grass = loadTexture("data/grass.png");
-		//Texture tmpSky = loadTexture("data/sky.png");
-		//sky = new TextureRegion(tmpSky);
 		temp = loadTexture("data/log.png");
 		log = new TextureRegion(temp);
 		TextureRegion[][] tmp = TextureRegion.split(bunny, bunnyWidth, bunnyHeight);
@@ -57,21 +52,6 @@ public class Assets {
 		}
 		bunnyAnim = new Animation(Bunny.ANIM_SPEED, bunnyFrames);
 		
-		/*bunnyIdle = new Animation(0.2f, new TextureRegion(bunny, 0, 0, bunnyWidth, bunnyHeight),
-									    new TextureRegion(bunny, bunnyWidth, 0, bunnyWidth, bunnyHeight),
-									    new TextureRegion(bunny, bunnyWidth*2, 0, bunnyWidth, bunnyHeight),
-										new TextureRegion(bunny, bunnyWidth*3, 0, bunnyWidth, bunnyHeight),
-										new TextureRegion(bunny, bunnyWidth*4, 0, bunnyWidth, bunnyHeight),
-										new TextureRegion(bunny, bunnyWidth*5, 0, bunnyWidth, bunnyHeight),
-										new TextureRegion(bunny, bunnyWidth*6, 0, bunnyWidth, bunnyHeight));
-		bunnyEyesClosed = new Animation(0.2f, new TextureRegion(bunny, 0, bunnyHeight, bunnyWidth, bunnyHeight),
-			    						new TextureRegion(bunny, bunnyWidth, bunnyHeight, bunnyWidth, bunnyHeight),
-			    						new TextureRegion(bunny, bunnyWidth*2, bunnyHeight, bunnyWidth, bunnyHeight),
-			    						new TextureRegion(bunny, bunnyWidth*3, bunnyHeight, bunnyWidth, bunnyHeight),
-			    						new TextureRegion(bunny, bunnyWidth*4, bunnyHeight, bunnyWidth, bunnyHeight),
-			    						new TextureRegion(bunny, bunnyWidth*5, bunnyHeight, bunnyWidth, bunnyHeight),
-			    						new TextureRegion(bunny, bunnyWidth*6, bunnyHeight, bunnyWidth, bunnyHeight));
-		*/
 		music = Gdx.audio.newMusic(Gdx.files.internal("data/HopHome.mp3"));
 		music.setLooping(true);
 		music.setVolume(0.5f);
