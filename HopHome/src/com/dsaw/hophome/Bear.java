@@ -20,7 +20,7 @@ public class Bear extends DynamicGameObject {
 	public Bear(float x, float y, float z, int state) {
 		super(x, y, z, BEAR_WIDTH, BEAR_HEIGHT);
 		this.state = state;
-		velocity.add(BEAR_ATTACK_ACCEL*stateTime, 0, BEAR_FORWARD_VELOCITY);
+		velocity.add(0, 0, BEAR_FORWARD_VELOCITY);
 	}
 	
 	public void update(float deltaTime) {
@@ -28,6 +28,15 @@ public class Bear extends DynamicGameObject {
 		case BEAR_STATE_ATTACK:
 			if(position.x + velocity.x * deltaTime < 7) {
 				state = BEAR_STATE_RETREAT;
+				velocity.x = Bear.BEAR_RETURN_VELOCITY;
+			}
+			else {
+				velocity.x += Bear.BEAR_ATTACK_ACCEL * deltaTime;
+			}
+			break;
+		case BEAR_STATE_RETREAT:
+			if(position.x + velocity.x * deltaTime > 15) {
+				state = BEAR_STATE_DEAD;
 			}
 			break;
 		default:
@@ -35,21 +44,21 @@ public class Bear extends DynamicGameObject {
 		}
 		
 		if(state != BEAR_STATE_DEAD) {
-			position.add(0, velocity.y * deltaTime, velocity.z * deltaTime);
+			position.add(velocity.x * deltaTime, 0, velocity.z * deltaTime);
 		}
 		
-		bounds.x = position.x - Log.LOG_WIDTH/2;
-		bounds.y = position.y - Log.LOG_HEIGHT/2;
+		bounds.x = position.x - Bear.BEAR_WIDTH/2;
+		bounds.y = position.y - Bear.BEAR_HEIGHT/2;
 		
 		stateTime += deltaTime;
 	}
 	
 	public void recreate() {
-		if (state == Log.LOG_STATE_DEAD) {
-			state = Log.LOG_STATE_ALIVE;
-			position.x = Log.LOG_INITIAL_POSITION_X;
-			position.y = Log.LOG_INITIAL_POSITION_Y;
-			position.z = Log.LOG_INITIAL_POSITION_Z;
+		if (state == Bear.BEAR_STATE_DEAD) {
+			state = Bear.BEAR_STATE_ATTACK;
+			position.x = Bear.BEAR_INITIAL_POSITION_X;
+			position.y = Bear.BEAR_INITIAL_POSITION_Y;
+			position.z = Bear.BEAR_INITIAL_POSITION_Z;
 		}
 	}
 
