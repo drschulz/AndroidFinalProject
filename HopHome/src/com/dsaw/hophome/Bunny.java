@@ -1,5 +1,7 @@
 package com.dsaw.hophome;
 
+import com.badlogic.gdx.math.Vector3;
+
 public class Bunny extends DynamicGameObject {
 
 	public static final int BUNNY_STATE_JUMP = 0;
@@ -8,12 +10,14 @@ public class Bunny extends DynamicGameObject {
 	public static final int BUNNY_STATE_DODGE_LEFT = 3;
 	public static final int BUNNY_STATE_DODGE_RIGHT = 4;
 	public static final float BUNNY_JUMP_VELOCITY = 10;
-	public static final float BUNNY_MOVE_VELOCITY = 7;
+	public static final float BUNNY_MOVE_VELOCITY = 12;
 	public static final float BUNNY_WIDTH = 5.0f;
 	public static final float BUNNY_HEIGHT = 8.0f;
 	public static final float BUNNY_DEPTH = .5f;
 	public static final float GROUND_LIMIT = 8;
 	public static final float HORIZ_LIMIT = 5f;
+	public static final float LEFT_LIMIT = 2.5f;
+	public static final float RIGHT_LIMIT = 7.5f;
 	public static final int ACT_STATIC = 0;
 	public static final int ACT_LEFT = 1;
 	public static final int ACT_RIGHT = 2;
@@ -25,6 +29,8 @@ public class Bunny extends DynamicGameObject {
 	public static final int MODE_BUGEYE = 1;
 	public static final int MODE_CLOSEEYE = 2;
 	
+	float prevPos;
+	float groundPos;
 	int state;
 	float stateTime;
 	int mode;
@@ -34,23 +40,28 @@ public class Bunny extends DynamicGameObject {
 		state = this.BUNNY_STATE_STATIC;
 		stateTime = 0;
 		mode = 0;
+		prevPos = 0;
+		groundPos = Bunny.HORIZ_LIMIT;
 	}
 	
 	public void update(float deltaTime) {
 		
 		switch(state) {
 		case BUNNY_STATE_DODGE_LEFT:
-			velocity.add(World.gravity.x * deltaTime, 0, 0);
+			//velocity.x = -Bunny.BUNNY_MOVE_VELOCITY;
+			//velocity.add(World.gravity.x * deltaTime, 0, 0);
 			velocity.y = 0;
-			if (position.x + velocity.x * deltaTime > this.HORIZ_LIMIT) {
+			if (Math.abs(position.x + velocity.x * deltaTime - prevPos) > 2.5f) {
 				state = BUNNY_STATE_STATIC;
+				groundPos = prevPos - 2.5f;
 			}
 			break;
 		case BUNNY_STATE_DODGE_RIGHT:
-			velocity.add(-World.gravity.x * deltaTime, 0, 0);
+			//velocity.add(-World.gravity.x * deltaTime, 0, 0);
 			velocity.y = 0;
-			if (position.x + velocity.x * deltaTime < this.HORIZ_LIMIT) {
+			if (Math.abs(position.x + velocity.x * deltaTime - prevPos) > 2.5f) {
 				state = BUNNY_STATE_STATIC;
+				groundPos = prevPos + 2.5f;
 			}
 			break;
 		case BUNNY_STATE_JUMP:
@@ -76,7 +87,7 @@ public class Bunny extends DynamicGameObject {
 			position.add(velocity.x * deltaTime, velocity.y * deltaTime, 0);
 		}
 		else {
-			position.x = Bunny.HORIZ_LIMIT;
+			position.x = this.groundPos;//Bunny.HORIZ_LIMIT;
 			position.y = Bunny.GROUND_LIMIT;
 		}
 		//velocity.add(World.gravity.x * deltaTime, World.gravity.y * deltaTime, 0);
@@ -106,8 +117,9 @@ public class Bunny extends DynamicGameObject {
 	}
 	
 	public void dodgeLeft() {
-		if(state == BUNNY_STATE_STATIC) {
+		if(state == BUNNY_STATE_STATIC && position.x > 3.0f) {
 			velocity.x = -BUNNY_MOVE_VELOCITY;
+			prevPos = position.x;
 			state = BUNNY_STATE_DODGE_LEFT;
 			//stateTime = 0;
 			System.out.print("bunny should dodge left\n");
@@ -115,8 +127,9 @@ public class Bunny extends DynamicGameObject {
 	}
 	
 	public void dodgeRight() {
-		if(state == BUNNY_STATE_STATIC) {
+		if(state == BUNNY_STATE_STATIC && position.x < 6.0f) {
 			velocity.x = BUNNY_MOVE_VELOCITY;
+			prevPos = position.x;
 			state = BUNNY_STATE_DODGE_RIGHT;
 			//stateTime = 0;
 			System.out.print("bunny should dodge right\n");
