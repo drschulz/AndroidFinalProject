@@ -53,6 +53,7 @@ public class HopHome extends Game implements ApplicationListener {
 
 	@Override
 	public void dispose() {
+		super.dispose();
 		//batch.dispose();
 		//texture.dispose();
 	}
