@@ -9,7 +9,7 @@ public class Main {
 		cfg.title = "HopHome";
 		//cfg.useGL20 = false;
 		cfg.width = 480;
-		cfg.height = 320;
+		cfg.height = 720;
 		
 		new LwjglApplication(new HopHome(), cfg);
 	}

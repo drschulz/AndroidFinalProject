@@ -28,6 +28,8 @@ public class Bunny extends DynamicGameObject {
 	public static final int MODE_NORM = 0;
 	public static final int MODE_BUGEYE = 2;
 	public static final int MODE_CLOSEEYE = 1;
+	public static final int MODE_LOOKRIGHT = 3;
+	public static final int MODE_LOOKLEFT = 4; 
 	
 	float prevPos;
 	float groundPos;

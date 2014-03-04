@@ -25,7 +25,7 @@ public class Assets {
 	private static int bunnyWidth;
 	private static int bunnyHeight;
 	public static final int BUNNY_COLS = 7;
-	public static final int BUNNY_ROWS = 2;
+	public static final int BUNNY_ROWS = 5;
 	public static TextureRegion[] bunnyFrames;
 	
 	public static Texture loadTexture (String file) {

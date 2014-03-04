@@ -43,6 +43,8 @@ public class GameScreen implements Screen {
 	boolean triggered;
 	int act;
 	
+	int days;
+	
 	public GameScreen(final Game game) {
 		this.game = game;
 
@@ -139,7 +141,7 @@ public class GameScreen implements Screen {
 
 	private void createObstacle(float deltaTime) {
 		if(triggered) {
-			if(bufferTime > 1.0) {
+			if(bufferTime > 0.5) {
 				actions[act] = World.CREATE_NEW;
 				bufferTime = 0;
 				triggered = false;
@@ -150,19 +152,19 @@ public class GameScreen implements Screen {
 			}
 		}
 		else {
-			if(bufferTime > 4.0) {
+			if(bufferTime > 1.0) {
 				bufferTime = 0;
 				act = rand.nextInt()%2 + 1;
 				switch(act) {
 				case LOG:
 					if(world.log.state == Log.STATE_DEAD) {
-						world.bunny.mode = Bunny.MODE_CLOSEEYE;
+						world.bunny.mode = Bunny.MODE_BUGEYE;
 						triggered = true;
 					}
 					break;
 				case BEAR:
 					if(world.bear.state == Bear.STATE_DEAD) {
-						world.bunny.mode = Bunny.MODE_CLOSEEYE;
+						world.bunny.mode = Bunny.MODE_LOOKRIGHT;
 						triggered = true;
 					}
 					break;
