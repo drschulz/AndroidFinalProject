@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.GLCommon;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.dsaw.hophome.World.WorldListener;
 
 public class GameScreen implements Screen {
@@ -43,6 +44,7 @@ public class GameScreen implements Screen {
 	boolean triggered;
 	int act;
 	
+	Stage stage;
 	int days;
 	
 	public GameScreen(final Game game) {
