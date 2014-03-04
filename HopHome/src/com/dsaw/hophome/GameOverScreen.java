@@ -35,6 +35,9 @@ public class GameOverScreen implements Screen{
 	
 	public GameOverScreen(Game game) {
 		this.game = game;
+		Assets.pausemusic.setVolume(0.5f);
+		Assets.pausemusic.setLooping(true);
+		Assets.pausemusic.play();
 	}
 	
 	@Override
@@ -79,6 +82,7 @@ public class GameOverScreen implements Screen{
 	    startButton.addListener(new InputListener(){
 	    	@Override
 	    	public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+	    		Assets.pausemusic.stop();
 	    		game.setScreen(new GameScreen(game));
 	    		return true;
 	    	}
@@ -92,6 +96,7 @@ public class GameOverScreen implements Screen{
 	    extrasButton.addListener(new InputListener(){
 	    	@Override
 	    	public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+	    		Assets.pausemusic.stop();
 	    		game.setScreen(new StartMenu(game));
 	    		return true;
 	    	}
@@ -107,6 +112,7 @@ public class GameOverScreen implements Screen{
 	
 	@Override
 	public void hide() {
+		
 		this.dispose();
 	}
 

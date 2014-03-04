@@ -18,7 +18,9 @@ public class Assets {
 	public static Animation bunnyEyesClosed;
 	public static Texture grass;
 	public static TextureRegion log;
-	public static Music music;
+	public static Music gamemusic;
+	public static Music startmusic;
+	public static Music pausemusic;
 	public static Sound jumpsound;
 	private static int bunnyWidth;
 	private static int bunnyHeight;
@@ -52,10 +54,12 @@ public class Assets {
 		}
 		bunnyAnim = new Animation(Bunny.ANIM_SPEED, bunnyFrames);
 		
-		music = Gdx.audio.newMusic(Gdx.files.internal("data/HopHome.mp3"));
-		music.setLooping(true);
-		music.setVolume(0.5f);
-		music.play();
+		gamemusic = Gdx.audio.newMusic(Gdx.files.internal("data/HopHome.mp3"));
+		startmusic = Gdx.audio.newMusic(Gdx.files.internal("data/hophometitle.mp3"));
+		pausemusic = Gdx.audio.newMusic(Gdx.files.internal("data/hophomedeathandpause.mp3"));
+		//music.setLooping(true);
+		//music.setVolume(0.5f);
+		//music.play();
 		
 		
 		jumpsound = Gdx.audio.newSound(Gdx.files.internal("data/highjump.wav"));

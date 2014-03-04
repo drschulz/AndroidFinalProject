@@ -40,6 +40,9 @@ public class StartMenu implements Screen{
 	
 	public StartMenu(Game game) {
 		this.game = game;
+		Assets.startmusic.setVolume(0.5f);
+		Assets.startmusic.setLooping(true);
+		Assets.startmusic.play();
 	}
 	
 	@Override
@@ -93,6 +96,7 @@ public class StartMenu implements Screen{
 	    startButton.addListener(new InputListener(){
 	    	@Override
 	    	public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+	    		Assets.startmusic.stop();
 	    		game.setScreen(new GameScreen(game));
 	    		return true;
 	    	}
@@ -136,6 +140,7 @@ public class StartMenu implements Screen{
 	
 	@Override
 	public void hide() {
+		
 		this.dispose();
 	}
 

@@ -79,6 +79,7 @@ public class GameScreen implements Screen {
 
 			@Override
 			public void hitLog() {
+				Assets.gamemusic.stop();
 				game.setScreen(new GameOverScreen(game));
 				
 			}
@@ -93,6 +94,9 @@ public class GameScreen implements Screen {
 		bufferTime = 0;
 		triggered = false;
 		act = 0;
+		Assets.gamemusic.setVolume(0.5f);
+		Assets.gamemusic.setLooping(true);
+		Assets.gamemusic.play();
 		
 	}
 	

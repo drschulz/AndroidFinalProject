@@ -8,9 +8,11 @@ import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.decals.CameraGroupStrategy;
 import com.badlogic.gdx.graphics.g3d.decals.Decal;
 import com.badlogic.gdx.graphics.g3d.decals.DecalBatch;
+import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 
@@ -32,7 +34,8 @@ public class WorldRenderer {
 	Decal bearDecal;
 	//Color colorBottom;
 	boolean day;
-	
+	ModelBuilder mb;
+	Model ground;
 	
 	public WorldRenderer(SpriteBatch batch, World world) {
 		this.world = world;
@@ -55,6 +58,9 @@ public class WorldRenderer {
 		decalBatch = new DecalBatch(new CameraGroupStrategy(this.camera));
 		logDecal = Decal.newDecal(Log.LOG_WIDTH, Log.LOG_HEIGHT, Assets.log, true);
 		bearDecal = Decal.newDecal(Bear.BEAR_WIDTH, Bear.BEAR_HEIGHT, Assets.bear, true);
+		//mb.begin();
+		//ground = mb.createCylinder(FRUSTUM_)
+		
 	}
 	
 	public void render() {
