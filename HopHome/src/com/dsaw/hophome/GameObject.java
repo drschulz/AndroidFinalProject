@@ -28,6 +28,9 @@ public class GameObject {
 	public final float width;
 	public final float height;
 	public final float depth;
+	public static final int STATE_DEAD = 0;
+	public static final int STATE_ALIVE = 1;
+	public int state;
 
 	public GameObject (float x, float y, float z, float width, float height, float depth) {
 		this.position = new Vector3(x, y, z);
@@ -41,8 +44,13 @@ public class GameObject {
 	}
 	
 	protected void updateBound() {
-		Vector3 near = new Vector3(position.x-width/2.0f, position.y-height/2.0f, position.z+depth/2.0f);
-		Vector3 far = new Vector3(position.x+width/2.0f, position.y+height/2.0f, position.z-depth/2.0f);
-		this.bound.set(near, far);
+		if(state != STATE_DEAD) {
+			Vector3 near = new Vector3(position.x-width/2.0f, position.y-height/2.0f, position.z+depth/2.0f);
+			Vector3 far = new Vector3(position.x+width/2.0f, position.y+height/2.0f, position.z-depth/2.0f);
+			this.bound.set(near, far);
+		}
+		else {
+			this.bound.clr();
+		}
 	}
 }

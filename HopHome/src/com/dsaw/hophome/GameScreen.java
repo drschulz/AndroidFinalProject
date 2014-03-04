@@ -1,5 +1,7 @@
 package com.dsaw.hophome;
 
+import java.util.Random;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -36,6 +38,10 @@ public class GameScreen implements Screen {
 	World world;
 	WorldRenderer wRenderer;
 	int[] actions;
+	float bufferTime;
+	Random rand;
+	boolean triggered;
+	int act;
 	
 	public GameScreen(final Game game) {
 		this.game = game;
@@ -83,7 +89,10 @@ public class GameScreen implements Screen {
 		world = new World(worldListener);
 		wRenderer = new WorldRenderer(batcher, world);
 		actions = new int[3];
-		
+		rand = new Random();
+		bufferTime = 0;
+		triggered = false;
+		act = 0;
 		
 	}
 	
@@ -124,6 +133,45 @@ public class GameScreen implements Screen {
 		
 	}
 
+	private void createObstacle(float deltaTime) {
+		if(triggered) {
+			if(bufferTime > 1.0) {
+				actions[act] = World.CREATE_NEW;
+				bufferTime = 0;
+				triggered = false;
+				world.bunny.mode = Bunny.MODE_NORM;
+			}
+			else {
+				bufferTime += deltaTime;
+			}
+		}
+		else {
+			if(bufferTime > 4.0) {
+				bufferTime = 0;
+				act = rand.nextInt()%2 + 1;
+				switch(act) {
+				case LOG:
+					if(world.log.state == Log.STATE_DEAD) {
+						world.bunny.mode = Bunny.MODE_CLOSEEYE;
+						triggered = true;
+					}
+					break;
+				case BEAR:
+					if(world.bear.state == Bear.STATE_DEAD) {
+						world.bunny.mode = Bunny.MODE_CLOSEEYE;
+						triggered = true;
+					}
+					break;
+				default:
+					break;
+				}
+			}
+			else {
+				bufferTime += deltaTime;
+			}
+		}
+	}
+	
 	private void updateRunning(float deltaTime) {
 		int changeX;
 		int changeY;
@@ -131,6 +179,8 @@ public class GameScreen implements Screen {
 		actions[BUNNY] = Bunny.ACT_STATIC;
 		actions[LOG] = World.STAY_AS_IS;
 		actions[BEAR] = World.STAY_AS_IS;
+		
+		createObstacle(deltaTime);
 		
 		if (Gdx.input.isTouched()) {
 			changeX = Gdx.input.getDeltaX();
@@ -144,12 +194,12 @@ public class GameScreen implements Screen {
 				}
 				else {
 					actions[BUNNY] = Bunny.ACT_LEFT;
-					actions[BEAR] = World.CREATE_NEW;
+					//actions[BEAR] = World.CREATE_NEW;
 				}
 			}
 			else if (Math.abs(changeY) > 15){
 				if(changeY > 0) {
-					actions[LOG] = World.CREATE_NEW;
+					//actions[LOG] = World.CREATE_NEW;
 				}
 				else {
 					actions[BUNNY] = Bunny.ACT_UP;

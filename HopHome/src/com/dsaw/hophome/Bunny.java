@@ -26,12 +26,12 @@ public class Bunny extends DynamicGameObject {
 	public static final int NUM_FRAMES = 7;
 	public static final float ANIM_SPEED = 0.1f;
 	public static final int MODE_NORM = 0;
-	public static final int MODE_BUGEYE = 1;
-	public static final int MODE_CLOSEEYE = 2;
+	public static final int MODE_BUGEYE = 2;
+	public static final int MODE_CLOSEEYE = 1;
 	
 	float prevPos;
 	float groundPos;
-	int state;
+	//int state;
 	float stateTime;
 	int mode;
 	
@@ -39,7 +39,7 @@ public class Bunny extends DynamicGameObject {
 		super(x, y, z, BUNNY_WIDTH, BUNNY_HEIGHT, BUNNY_DEPTH);
 		state = this.BUNNY_STATE_STATIC;
 		stateTime = 0;
-		mode = 0;
+		mode = MODE_NORM;
 		prevPos = 0;
 		groundPos = Bunny.HORIZ_LIMIT;
 	}

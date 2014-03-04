@@ -10,7 +10,7 @@ public class Log extends DynamicGameObject {
 	public static final float LOG_INITIAL_POSITION_Y = 1;
 	public static final float LOG_INITIAL_POSITION_Z = -2;
 	
-	int state;
+	//int state;
 	float stateTime;
 	
 	public Log(float x, float y, float z, int state) {
@@ -46,6 +46,7 @@ public class Log extends DynamicGameObject {
 			position.x = Log.LOG_INITIAL_POSITION_X;
 			position.y = Log.LOG_INITIAL_POSITION_Y;
 			position.z = Log.LOG_INITIAL_POSITION_Z;
+			this.updateBound();
 		}
 	}
 
