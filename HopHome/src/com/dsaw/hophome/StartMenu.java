@@ -43,6 +43,15 @@ public class StartMenu implements Screen{
 		Assets.startmusic.setVolume(0.5f);
 		Assets.startmusic.setLooping(true);
 		Assets.startmusic.play();
+		
+		//Set stage to be whole screen
+	    stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
+	    //Create a font style using libgdx font creator to make a .fnt file.
+	    font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"), false);
+	    //Set the BitmapFont color
+	    style = new LabelStyle(font, Color.BLACK);
+	    //Create a label with the style made above.
+	    label = new Label("Hop Home", style);
 	}
 	
 	@Override

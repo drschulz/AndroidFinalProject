@@ -6,12 +6,16 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Application.ApplicationType;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.GLCommon;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.dsaw.hophome.World.WorldListener;
 
 public class GameScreen implements Screen {
@@ -44,8 +48,11 @@ public class GameScreen implements Screen {
 	boolean triggered;
 	int act;
 	
-	Stage stage;
-	int days;
+	private Stage stage;
+	private int days;
+	private Label label;
+	private LabelStyle style;
+	private BitmapFont font;
 	
 	public GameScreen(final Game game) {
 		this.game = game;
@@ -102,11 +109,24 @@ public class GameScreen implements Screen {
 		Assets.gamemusic.setLooping(true);
 		Assets.gamemusic.play();
 		
+		
+		//ADDED
+		
+	    //Set stage to be whole screen
+	    stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
+	    //Create a font style using libgdx font creator to make a .fnt file.
+	    font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"), false);
+	    //Set the BitmapFont color
+	    style = new LabelStyle(font, Color.BLACK);
+	    //Create a label with the style made above.
+	    label = new Label("Hop Home", style);
+	    label.setPosition(0, (float)(Gdx.graphics.getHeight() - label.getHeight()));
+
+	    stage.addActor(label);
 	}
 	
 	public void update (float deltaTime) {
 		if (deltaTime > 0.1f) deltaTime = 0.1f;
-
 		switch (state) {
 		case GAME_READY:
 			updateReady();
@@ -143,7 +163,7 @@ public class GameScreen implements Screen {
 
 	private void createObstacle(float deltaTime) {
 		if(triggered) {
-			if(bufferTime > 0.5) {
+			if(bufferTime > 1.0) {
 				actions[act] = World.CREATE_NEW;
 				bufferTime = 0;
 				triggered = false;
@@ -154,7 +174,7 @@ public class GameScreen implements Screen {
 			}
 		}
 		else {
-			if(bufferTime > 1.0) {
+			if(bufferTime > 4.0) {
 				bufferTime = 0;
 				act = rand.nextInt()%2 + 1;
 				switch(act) {
@@ -232,6 +252,14 @@ public class GameScreen implements Screen {
 		wRenderer.render();
 		guiCam.update();
 		batcher.setProjectionMatrix(guiCam.combined);
+		
+		
+		//Changes day
+		label.setText("Days: " + days);
+
+		//Act & Draw Stage First
+		stage.act();
+		stage.draw();
 		
 		
 	}
