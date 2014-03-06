@@ -102,18 +102,19 @@ public class WorldRenderer {
 	
 	public void renderBackground() {
 		if(day) {
-			backcolor.sub(0.0001f, 0.0001f, 0.0001f, 1);
-			grasscolor.sub(0.0001f, 0.0001f, 0.0001f, 1);
-			lr = lr - 0.0001f;
-			lg = lg - 0.0001f;
-			lb = lb - 0.0001f;
+			//backcolor.sub(Color.luminanceAlpha(0.001, 1))
+			backcolor.sub(0.0005f, 0.0005f, 0.0005f, 1);
+			grasscolor.sub(0.0005f, 0.0005f, 0.0005f, 1);
+			lr = lr - 0.0005f;
+			lg = lg - 0.0005f;
+			lb = lb - 0.0005f;
 		}
 		else {
-			backcolor.add(0.001f, 0.001f, 0.001f, 1);
-			grasscolor.add(0.001f, 0.001f, 0.001f, 1);
-			lr = lr + 0.0001f;
-			lg = lg + 0.0001f;
-			lb = lb + 0.0001f;
+			backcolor.add(0.0005f, 0.0005f, 0.0005f, 1);
+			grasscolor.add(0.0005f, 0.0005f, 0.0005f, 1);
+			lr = lr + 0.0005f;
+			lg = lg + 0.0005f;
+			lb = lb + 0.0005f;
 		}
 		if (backcolor.b > 0.94f) {
 			day = true;
