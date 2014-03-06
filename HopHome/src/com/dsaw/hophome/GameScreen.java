@@ -12,7 +12,9 @@ import com.badlogic.gdx.graphics.GLCommon;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
@@ -40,6 +42,7 @@ public class GameScreen implements Screen {
 	Vector3 touchPoint;
 	SpriteBatch batcher;
 	WorldListener worldListener;
+	ShapeRenderer shapeRenderer;
 	World world;
 	WorldRenderer wRenderer;
 	int[] actions;
@@ -62,6 +65,7 @@ public class GameScreen implements Screen {
 		guiCam.position.set(320 / 2, 480 / 2, 0);
 		touchPoint = new Vector3();
 		batcher = new SpriteBatch();
+		shapeRenderer = new ShapeRenderer();
 		worldListener = new WorldListener() {
 
 			@Override
@@ -94,6 +98,14 @@ public class GameScreen implements Screen {
 				game.setScreen(new GameOverScreen(game));
 				
 			}
+
+			@Override
+			public void incDay() {
+				days++;
+				// TODO Auto-generated method stub
+				
+			}
+
 			
 		};
 		Gdx.app.debug("GameScreen", "Initialized the screen!");
@@ -123,6 +135,19 @@ public class GameScreen implements Screen {
 	    label.setPosition(0, (float)(Gdx.graphics.getHeight() - label.getHeight()));
 
 	    stage.addActor(label);
+	    stage.addActor(new Actor() {
+	    	@Override
+	    	public Actor hit(float arg0, float arg1, boolean touchable) {return null;}
+	    	@Override
+	    	public void draw(SpriteBatch batch, float arg1) {
+	    		batch.end();
+	    		shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+	    		shapeRenderer.setColor(Color.GRAY);
+	    		shapeRenderer.rect(0,0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/6);
+	    		shapeRenderer.end();
+	    		batch.begin();
+	    	}
+	    });
 	}
 	
 	public void update (float deltaTime) {

@@ -1,5 +1,6 @@
 package com.dsaw.hophome;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector3;
 
 public class Bunny extends DynamicGameObject {
@@ -39,6 +40,7 @@ public class Bunny extends DynamicGameObject {
 	
 	public Bunny(float x, float y, float z) {
 		super(x, y, z, BUNNY_WIDTH, BUNNY_HEIGHT, BUNNY_DEPTH);
+		System.out.print("bunnyPos: " + x);
 		state = this.BUNNY_STATE_STATIC;
 		stateTime = 0;
 		mode = MODE_NORM;

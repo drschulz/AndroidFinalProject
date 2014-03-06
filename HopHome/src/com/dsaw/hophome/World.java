@@ -16,6 +16,8 @@ public class World {
 		public void dodgeRight ();
 		
 		public void hitLog ();
+		
+		public void incDay ();
 	}
 	
 	public static final int WORLD_STATE_RUNNING = 0;

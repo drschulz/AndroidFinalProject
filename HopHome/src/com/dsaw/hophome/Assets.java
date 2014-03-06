@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Assets {
 
-	public static Texture background;
+	public static TextureRegion background;
 	
 	public static Texture bunny;
 	public static TextureRegion bear;
@@ -17,6 +17,7 @@ public class Assets {
 	public static Animation bunnyAnim;
 	public static Animation bunnyEyesClosed;
 	public static Texture grass;
+	public static Texture carrot;
 	public static TextureRegion log;
 	public static Music gamemusic;
 	public static Music startmusic;
@@ -53,7 +54,9 @@ public class Assets {
 			}
 		}
 		bunnyAnim = new Animation(Bunny.ANIM_SPEED, bunnyFrames);
-		
+		carrot = loadTexture("data/carrot.png");
+		temp = loadTexture("data/Background.png");
+		background = new TextureRegion(temp);
 		gamemusic = Gdx.audio.newMusic(Gdx.files.internal("data/HopHome.mp3"));
 		startmusic = Gdx.audio.newMusic(Gdx.files.internal("data/hophometitle.mp3"));
 		pausemusic = Gdx.audio.newMusic(Gdx.files.internal("data/hophomedeathandpause.mp3"));
