@@ -1,14 +1,14 @@
 package com.dsaw.hophome;
 
 public class Log extends DynamicGameObject {
-	public static final float LOG_WIDTH = 3.0f;
+	public static final float LOG_WIDTH = 8.0f;
 	public static final float LOG_HEIGHT = 2.0f;
 	public static final float LOG_DEPTH = 0.5f;
 	public static final float LOG_UP_VELOCITY = 8;
 	public static final float LOG_FORWARD_VELOCITY = -6;
 	public static final float LOG_INITIAL_POSITION_X = 5f;
 	public static final float LOG_INITIAL_POSITION_Y = 1;
-	public static final float LOG_INITIAL_POSITION_Z = -2;
+	public static final float LOG_INITIAL_POSITION_Z = 2;
 	
 	//int state;
 	float stateTime;

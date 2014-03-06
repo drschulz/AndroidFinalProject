@@ -12,10 +12,10 @@ public class Bunny extends DynamicGameObject {
 	public static final int BUNNY_STATE_DODGE_RIGHT = 6;
 	public static final float BUNNY_JUMP_VELOCITY = 10;
 	public static final float BUNNY_MOVE_VELOCITY = 12;
-	public static final float BUNNY_WIDTH = 5.0f;
-	public static final float BUNNY_HEIGHT = 8.0f;
+	public static final float BUNNY_WIDTH = 3;//5.0f;
+	public static final float BUNNY_HEIGHT = 5;//8.0f;
 	public static final float BUNNY_DEPTH = .5f;
-	public static final float GROUND_LIMIT = 4;
+	public static final float GROUND_LIMIT = 2.5f;//4;
 	public static final float HORIZ_LIMIT = 5f;
 	public static final float LEFT_LIMIT = 2.5f;
 	public static final float RIGHT_LIMIT = 7.5f;
@@ -81,12 +81,14 @@ public class Bunny extends DynamicGameObject {
 			velocity.x = 0;
 			if (position.y + velocity.y * deltaTime < this.GROUND_LIMIT) {
 				state = this.BUNNY_STATE_STATIC;
+				//position.y = Bunny.GROUND_LIMIT;
 			}
 			break;
 		default:
 			velocity.x = 0;
 			velocity.y = 0;
 		}
+		
 		
 		if (state != this.BUNNY_STATE_STATIC || state != this.STATE_DEAD) {
 			position.add(velocity.x * deltaTime, velocity.y * deltaTime, 0);

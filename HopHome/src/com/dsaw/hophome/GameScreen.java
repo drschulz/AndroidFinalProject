@@ -46,6 +46,7 @@ public class GameScreen implements Screen {
 	static final int BUNNY = 0;
 	static final int LOG = 1;
 	static final int BEAR = 2;
+	static final int TREE = 3;
 	
 	
 	private Game game;
@@ -82,10 +83,12 @@ public class GameScreen implements Screen {
 	Image carrotImg;
 	Rectangle carrotRect;
 	
-	public GameScreen(final Game game) {
+	public GameScreen(final Game game, int numdays) {
 		this.game = game;
 
 		state = GAME_READY;
+		this.days = numdays;
+		//this.hungerLevel = hunger;
 		guiCam = new OrthographicCamera(320, 480);
 		guiCam.position.set(320 / 2, 480 / 2, 0);
 		touchPoint = new Vector3();
@@ -138,7 +141,7 @@ public class GameScreen implements Screen {
 		
 		world = new World(worldListener);
 		wRenderer = new WorldRenderer(batcher, world);
-		actions = new int[3];
+		actions = new int[4];
 		rand = new Random();
 		bufferTime = 0;
 		triggered = false;
@@ -168,7 +171,11 @@ public class GameScreen implements Screen {
 	    		batch.end();
 	    		shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 	    		shapeRenderer.setColor(Color.GRAY);
-	    		shapeRenderer.rect(0,0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/6);
+	    		shapeRenderer.rect(0,0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/8);
+	    		shapeRenderer.end();
+	    		shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+	    		shapeRenderer.setColor(Color.BLACK);
+	    		shapeRenderer.rect(0,0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/8);
 	    		shapeRenderer.end();
 	    		batch.begin();
 	    	}
@@ -208,7 +215,7 @@ public class GameScreen implements Screen {
 	    carrot = new Texture(Gdx.files.internal("data/carrot.png"));
 	    carrotRegion = new TextureRegion(carrot);
 	    carrotImg = new Image(carrotRegion);
-	    carrotImg.setSize(carrotImg.getWidth()/8, carrotImg.getHeight()/8);
+	    carrotImg.setSize(Gdx.graphics.getWidth()/8, Gdx.graphics.getHeight()/8);//carrotImg.getWidth()/8, carrotImg.getHeight()/8);
 	    carrotImg.setPosition(Gdx.graphics.getWidth()/2 - carrotImg.getWidth()/2, 2);
 	    carrotRect = new Rectangle(carrotImg.getX(), carrotImg.getY(), carrotImg.getWidth(), carrotImg.getHeight());
 	    carrotImg.addListener(new InputListener(){
@@ -276,9 +283,9 @@ public class GameScreen implements Screen {
 			}
 		}
 		else {
-			if(bufferTime > 4.0) {
+			if(bufferTime > 3.0) {
 				bufferTime = 0;
-				act = rand.nextInt()%2 + 1;
+				act = rand.nextInt()%3 + 1;
 				switch(act) {
 				case LOG:
 					if(world.log.state == Log.STATE_DEAD) {
@@ -292,6 +299,11 @@ public class GameScreen implements Screen {
 						triggered = true;
 					}
 					break;
+				case TREE:
+					if(world.tree.state == Tree.STATE_DEAD) {
+						world.bunny.mode = Bunny.MODE_LOOKLEFT;
+						triggered = true;
+					}
 				default:
 					break;
 				}
@@ -309,6 +321,7 @@ public class GameScreen implements Screen {
 		actions[BUNNY] = Bunny.ACT_STATIC;
 		actions[LOG] = World.STAY_AS_IS;
 		actions[BEAR] = World.STAY_AS_IS;
+		actions[TREE] = World.STAY_AS_IS;
 		
 		createObstacle(deltaTime);
 		
@@ -363,7 +376,7 @@ public class GameScreen implements Screen {
 		hungerLabel.setText("Hunger: " + hungerLevel + "%");
 		
 		if (hungerLevel <= 0) {
-			world.bunny.mode = Bunny.STATE_DEAD;
+			world.bunny.mode = Bunny.MODE_DEAD;
 		}
 
 		//Act & Draw Stage First

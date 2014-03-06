@@ -32,7 +32,9 @@ public class WorldRenderer {
 	Decal bunnyDecal;
 	Decal logDecal;
 	Decal bearDecal;
+	Decal treeDecal;
 	Decal landDecal;
+	Decal groundDecal;
 	//Color colorBottom;
 	boolean day;
 	ModelBuilder mb;
@@ -60,6 +62,10 @@ public class WorldRenderer {
 		decalBatch = new DecalBatch(new CameraGroupStrategy(this.camera));
 		logDecal = Decal.newDecal(Log.LOG_WIDTH, Log.LOG_HEIGHT, Assets.log, true);
 		bearDecal = Decal.newDecal(Bear.BEAR_WIDTH, Bear.BEAR_HEIGHT, Assets.bear, true);
+		treeDecal = Decal.newDecal(Tree.TREE_WIDTH, Tree.TREE_HEIGHT, Assets.tree, true);
+		groundDecal = Decal.newDecal(FRUSTUM_WIDTH*2.5f, FRUSTUM_HEIGHT*4, Assets.grass, true);
+		groundDecal.rotateX(90);
+		groundDecal.translate(5, 0, -12);
 		landDecal = Decal.newDecal(FRUSTUM_WIDTH*3f, FRUSTUM_HEIGHT*3, Assets.background, true);
 		lr = lg = lb = 1;
 		//mb.begin();
@@ -75,9 +81,10 @@ public class WorldRenderer {
 		batch.setProjectionMatrix(camera.combined);
 		renderBackground();
 		renderLandscape();
-		renderBunny();
 		renderLog();
 		renderBear();
+		renderTree();
+		renderBunny();
 		decalBatch.flush();
 		//renderCarrot();
 	}
@@ -131,11 +138,18 @@ public class WorldRenderer {
 		shapeRenderer.rect(-FRUSTUM_WIDTH*2, -FRUSTUM_HEIGHT, FRUSTUM_WIDTH*4, FRUSTUM_HEIGHT*5);
 		shapeRenderer.end();
 		shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-		shapeRenderer.setColor(grasscolor);
-		shapeRenderer.identity();
-		shapeRenderer.rotate(1, 0, 0, -90);
-		shapeRenderer.rect(-FRUSTUM_WIDTH, -FRUSTUM_HEIGHT, FRUSTUM_WIDTH*3, FRUSTUM_HEIGHT*2);
+		//shapeRenderer.setColor(grasscolor);
+		//shapeRenderer.identity();
+		//shapeRenderer.rotate(1, 0, 0, -90);
+		//shapeRenderer.rect(-FRUSTUM_WIDTH, -FRUSTUM_HEIGHT, FRUSTUM_WIDTH*3, FRUSTUM_HEIGHT*2);
 		shapeRenderer.end();
+		//batch.begin();
+		//batch.draw(Assets.grass, -FRUSTUM_WIDTH, -FRUSTUM_HEIGHT, 0, 0, FRUSTUM_WIDTH*3, FRUSTUM_HEIGHT*2, 1, 1, rotation, clockwise);
+		//groundDecal.setPosition(5, 0, 0);
+		groundDecal.setColor(new Color(lr, lg, lb, 1));
+		decalBatch.add(groundDecal);
+		
+		
 	}
 	
 	public void renderBunny() {
@@ -172,6 +186,16 @@ public class WorldRenderer {
 			bearDecal.setPosition(world.bear.position.x, world.bear.position.y, world.bear.position.z);
 			bearDecal.setColor(new Color(lr, lg, lb, 1));
 			decalBatch.add(bearDecal);
+		}
+	}
+	
+	public void renderTree() {
+		if(world.tree.state != Tree.STATE_DEAD) {
+			//bearDecal.setTextureRegion(Assets.bear);
+			//Vector3 pos = world.tree.bound.getMin();
+			treeDecal.setPosition(world.tree.position.x, world.tree.position.y, world.tree.position.z);
+			treeDecal.setColor(new Color(lr, lg, lb, 1));
+			decalBatch.add(treeDecal);
 		}
 	}
 	

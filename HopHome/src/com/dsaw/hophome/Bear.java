@@ -10,9 +10,9 @@ public class Bear extends DynamicGameObject {
 	public static final float BEAR_ATTACK_ACCEL = -10;
 	public static final float BEAR_RETURN_VELOCITY = 5;
 	public static final float BEAR_INIT_VEL = -20;
-	public static final float BEAR_INITIAL_POSITION_X = 15f;
+	public static final float BEAR_INITIAL_POSITION_X = 20f;
 	public static final float BEAR_INITIAL_POSITION_Y = 4;
-	public static final float BEAR_INITIAL_POSITION_Z = -5;
+	public static final float BEAR_INITIAL_POSITION_Z = -3;
 	
 	//int state;
 	float stateTime;
@@ -26,7 +26,7 @@ public class Bear extends DynamicGameObject {
 	public void update(float deltaTime) {
 		switch(state) {
 		case BEAR_STATE_ATTACK:
-			if(position.x + velocity.x * deltaTime < 9) {
+			if(position.x + velocity.x * deltaTime < 7) {
 				state = BEAR_STATE_RETREAT;
 				velocity.x = Bear.BEAR_RETURN_VELOCITY;
 			}

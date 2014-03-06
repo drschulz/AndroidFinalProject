@@ -28,6 +28,7 @@ public class World {
 	
 	public final Bunny bunny;
 	public final Bear bear;
+	public final Tree tree;
 	public Log log;
 	public final WorldListener listener;
 	public final Random rand;
@@ -40,6 +41,7 @@ public class World {
 		this.bunny = new Bunny(Bunny.HORIZ_LIMIT, Bunny.GROUND_LIMIT, -5);
 		this.bear = new Bear(Bear.BEAR_INITIAL_POSITION_X, Bear.BEAR_INITIAL_POSITION_Y, Bear.BEAR_INITIAL_POSITION_Z, Bear.STATE_DEAD);
 		this.log = new Log(Log.LOG_INITIAL_POSITION_X, Log.LOG_INITIAL_POSITION_Y, Log.LOG_INITIAL_POSITION_Z, Log.STATE_DEAD);
+		this.tree = new Tree(Tree.TREE_INITIAL_POSITION_X, Tree.TREE_INITIAL_POSITION_Y, Tree.TREE_INITIAL_POSITION_Z, Tree.STATE_DEAD);
 		this.listener = listener;
 		rand = new Random();
 		generateField();
@@ -69,6 +71,12 @@ public class World {
 			bunny.stateTime = 0;
 			//listener.hitLog();
 		}
+		else if(bunny.bound.intersects(tree.bound)) {
+			bunnyHit = true;
+			bunny.mode = Bunny.MODE_DEAD;
+			bunny.state = Bunny.STATE_DEAD;
+			bunny.stateTime = 0;
+		}
 	}
 	
 	public void update (float deltaTime, int[] actions) {
@@ -76,7 +84,22 @@ public class World {
 		if(!bunnyHit) {
 			updateLog(deltaTime, actions[1]);
 			updateBear(deltaTime, actions[2]);
+			updateTree(deltaTime, actions[3]);
 			checkCollisions();
+		}
+	}
+	
+	private void updateTree(float deltaTime, int treeAction) {
+		switch(treeAction) {
+		case World.CREATE_NEW:
+			tree.recreate();
+			break;
+		default:
+			break;
+		}
+		
+		if(tree.state != Tree.STATE_DEAD) {
+			tree.update(deltaTime);
 		}
 	}
 	

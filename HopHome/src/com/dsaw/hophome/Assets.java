@@ -13,10 +13,10 @@ public class Assets {
 	
 	public static Texture bunny;
 	public static TextureRegion bear;
-	public static TextureRegion sky;
 	public static Animation bunnyAnim;
+	public static TextureRegion tree;
 	public static Animation bunnyEyesClosed;
-	public static Texture grass;
+	public static TextureRegion grass;
 	public static Texture carrot;
 	public static TextureRegion log;
 	public static Music gamemusic;
@@ -50,13 +50,17 @@ public class Assets {
 		int idx = 0;
 		for(int i = 0; i < BUNNY_ROWS; i++) {
 			for(int j = 0; j < BUNNY_COLS; j++) {
-				bunnyFrames[idx++] = tmp[i][j];
+				bunnyFrames[idx++] = new TextureRegion(bunny, j*bunnyWidth + 40, i*bunnyHeight + 100,80,125);//tmp[i][j];
 			}
 		}
 		bunnyAnim = new Animation(Bunny.ANIM_SPEED, bunnyFrames);
 		carrot = loadTexture("data/carrot.png");
 		temp = loadTexture("data/Background.png");
 		background = new TextureRegion(temp);
+		temp = loadTexture("data/tree.png");
+		tree = new TextureRegion(temp);
+		temp = loadTexture("data/Grass Pattern.png");
+		grass = new TextureRegion(temp);
 		gamemusic = Gdx.audio.newMusic(Gdx.files.internal("data/HopHome.mp3"));
 		startmusic = Gdx.audio.newMusic(Gdx.files.internal("data/hophometitle.mp3"));
 		pausemusic = Gdx.audio.newMusic(Gdx.files.internal("data/hophomedeathandpause.mp3"));

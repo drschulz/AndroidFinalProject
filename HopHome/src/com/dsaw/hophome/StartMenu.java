@@ -40,7 +40,7 @@ public class StartMenu implements Screen{
 	
 	public StartMenu(Game game) {
 		this.game = game;
-		Assets.startmusic.setVolume(0.5f);
+		Assets.startmusic.setVolume(0.7f);
 		Assets.startmusic.setLooping(true);
 		Assets.startmusic.play();
 		
@@ -107,7 +107,7 @@ public class StartMenu implements Screen{
 	    	public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 	    		startButton.setColor(startButton.getColor().sub(0.1f, 0.1f, 0.1f, 0));
 	    		Assets.startmusic.stop();
-	    		game.setScreen(new GameScreen(game));
+	    		game.setScreen(new GameScreen(game, 0));
 	    		return true;
 	    	}
 	    });
