@@ -53,9 +53,11 @@ public class GameScreen implements Screen {
 	
 	private Stage stage;
 	private int days;
-	private Label label;
+	private Label dayLabel;
+	private Label hungerLabel;
 	private LabelStyle style;
 	private BitmapFont font;
+	private int hungerLevel = 100;
 	
 	public GameScreen(final Game game) {
 		this.game = game;
@@ -102,6 +104,7 @@ public class GameScreen implements Screen {
 			@Override
 			public void incDay() {
 				days++;
+				hungerLevel -= 20;
 				// TODO Auto-generated method stub
 				
 			}
@@ -131,10 +134,17 @@ public class GameScreen implements Screen {
 	    //Set the BitmapFont color
 	    style = new LabelStyle(font, Color.BLACK);
 	    //Create a label with the style made above.
-	    label = new Label("Hop Home", style);
-	    label.setPosition(0, (float)(Gdx.graphics.getHeight() - label.getHeight()));
+	    dayLabel = new Label("Day: ", style);
+	    dayLabel.setPosition(0, (float)(Gdx.graphics.getHeight() - dayLabel.getHeight()));
 
-	    stage.addActor(label);
+	    stage.addActor(dayLabel);
+	    
+	  //Create a label with the style made above.
+	    hungerLabel = new Label("Hunger: 100%", style);
+	    hungerLabel.setPosition(Gdx.graphics.getWidth() - hungerLabel.getWidth(), (float)(Gdx.graphics.getHeight() - hungerLabel.getHeight()));
+
+	    stage.addActor(hungerLabel);
+	    
 	    stage.addActor(new Actor() {
 	    	@Override
 	    	public Actor hit(float arg0, float arg1, boolean touchable) {return null;}
@@ -280,7 +290,14 @@ public class GameScreen implements Screen {
 		
 		
 		//Changes day
-		label.setText("Days: " + days);
+        dayLabel.setText("Days: " + days);
+		
+		//Changes hunger
+		hungerLabel.setText("Hunger: " + hungerLevel + "%");
+		
+		if (hungerLevel <= 0) {
+			world.bunny.mode = Bunny.STATE_DEAD;
+		}
 
 		//Act & Draw Stage First
 		stage.act();
@@ -331,6 +348,4 @@ public class GameScreen implements Screen {
 		// TODO Auto-generated method stub
 		
 	}
-
-	
 }
