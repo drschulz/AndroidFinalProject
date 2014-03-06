@@ -142,11 +142,16 @@ public class WorldRenderer {
 		TextureRegion keyFrame;
 		switch(world.bunny.state) {
 		case Bunny.BUNNY_STATE_JUMP:
-			
 			keyFrame = Assets.bunnyAnim.getKeyFrame(world.bunny.mode*Assets.BUNNY_COLS*Bunny.ANIM_SPEED + 2*Bunny.ANIM_SPEED);
 			break;
 		case Bunny.BUNNY_STATE_FALL:
 			keyFrame = Assets.bunnyAnim.getKeyFrame(world.bunny.mode*Assets.BUNNY_COLS*Bunny.ANIM_SPEED + 4*Bunny.ANIM_SPEED);
+			break;
+		case Bunny.STATE_DEAD:
+			keyFrame = Assets.bunnyAnim.getKeyFrame(world.bunny.mode*Assets.BUNNY_COLS*Bunny.ANIM_SPEED + world.bunny.stateTime);
+			if(world.bunny.stateTime > Bunny.NUM_FRAMES*Bunny.ANIM_SPEED - 0.2) {
+				world.listener.hitLog();
+			}
 			break;
 		default:
 			keyFrame = Assets.bunnyAnim.getKeyFrame(world.bunny.mode*Assets.BUNNY_COLS*Bunny.ANIM_SPEED + world.bunny.stateTime);

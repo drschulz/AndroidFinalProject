@@ -5,11 +5,11 @@ import com.badlogic.gdx.math.Vector3;
 
 public class Bunny extends DynamicGameObject {
 
-	public static final int BUNNY_STATE_JUMP = 0;
-	public static final int BUNNY_STATE_FALL = 1;
-	public static final int BUNNY_STATE_STATIC = 2;
-	public static final int BUNNY_STATE_DODGE_LEFT = 3;
-	public static final int BUNNY_STATE_DODGE_RIGHT = 4;
+	public static final int BUNNY_STATE_JUMP = 2;
+	public static final int BUNNY_STATE_FALL = 3;
+	public static final int BUNNY_STATE_STATIC = 4;
+	public static final int BUNNY_STATE_DODGE_LEFT = 5;
+	public static final int BUNNY_STATE_DODGE_RIGHT = 6;
 	public static final float BUNNY_JUMP_VELOCITY = 10;
 	public static final float BUNNY_MOVE_VELOCITY = 12;
 	public static final float BUNNY_WIDTH = 5.0f;
@@ -30,7 +30,8 @@ public class Bunny extends DynamicGameObject {
 	public static final int MODE_BUGEYE = 2;
 	public static final int MODE_CLOSEEYE = 1;
 	public static final int MODE_LOOKRIGHT = 3;
-	public static final int MODE_LOOKLEFT = 4; 
+	public static final int MODE_LOOKLEFT = 4;
+	public static final int MODE_DEAD = 5;
 	
 	float prevPos;
 	float groundPos;
@@ -87,7 +88,7 @@ public class Bunny extends DynamicGameObject {
 			velocity.y = 0;
 		}
 		
-		if (state != this.BUNNY_STATE_STATIC) {
+		if (state != this.BUNNY_STATE_STATIC || state != this.STATE_DEAD) {
 			position.add(velocity.x * deltaTime, velocity.y * deltaTime, 0);
 		}
 		else {

@@ -34,6 +34,7 @@ public class World {
 	public int score;
 	public int daysTraveled;
 	public int state;
+	boolean bunnyHit;
 	
 	public World(WorldListener listener) {
 		this.bunny = new Bunny(Bunny.HORIZ_LIMIT, Bunny.GROUND_LIMIT, -5);
@@ -46,6 +47,7 @@ public class World {
 		this.daysTraveled = 0;
 		this.state = WORLD_STATE_RUNNING;
 		Gdx.app.debug("World", "Initialized world");
+		bunnyHit = false;
 	}
 	
 	private void generateField() {
@@ -54,18 +56,26 @@ public class World {
 	
 	private void checkCollisions() {
 		if(bunny.bound.intersects(log.bound)) {
-			listener.hitLog();
+			bunnyHit = true;
+			bunny.mode = Bunny.MODE_DEAD;
+			bunny.stateTime = 0;
+			//listener.hitLog();
 		}
 		else if(bunny.bound.intersects(bear.bound)) {
-			listener.hitLog();
+			bunnyHit = true;
+			bunny.mode = Bunny.MODE_DEAD;
+			bunny.stateTime = 0;
+			//listener.hitLog();
 		}
 	}
 	
 	public void update (float deltaTime, int[] actions) {
 		updateBunny(deltaTime, actions[0]);
-		updateLog(deltaTime, actions[1]);
-		updateBear(deltaTime, actions[2]);
-		checkCollisions();
+		if(!bunnyHit) {
+			updateLog(deltaTime, actions[1]);
+			updateBear(deltaTime, actions[2]);
+			checkCollisions();
+		}
 	}
 	
 	private void updateLog(float deltaTime, int logAction) {
