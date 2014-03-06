@@ -105,6 +105,7 @@ public class StartMenu implements Screen{
 	    startButton.addListener(new InputListener(){
 	    	@Override
 	    	public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+	    		startButton.setColor(startButton.getColor().sub(0.1f, 0.1f, 0.1f, 0));
 	    		Assets.startmusic.stop();
 	    		game.setScreen(new GameScreen(game));
 	    		return true;

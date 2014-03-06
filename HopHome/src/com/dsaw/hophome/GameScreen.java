@@ -10,14 +10,26 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.GLCommon;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import com.dsaw.hophome.World.WorldListener;
 
 public class GameScreen implements Screen {
@@ -59,6 +71,17 @@ public class GameScreen implements Screen {
 	private BitmapFont font;
 	private int hungerLevel = 100;
 	
+	//Button
+	TextureAtlas buttonAtlas; 
+	TextButtonStyle buttonStyle; //Font, Color of text in button
+	Button pauseButton;
+	Skin buttonSkin;
+	
+	Texture carrot;
+	TextureRegion carrotRegion;
+	Image carrotImg;
+	Rectangle carrotRect;
+	
 	public GameScreen(final Game game) {
 		this.game = game;
 
@@ -97,7 +120,7 @@ public class GameScreen implements Screen {
 			@Override
 			public void hitLog() {
 				Assets.gamemusic.stop();
-				game.setScreen(new GameOverScreen(game));
+				game.setScreen(new GameOverScreen(game, days));
 				
 			}
 
@@ -124,26 +147,18 @@ public class GameScreen implements Screen {
 		Assets.gamemusic.setLooping(true);
 		Assets.gamemusic.play();
 		
-		
-		//ADDED
-		
 	    //Set stage to be whole screen
 	    stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
 	    //Create a font style using libgdx font creator to make a .fnt file.
 	    font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"), false);
 	    //Set the BitmapFont color
-	    style = new LabelStyle(font, Color.BLACK);
+	    style = new LabelStyle(font, Color.WHITE);
 	    //Create a label with the style made above.
 	    dayLabel = new Label("Day: ", style);
+	    font.setScale(2.0f);//   .setSize(Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/10);
 	    dayLabel.setPosition(0, (float)(Gdx.graphics.getHeight() - dayLabel.getHeight()));
 
 	    stage.addActor(dayLabel);
-	    
-	  //Create a label with the style made above.
-	    hungerLabel = new Label("Hunger: 100%", style);
-	    hungerLabel.setPosition(Gdx.graphics.getWidth() - hungerLabel.getWidth(), (float)(Gdx.graphics.getHeight() - hungerLabel.getHeight()));
-
-	    stage.addActor(hungerLabel);
 	    
 	    stage.addActor(new Actor() {
 	    	@Override
@@ -158,6 +173,58 @@ public class GameScreen implements Screen {
 	    		batch.begin();
 	    	}
 	    });
+	    
+	    buttonSkin = new Skin();
+	    buttonAtlas = new TextureAtlas("buttons/pause.pack");
+	    buttonSkin.addRegions(buttonAtlas);
+	    
+	    buttonStyle = new TextButtonStyle();
+	    buttonStyle.up = buttonSkin.getDrawable("Pause");
+	    buttonStyle.over = buttonSkin.getDrawable("Pause");
+	    buttonStyle.down = buttonSkin.getDrawable("Pause");
+	    buttonStyle.font = font;
+
+	    pauseButton = new Button(buttonStyle);
+	    pauseButton.setSize(Gdx.graphics.getWidth()/8, Gdx.graphics.getHeight()/10);
+	    pauseButton.setPosition(Gdx.graphics.getWidth() - pauseButton.getWidth(), Gdx.graphics.getHeight() - pauseButton.getHeight() );
+	    
+	    stage.addActor(pauseButton);
+	    Gdx.input.setInputProcessor(stage);
+	    pauseButton.addListener(new InputListener(){
+	    	@Override
+	    	public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+	    		Assets.gamemusic.stop();
+	    		game.setScreen(new PauseScreen(game, days));
+	    		return true;
+	    	}
+	    });
+	    
+	  //Create a label with the style made above.
+	    hungerLabel = new Label("Hunger: 100%", style);
+	    hungerLabel.setPosition(Gdx.graphics.getWidth() - hungerLabel.getWidth() - pauseButton.getWidth(), (float)(Gdx.graphics.getHeight() - hungerLabel.getHeight()));
+
+	    stage.addActor(hungerLabel);
+	    
+	    carrot = new Texture(Gdx.files.internal("data/carrot.png"));
+	    carrotRegion = new TextureRegion(carrot);
+	    carrotImg = new Image(carrotRegion);
+	    carrotImg.setSize(carrotImg.getWidth()/8, carrotImg.getHeight()/8);
+	    carrotImg.setPosition(Gdx.graphics.getWidth()/2 - carrotImg.getWidth()/2, 2);
+	    carrotRect = new Rectangle(carrotImg.getX(), carrotImg.getY(), carrotImg.getWidth(), carrotImg.getHeight());
+	    carrotImg.addListener(new InputListener(){
+	    	@Override
+	    	public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+	    		//TODO Stop any jump actions for bunny.
+	    		hungerLevel = 100;
+	    		carrotImg.setColor(carrotImg.getColor().sub(0.1f, 0.1f, 0.1f, 0));
+	    		return true;
+	    	}
+	    	@Override
+	    	public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+	    		carrotImg.setColor(carrotImg.getColor().add(0.1f, 0.1f, 0.1f, 0));
+	    	}
+	    });
+	    stage.addActor(carrotImg);
 	}
 	
 	public void update (float deltaTime) {

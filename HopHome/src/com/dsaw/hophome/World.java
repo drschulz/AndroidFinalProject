@@ -58,12 +58,14 @@ public class World {
 		if(bunny.bound.intersects(log.bound)) {
 			bunnyHit = true;
 			bunny.mode = Bunny.MODE_DEAD;
+			bunny.state = Bunny.STATE_DEAD;
 			bunny.stateTime = 0;
 			//listener.hitLog();
 		}
 		else if(bunny.bound.intersects(bear.bound)) {
 			bunnyHit = true;
 			bunny.mode = Bunny.MODE_DEAD;
+			bunny.state = Bunny.STATE_DEAD;
 			bunny.stateTime = 0;
 			//listener.hitLog();
 		}

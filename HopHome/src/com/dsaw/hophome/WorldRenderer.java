@@ -149,7 +149,8 @@ public class WorldRenderer {
 			break;
 		case Bunny.STATE_DEAD:
 			keyFrame = Assets.bunnyAnim.getKeyFrame(world.bunny.mode*Assets.BUNNY_COLS*Bunny.ANIM_SPEED + world.bunny.stateTime);
-			if(world.bunny.stateTime > Bunny.NUM_FRAMES*Bunny.ANIM_SPEED - 0.2) {
+			System.out.println("bunny state time: " + world.bunny.stateTime);
+			if(world.bunny.stateTime > Bunny.NUM_FRAMES*Bunny.ANIM_SPEED) {
 				world.listener.hitLog();
 			}
 			break;

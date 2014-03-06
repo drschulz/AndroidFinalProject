@@ -1,0 +1,12 @@
+
+pause.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Pause
+  rotate: false
+  xy: 1, 1
+  size: 180, 196
+  orig: 256, 256
+  offset: 36, 28
+  index: -1

@@ -32,9 +32,11 @@ public class GameOverScreen implements Screen{
 	Skin buttonSkin;
 	
 	Game game;
+	int days;
 	
-	public GameOverScreen(Game game) {
+	public GameOverScreen(Game game, int days) {
 		this.game = game;
+		this.days = days;
 		Assets.pausemusic.setVolume(0.5f);
 		Assets.pausemusic.setLooping(true);
 		Assets.pausemusic.play();
@@ -59,7 +61,7 @@ public class GameOverScreen implements Screen{
 	    //Set the BitmapFont color
 	    style = new LabelStyle(font, Color.BLACK);
 	    //Create a label with the style made above.
-	    label = new Label("Game Over", style);
+	    label = new Label("Game Over\nYou Survived: " + days + " Days", style);
 	    label.setPosition(Gdx.graphics.getWidth()/2 - label.getWidth()/2, Gdx.graphics.getHeight() - label.getHeight());
 
 	    stage.addActor(label);
