@@ -112,11 +112,11 @@ public class StartMenu implements Screen{
 	    	}
 	    });
 	    
-	    extrasButton = new TextButton("    Extras", buttonStyle);
-	    extrasButton.setSize((float) (Gdx.graphics.getWidth()/(1.5)), Gdx.graphics.getHeight()/3);
-	    extrasButton.setPosition(Gdx.graphics.getWidth()/2 - extrasButton.getWidth()/2, Gdx.graphics.getHeight()/10);
+	    //extrasButton = new TextButton("    Extras", buttonStyle);
+	    //extrasButton.setSize((float) (Gdx.graphics.getWidth()/(1.5)), Gdx.graphics.getHeight()/3);
+	    //extrasButton.setPosition(Gdx.graphics.getWidth()/2 - extrasButton.getWidth()/2, Gdx.graphics.getHeight()/10);
 	    
-	    stage.addActor(extrasButton);
+	    //stage.addActor(extrasButton);
 	    Gdx.input.setInputProcessor(stage);
 	    /*
 	    extrasButton.addListener(new InputListener(){
