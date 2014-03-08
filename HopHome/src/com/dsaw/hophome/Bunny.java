@@ -1,7 +1,7 @@
 package com.dsaw.hophome;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Vector3;
+//import com.badlogic.gdx.Gdx;
+//import com.badlogic.gdx.math.Vector3;
 
 public class Bunny extends DynamicGameObject {
 
@@ -42,7 +42,7 @@ public class Bunny extends DynamicGameObject {
 	public Bunny(float x, float y, float z) {
 		super(x, y, z, BUNNY_WIDTH, BUNNY_HEIGHT, BUNNY_DEPTH);
 		System.out.print("bunnyPos: " + x);
-		state = this.BUNNY_STATE_STATIC;
+		state = BUNNY_STATE_STATIC;
 		stateTime = 0;
 		mode = MODE_NORM;
 		prevPos = 0;
@@ -79,8 +79,8 @@ public class Bunny extends DynamicGameObject {
 		case BUNNY_STATE_FALL:
 			velocity.add(0, World.gravity.y * deltaTime, 0);
 			velocity.x = 0;
-			if (position.y + velocity.y * deltaTime < this.GROUND_LIMIT) {
-				state = this.BUNNY_STATE_STATIC;
+			if (position.y + velocity.y * deltaTime < GROUND_LIMIT) {
+				state = BUNNY_STATE_STATIC;
 				//position.y = Bunny.GROUND_LIMIT;
 			}
 			break;
@@ -90,7 +90,7 @@ public class Bunny extends DynamicGameObject {
 		}
 		
 		
-		if (state != this.BUNNY_STATE_STATIC || state != this.STATE_DEAD) {
+		if (state != BUNNY_STATE_STATIC || state != STATE_DEAD) {
 			position.add(velocity.x * deltaTime, velocity.y * deltaTime, 0);
 		}
 		else {

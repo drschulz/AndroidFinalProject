@@ -10,11 +10,11 @@ public class MainActivity extends AndroidApplication {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
         AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
         //cfg.useGL20 = false;
         Log.d("HopHome", "In android activity");
         initialize(new HopHome(), cfg);
         Log.d("HopHome", "Initialized app");
     }
+    
 }

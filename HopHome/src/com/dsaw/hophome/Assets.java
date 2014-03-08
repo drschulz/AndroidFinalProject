@@ -15,6 +15,7 @@ public class Assets {
 	public static TextureRegion bear;
 	public static Animation bunnyAnim;
 	public static TextureRegion tree;
+	public static TextureRegion bird;
 	public static Animation bunnyEyesClosed;
 	public static TextureRegion grass;
 	public static Texture carrot;
@@ -45,6 +46,8 @@ public class Assets {
 		bear = new TextureRegion(temp);
 		temp = loadTexture("data/log.png");
 		log = new TextureRegion(temp);
+		temp = loadTexture("data/bird.png");
+		bird = new TextureRegion(temp);
 		TextureRegion[][] tmp = TextureRegion.split(bunny, bunnyWidth, bunnyHeight);
 
 		int idx = 0;
@@ -57,10 +60,11 @@ public class Assets {
 		carrot = loadTexture("data/carrot.png");
 		temp = loadTexture("data/Background.png");
 		background = new TextureRegion(temp);
-		temp = loadTexture("data/tree.png");
+		temp = loadTexture("data/bush.png");
 		tree = new TextureRegion(temp);
 		temp = loadTexture("data/Grass Pattern.png");
 		grass = new TextureRegion(temp);
+		
 		gamemusic = Gdx.audio.newMusic(Gdx.files.internal("data/HopHome.mp3"));
 		startmusic = Gdx.audio.newMusic(Gdx.files.internal("data/hophometitle.mp3"));
 		pausemusic = Gdx.audio.newMusic(Gdx.files.internal("data/hophomedeathandpause.mp3"));
