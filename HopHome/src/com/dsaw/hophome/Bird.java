@@ -1,22 +1,27 @@
 package com.dsaw.hophome;
 
+import com.badlogic.gdx.math.Vector3;
+
 public class Bird extends DynamicGameObject {
-	public static final float BIRD_WIDTH = 8.0f;
-	public static final float BIRD_HEIGHT = 2.0f;
+	public static final float BIRD_WIDTH = 4.0f;
+	public static final float BIRD_HEIGHT = 3.0f;
 	public static final float BIRD_DEPTH = 0.5f;
 	public static final float BIRD_UP_VELOCITY = 8;
-	public static final float BIRD_FORWARD_VELOCITY = -6;
+	public static final float BIRD_FORWARD_VELOCITY = -10;
+	public static final float BIRD_DOWN_VELOCITY = -6;
 	public static final float BIRD_INITIAL_POSITION_X = 5f;
-	public static final float BIRD_INITIAL_POSITION_Y = 17;
+	public static final float BIRD_INITIAL_POSITION_Y = 8;
 	public static final float BIRD_INITIAL_POSITION_Z = 2;
 	
 	//int state;
 	float stateTime;
+	Vector3 yAccel;
 	
 	public Bird(float x, float y, float z, int state) {
 		super(x, y, z, BIRD_WIDTH, BIRD_HEIGHT, BIRD_DEPTH);
 		this.state = state;
-		velocity.add(0, 0, BIRD_FORWARD_VELOCITY);
+		velocity.add(0, BIRD_DOWN_VELOCITY, BIRD_FORWARD_VELOCITY);
+		yAccel = new Vector3(0, 5, 0);
 	}
 	
 	public void update(float deltaTime) {
@@ -26,13 +31,14 @@ public class Bird extends DynamicGameObject {
 				System.out.print("log died\n");
 				state = STATE_DEAD;
 			}
+			velocity.add(0, yAccel.y * deltaTime, 0);
 			break;
 		default:
 			break;	
 		}
 		
 		if(state != STATE_DEAD) {
-			position.add(0, 0, velocity.z * deltaTime);
+			position.add(0, velocity.y*deltaTime, velocity.z * deltaTime);
 		}
 		
 		this.updateBound();

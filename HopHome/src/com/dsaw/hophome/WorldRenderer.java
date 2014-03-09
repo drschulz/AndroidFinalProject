@@ -35,6 +35,7 @@ public class WorldRenderer {
 	Decal treeDecal;
 	Decal landDecal;
 	Decal groundDecal;
+	Decal birdDecal;
 	//Color colorBottom;
 	boolean day;
 	ModelBuilder mb;
@@ -63,6 +64,7 @@ public class WorldRenderer {
 		logDecal = Decal.newDecal(Log.LOG_WIDTH, Log.LOG_HEIGHT, Assets.log, true);
 		bearDecal = Decal.newDecal(Bear.BEAR_WIDTH, Bear.BEAR_HEIGHT, Assets.bear, true);
 		treeDecal = Decal.newDecal(Tree.TREE_WIDTH, Tree.TREE_HEIGHT, Assets.tree, true);
+		birdDecal = Decal.newDecal(Bird.BIRD_WIDTH, Bird.BIRD_HEIGHT, Assets.bird, true);
 		groundDecal = Decal.newDecal(FRUSTUM_WIDTH*2.5f, FRUSTUM_HEIGHT*4, Assets.grass, true);
 		groundDecal.rotateX(90);
 		groundDecal.translate(5, 0, -12);
@@ -85,6 +87,7 @@ public class WorldRenderer {
 		renderBear();
 		renderTree();
 		renderBunny();
+		renderBird();
 		decalBatch.flush();
 		//renderCarrot();
 	}
@@ -164,9 +167,12 @@ public class WorldRenderer {
 		case Bunny.STATE_DEAD:
 			keyFrame = Assets.bunnyAnim.getKeyFrame(world.bunny.mode*Assets.BUNNY_COLS*Bunny.ANIM_SPEED + world.bunny.stateTime);
 			System.out.println("bunny state time: " + world.bunny.stateTime);
-			if(world.bunny.stateTime > Bunny.NUM_FRAMES*Bunny.ANIM_SPEED) {
+			if(world.bunny.stateTime > (Bunny.NUM_FRAMES-1)*Bunny.ANIM_SPEED) {
 				world.listener.hitLog();
 			}
+			break;
+		case Bunny.BUNNY_STATE_DUCK:
+			keyFrame = Assets.bunnyAnim.getKeyFrame(world.bunny.mode*Assets.BUNNY_COLS*Bunny.ANIM_SPEED + 3*Bunny.ANIM_SPEED);
 			break;
 		default:
 			keyFrame = Assets.bunnyAnim.getKeyFrame(world.bunny.mode*Assets.BUNNY_COLS*Bunny.ANIM_SPEED + world.bunny.stateTime);
@@ -205,6 +211,15 @@ public class WorldRenderer {
 			logDecal.setPosition(world.log.position.x, world.log.position.y, world.log.position.z);
 			logDecal.setColor(new Color(lr, lg, lb, 1));
 			decalBatch.add(logDecal);
+		}
+	}
+	
+	public void renderBird() {
+		if(world.bird.state == Bird.STATE_ALIVE) {
+			//Vector3 pos = world.bird.bound.getMin();
+			birdDecal.setPosition(world.bird.position.x, world.bird.position.y, world.bird.position.z);
+			birdDecal.setColor(new Color(lr, lg, lb, 1));
+			decalBatch.add(birdDecal);
 		}
 	}
 	

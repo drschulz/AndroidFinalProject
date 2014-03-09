@@ -10,6 +10,7 @@ public class Bunny extends DynamicGameObject {
 	public static final int BUNNY_STATE_STATIC = 4;
 	public static final int BUNNY_STATE_DODGE_LEFT = 5;
 	public static final int BUNNY_STATE_DODGE_RIGHT = 6;
+	public static final int BUNNY_STATE_DUCK = 7;
 	public static final float BUNNY_JUMP_VELOCITY = 10;
 	public static final float BUNNY_MOVE_VELOCITY = 12;
 	public static final float BUNNY_WIDTH = 3;//5.0f;
@@ -84,18 +85,31 @@ public class Bunny extends DynamicGameObject {
 				//position.y = Bunny.GROUND_LIMIT;
 			}
 			break;
+		case BUNNY_STATE_DUCK:
+			velocity.x = 0;
+			velocity.y = 0;
+			if(stateTime > 0.5) {
+				state = BUNNY_STATE_STATIC;
+				stateTime = 0;
+			}
+			break;
 		default:
 			velocity.x = 0;
 			velocity.y = 0;
+			break;
 		}
 		
 		
-		if (state != BUNNY_STATE_STATIC || state != STATE_DEAD) {
+		if (state != BUNNY_STATE_STATIC && state != STATE_DEAD && state != Bunny.BUNNY_STATE_DUCK) {
 			position.add(velocity.x * deltaTime, velocity.y * deltaTime, 0);
 		}
 		else {
+			System.out.println("here!");
 			position.x = this.groundPos;//Bunny.HORIZ_LIMIT;
 			position.y = Bunny.GROUND_LIMIT;
+			if(state == Bunny.BUNNY_STATE_DUCK) {
+				position.add(0, -2, 0);
+			}
 		}
 		//velocity.add(World.gravity.x * deltaTime, World.gravity.y * deltaTime, 0);
 		
@@ -107,7 +121,7 @@ public class Bunny extends DynamicGameObject {
 		//bounds.y = position.y - Bunny.BUNNY_HEIGHT/2;
 		
 		//stateTime += deltaTime;
-		if (stateTime < NUM_FRAMES*ANIM_SPEED) {
+		if (stateTime+deltaTime < NUM_FRAMES*ANIM_SPEED || state == Bunny.BUNNY_STATE_DUCK) {
 			stateTime += deltaTime;
 		}
 		else {
@@ -121,6 +135,15 @@ public class Bunny extends DynamicGameObject {
 			velocity.y += BUNNY_JUMP_VELOCITY;
 			state = BUNNY_STATE_JUMP;
 			//stateTime = 0;
+			System.out.print("bunny should jump\n");
+		}
+	}
+	
+	public void duck() {
+		if(state == BUNNY_STATE_STATIC) {
+			//velocity.y += BUNNY_JUMP_VELOCITY;
+			state = BUNNY_STATE_DUCK;
+			stateTime = 0;
 			System.out.print("bunny should jump\n");
 		}
 	}

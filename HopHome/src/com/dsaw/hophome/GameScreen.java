@@ -47,6 +47,7 @@ public class GameScreen implements Screen {
 	static final int LOG = 1;
 	static final int BEAR = 2;
 	static final int TREE = 3;
+	static final int BIRD = 4;
 	
 	
 	private Game game;
@@ -141,7 +142,7 @@ public class GameScreen implements Screen {
 		
 		world = new World(worldListener);
 		wRenderer = new WorldRenderer(batcher, world);
-		actions = new int[4];
+		actions = new int[5];
 		rand = new Random();
 		bufferTime = 0;
 		triggered = false;
@@ -285,7 +286,7 @@ public class GameScreen implements Screen {
 		else {
 			if(bufferTime > 3.0) {
 				bufferTime = 0;
-				act = rand.nextInt()%3 + 1;
+				act = rand.nextInt()%4 + 1;
 				switch(act) {
 				case LOG:
 					if(world.log.state == Log.STATE_DEAD) {
@@ -304,6 +305,13 @@ public class GameScreen implements Screen {
 						world.bunny.mode = Bunny.MODE_LOOKLEFT;
 						triggered = true;
 					}
+					break;
+				case BIRD:
+					if(world.bird.state == Bird.STATE_DEAD) {
+						world.bunny.mode = Bunny.MODE_CLOSEEYE;
+						triggered = true;
+					}
+					break;
 				default:
 					break;
 				}
@@ -322,6 +330,7 @@ public class GameScreen implements Screen {
 		actions[LOG] = World.STAY_AS_IS;
 		actions[BEAR] = World.STAY_AS_IS;
 		actions[TREE] = World.STAY_AS_IS;
+		actions[BIRD] = World.STAY_AS_IS;
 		
 		createObstacle(deltaTime);
 		
@@ -342,6 +351,7 @@ public class GameScreen implements Screen {
 			}
 			else if (Math.abs(changeY) > 15){
 				if(changeY > 0) {
+					actions[BUNNY] = Bunny.ACT_DOWN;
 					//actions[LOG] = World.CREATE_NEW;
 				}
 				else {
