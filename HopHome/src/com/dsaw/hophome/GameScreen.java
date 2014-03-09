@@ -84,14 +84,18 @@ public class GameScreen implements Screen {
 	Image carrotImg;
 	Rectangle carrotRect;
 	
+	public static final int VIRTUAL_WIDTH = 480;
+	public static final int VIRTUAL_HEIGHT = 720;
+	public static final float ASPECT_RATIO = (float)VIRTUAL_WIDTH/VIRTUAL_HEIGHT;
+	
 	public GameScreen(final Game game, int numdays) {
 		this.game = game;
 
 		state = GAME_READY;
 		this.days = numdays;
 		//this.hungerLevel = hunger;
-		guiCam = new OrthographicCamera(320, 480);
-		guiCam.position.set(320 / 2, 480 / 2, 0);
+		guiCam = new OrthographicCamera(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
+		guiCam.position.set(VIRTUAL_WIDTH / 2, VIRTUAL_HEIGHT / 2, 0);
 		touchPoint = new Vector3();
 		batcher = new SpriteBatch();
 		shapeRenderer = new ShapeRenderer();
@@ -209,8 +213,10 @@ public class GameScreen implements Screen {
 	    
 	  //Create a label with the style made above.
 	    hungerLabel = new Label("Hunger: 100%", style);
+        hungerLabel.setFontScale(0.2f);
+        hungerLabel.setSize(hungerLabel.getWidth()*0.2f, hungerLabel.getHeight()*0.2f);
+        hungerLabel.setScale(0.2f);
 	    hungerLabel.setPosition(Gdx.graphics.getWidth() - hungerLabel.getWidth() - pauseButton.getWidth(), (float)(Gdx.graphics.getHeight() - hungerLabel.getHeight()));
-
 	    stage.addActor(hungerLabel);
 	    
 	    carrot = new Texture(Gdx.files.internal("data/carrot.png"));
@@ -390,6 +396,7 @@ public class GameScreen implements Screen {
 		}
 
 		//Act & Draw Stage First
+		stage.setCamera(guiCam);
 		stage.act();
 		stage.draw();
 		

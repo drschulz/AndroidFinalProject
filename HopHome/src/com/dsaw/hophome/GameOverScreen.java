@@ -106,6 +106,7 @@ public class GameOverScreen implements Screen{
 	    buttonStyle.over = buttonSkin.getDrawable("buttonPressed");
 	    buttonStyle.down = buttonSkin.getDrawable("buttonPressed");
 	    buttonStyle.font = font;
+	    buttonStyle.font.scale(0.1f);
 	    
 
 	    startButton = new TextButton("Retry", buttonStyle);

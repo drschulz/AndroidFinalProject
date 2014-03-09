@@ -148,7 +148,7 @@ public class StartMenu implements Screen{
 	    });
         */	    
 	    background = new Texture(Gdx.files.internal("Background1.png"));
-	    //background.setFilter(TextureFilter.MipMap, TextureFilter.MipMap);
+	    background.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 	    title = new Texture(Gdx.files.internal("Hop_Home_title.png"));
 	    title.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 	}
