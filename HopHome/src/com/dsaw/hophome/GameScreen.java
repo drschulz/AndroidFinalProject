@@ -163,9 +163,8 @@ public class GameScreen implements Screen {
 	    style = new LabelStyle(font, Color.WHITE);
 	    //Create a label with the style made above.
 	    dayLabel = new Label("Day: ", style);
-	    font.setScale(Gdx.graphics.getDensity());//   .setSize(Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/10);
-	    dayLabel.setPosition(0, (float)(Gdx.graphics.getHeight() - dayLabel.getHeight()));
-
+	    font.setScale(0.2f);//   .setSize(Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/10);
+	    dayLabel.setPosition(0, VIRTUAL_HEIGHT - 120);
 	    stage.addActor(dayLabel);
 	    
 	    stage.addActor(new Actor() {
@@ -197,7 +196,7 @@ public class GameScreen implements Screen {
 	    buttonStyle.font = font;
 
 	    pauseButton = new Button(buttonStyle);
-	    pauseButton.setSize(Gdx.graphics.getWidth()/8, Gdx.graphics.getHeight()/10);
+	    pauseButton.setSize(Gdx.graphics.getWidth()/8, Gdx.graphics.getHeight()/11);
 	    pauseButton.setPosition(Gdx.graphics.getWidth() - pauseButton.getWidth(), Gdx.graphics.getHeight() - pauseButton.getHeight() );
 	    
 	    stage.addActor(pauseButton);
@@ -213,10 +212,7 @@ public class GameScreen implements Screen {
 	    
 	  //Create a label with the style made above.
 	    hungerLabel = new Label("Hunger: 100%", style);
-        hungerLabel.setFontScale(0.2f);
-        hungerLabel.setSize(hungerLabel.getWidth()*0.2f, hungerLabel.getHeight()*0.2f);
-        hungerLabel.setScale(0.2f);
-	    hungerLabel.setPosition(Gdx.graphics.getWidth() - hungerLabel.getWidth() - pauseButton.getWidth(), (float)(Gdx.graphics.getHeight() - hungerLabel.getHeight()));
+	    hungerLabel.setPosition(VIRTUAL_WIDTH - 250, VIRTUAL_HEIGHT - 38);
 	    stage.addActor(hungerLabel);
 	    
 	    carrot = new Texture(Gdx.files.internal("data/carrot.png"));

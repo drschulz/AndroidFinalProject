@@ -73,7 +73,7 @@ public class GameOverScreen implements Screen{
 		
 		batch.begin();
 		batch.draw(background, 0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
-		batch.draw(gameOver, 0, 0, gameOver.getWidth(), gameOver.getHeight());
+		batch.draw(gameOver, 40, VIRTUAL_HEIGHT - 200, gameOver.getWidth(), gameOver.getHeight());
 		batch.end();
 		
 		//Act & Draw Stage First
@@ -88,12 +88,12 @@ public class GameOverScreen implements Screen{
 	    stage = new Stage(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, true);
 	    //Create a font style using libgdx font creator to make a .fnt file.
 	    font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"), false);
+	    font.setScale(0.2f);
 	    //Set the BitmapFont color
 	    style = new LabelStyle(font, Color.BLACK);
 	    //Create a label with the style made above.
-	    label = new Label("Game Over\nYou Survived: " + days + " Days", style);
-	    label.setFontScale(ASPECT_RATIO);
-	    label.setPosition(0, VIRTUAL_HEIGHT - label.getHeight());
+	    label = new Label("You Survived: " + days + " Days", style);
+	    label.setPosition(20 , VIRTUAL_HEIGHT - 300);
 
 	    stage.addActor(label);
 	    
@@ -112,7 +112,7 @@ public class GameOverScreen implements Screen{
 	    startButton = new TextButton("Retry", buttonStyle);
 	    startButton.setPosition(0.0f, 0.0f);
 	    startButton.setSize(VIRTUAL_WIDTH*0.8f, VIRTUAL_HEIGHT*0.3f);
-	    startButton.setPosition(VIRTUAL_WIDTH/2 - startButton.getWidth()/2, VIRTUAL_HEIGHT/2);// + startButton.getHeight());
+	    startButton.setPosition(VIRTUAL_WIDTH/2 - startButton.getWidth()/2, 200);// + startButton.getHeight());
 	    
 	    stage.addActor(startButton);
 	    Gdx.input.setInputProcessor(stage);
@@ -125,9 +125,9 @@ public class GameOverScreen implements Screen{
 	    	}
 	    });
 	    
-	    extrasButton = new TextButton("Quit", buttonStyle);
-	    extrasButton.setSize(320f*0.8f, 480f*0.3f);
-	    extrasButton.setPosition(VIRTUAL_WIDTH/2 - extrasButton.getWidth()/2, VIRTUAL_HEIGHT/2 - extrasButton.getHeight());
+	    extrasButton = new TextButton("Quit ", buttonStyle);
+	    extrasButton.setSize(VIRTUAL_WIDTH*0.8f, VIRTUAL_HEIGHT*0.3f);
+	    extrasButton.setPosition(VIRTUAL_WIDTH/2 - extrasButton.getWidth()/2, 30);
 	    
 	    stage.addActor(extrasButton);
 	    Gdx.input.setInputProcessor(stage);

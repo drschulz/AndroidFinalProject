@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -34,9 +35,20 @@ public class PauseScreen implements Screen{
 	Game game;
 	int days;
 	
+	OrthographicCamera guiCam;
+	
+	public static final int VIRTUAL_WIDTH = 480;
+	public static final int VIRTUAL_HEIGHT = 720;
+	public static final float ASPECT_RATIO = (float)VIRTUAL_WIDTH/VIRTUAL_HEIGHT;
+	
+	
 	public PauseScreen(Game game, int days) {
 		this.game = game;
 		this.days = days;
+		
+		guiCam = new OrthographicCamera(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
+		guiCam.position.set(VIRTUAL_WIDTH / 2, VIRTUAL_HEIGHT / 2, 0);
+		
 		Assets.pausemusic.setVolume(0.5f);
 		Assets.pausemusic.setLooping(true);
 		Assets.pausemusic.play();
@@ -47,7 +59,10 @@ public class PauseScreen implements Screen{
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
+		guiCam.update();
+		
 		//Act & Draw Stage First
+		stage.setCamera(guiCam);
 		stage.act();
 		stage.draw();
 	}
@@ -55,14 +70,15 @@ public class PauseScreen implements Screen{
 	@Override
 	public void show() {
 	    //Set stage to be whole screen
-	    stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
+	    stage = new Stage(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, true);
 	    //Create a font style using libgdx font creator to make a .fnt file.
 	    font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"), false);
+	    font.setScale(0.2f);
 	    //Set the BitmapFont color
 	    style = new LabelStyle(font, Color.BLACK);
 	    //Create a label with the style made above.
-	    label = new Label("Currently you have survived: " + days + " Days", style);
-	    label.setPosition(Gdx.graphics.getWidth()/2 - label.getWidth()/2, Gdx.graphics.getHeight() - label.getHeight());
+	    label = new Label("Days survived: " + days, style);
+	    label.setPosition(VIRTUAL_WIDTH/2 - label.getWidth()/2, VIRTUAL_HEIGHT - label.getHeight());
 
 	    stage.addActor(label);
 	    
@@ -77,7 +93,8 @@ public class PauseScreen implements Screen{
 	    buttonStyle.font = font;
 
 	    startButton = new TextButton("Continue", buttonStyle);
-	    startButton.setPosition(Gdx.graphics.getWidth()/2 - startButton.getWidth()/2, Gdx.graphics.getHeight()/2 + startButton.getHeight());
+	    startButton.setSize(VIRTUAL_WIDTH*0.8f, VIRTUAL_HEIGHT*0.3f);
+	    startButton.setPosition(VIRTUAL_WIDTH/2 - startButton.getWidth()/2, VIRTUAL_HEIGHT/2);
 	    
 	    stage.addActor(startButton);
 	    Gdx.input.setInputProcessor(stage);
@@ -91,7 +108,8 @@ public class PauseScreen implements Screen{
 	    });
 	    
 	    extrasButton = new TextButton("Quit", buttonStyle);
-	    extrasButton.setPosition(Gdx.graphics.getWidth()/2 - extrasButton.getWidth()/2, Gdx.graphics.getHeight()/2 - extrasButton.getHeight());
+	    extrasButton.setSize(VIRTUAL_WIDTH*0.8f, VIRTUAL_HEIGHT*0.3f);
+	    extrasButton.setPosition(VIRTUAL_WIDTH/2 - extrasButton.getWidth()/2, VIRTUAL_HEIGHT/2 - extrasButton.getHeight());
 	    
 	    stage.addActor(extrasButton);
 	    Gdx.input.setInputProcessor(stage);

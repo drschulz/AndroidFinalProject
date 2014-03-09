@@ -85,7 +85,7 @@ public class StartMenu implements Screen{
 		
 		batch.begin();
 		batch.draw(background, 0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
-		batch.draw(title, 0, VIRTUAL_HEIGHT/2, VIRTUAL_WIDTH, 300);
+		batch.draw(title, 0, VIRTUAL_HEIGHT - 300, VIRTUAL_WIDTH, 300);
 		batch.end();
 	    Gdx.gl.glDisable(GL11.GL_BLEND);
 		//Act & Draw Stage First
@@ -99,9 +99,6 @@ public class StartMenu implements Screen{
 		batch = new SpriteBatch();
 		Texture.setEnforcePotImages(false);
 		
-	    label.setPosition(VIRTUAL_WIDTH/2 - label.getWidth()/2, (float)(VIRTUAL_HEIGHT*0.8 - label.getHeight()));
-	    //stage.addActor(label);
-	    
 	    buttonSkin = new Skin();
 	    buttonAtlas = new TextureAtlas("buttons/CarrotButton.pack");
 	    buttonSkin.addRegions(buttonAtlas);
@@ -111,13 +108,12 @@ public class StartMenu implements Screen{
 	    buttonStyle.over = buttonSkin.getDrawable("carrot");
 	    buttonStyle.down = buttonSkin.getDrawable("carrot");
 	    buttonStyle.font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"), false);
-	    buttonStyle.font.setScale(ASPECT_RATIO);
+	    buttonStyle.font.setScale(0.3f);
 
 	    startButton = new TextButton("Play", buttonStyle);
-	    startButton.setWidth(VIRTUAL_WIDTH/3);
-	    startButton.setHeight(VIRTUAL_HEIGHT/10);
+	    startButton.setWidth(VIRTUAL_WIDTH/2);
+	    startButton.setHeight(VIRTUAL_HEIGHT/7);
 	    startButton.setPosition(VIRTUAL_WIDTH/2 - startButton.getWidth()/2, VIRTUAL_HEIGHT/10 + startButton.getHeight() );
-	    startButton.setScale(ASPECT_RATIO);
 	    
 	    stage.addActor(startButton);
 	    Gdx.input.setInputProcessor(stage);
@@ -148,9 +144,7 @@ public class StartMenu implements Screen{
 	    });
         */	    
 	    background = new Texture(Gdx.files.internal("Background1.png"));
-	    background.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 	    title = new Texture(Gdx.files.internal("Hop_Home_title.png"));
-	    title.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 	}
 	
 	/* 
