@@ -175,11 +175,11 @@ public class GameScreen implements Screen {
 	    		batch.end();
 	    		shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 	    		shapeRenderer.setColor(Color.GRAY);
-	    		shapeRenderer.rect(0,0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/8);
+	    		shapeRenderer.rect(0,0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT/8);
 	    		shapeRenderer.end();
 	    		shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
 	    		shapeRenderer.setColor(Color.BLACK);
-	    		shapeRenderer.rect(0,0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/8);
+	    		shapeRenderer.rect(0,0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT/8);
 	    		shapeRenderer.end();
 	    		batch.begin();
 	    	}
@@ -196,17 +196,21 @@ public class GameScreen implements Screen {
 	    buttonStyle.font = font;
 
 	    pauseButton = new Button(buttonStyle);
-	    pauseButton.setSize(Gdx.graphics.getWidth()/8, Gdx.graphics.getHeight()/11);
-	    pauseButton.setPosition(Gdx.graphics.getWidth() - pauseButton.getWidth(), Gdx.graphics.getHeight() - pauseButton.getHeight() );
+	    pauseButton.setSize(50, 50);
+	    pauseButton.setPosition(VIRTUAL_WIDTH - pauseButton.getWidth(), VIRTUAL_HEIGHT - pauseButton.getHeight() );
 	    
 	    stage.addActor(pauseButton);
 	    Gdx.input.setInputProcessor(stage);
 	    pauseButton.addListener(new InputListener(){
 	    	@Override
 	    	public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-	    		Assets.gamemusic.stop();
-	    		game.setScreen(new PauseScreen(game, days));
 	    		return true;
+	    	}
+	    	
+	    	@Override
+	    	public void touchUp(InputEvent event, float x, float y, int pointer, int button) {		
+		    	Assets.gamemusic.stop();
+		    	game.setScreen(new PauseScreen(game, days));
 	    	}
 	    });
 	    
@@ -218,20 +222,18 @@ public class GameScreen implements Screen {
 	    carrot = new Texture(Gdx.files.internal("data/carrot.png"));
 	    carrotRegion = new TextureRegion(carrot);
 	    carrotImg = new Image(carrotRegion);
-	    carrotImg.setSize(Gdx.graphics.getWidth()/8, Gdx.graphics.getHeight()/8);//carrotImg.getWidth()/8, carrotImg.getHeight()/8);
-	    carrotImg.setPosition(Gdx.graphics.getWidth()/2 - carrotImg.getWidth()/2, 2);
-	    carrotRect = new Rectangle(carrotImg.getX(), carrotImg.getY(), carrotImg.getWidth(), carrotImg.getHeight());
+	    carrotImg.setSize(VIRTUAL_WIDTH/3, VIRTUAL_HEIGHT/8);
+	    carrotImg.setPosition(VIRTUAL_WIDTH/2 - carrotImg.getWidth()/2, 0);
 	    carrotImg.addListener(new InputListener(){
 	    	@Override
 	    	public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-	    		//TODO Stop any jump actions for bunny.
-	    		hungerLevel = 100;
 	    		carrotImg.setColor(carrotImg.getColor().sub(0.1f, 0.1f, 0.1f, 0));
 	    		return true;
 	    	}
 	    	@Override
 	    	public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 	    		carrotImg.setColor(carrotImg.getColor().add(0.1f, 0.1f, 0.1f, 0));
+	    		hungerLevel = 100;
 	    	}
 	    });
 	    stage.addActor(carrotImg);
