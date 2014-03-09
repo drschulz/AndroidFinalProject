@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -19,6 +20,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 
 public class StartMenu implements Screen{
+	
+	OrthographicCamera guiCam;
 	//Background
 	SpriteBatch batch;
 	Texture background;
@@ -38,8 +41,16 @@ public class StartMenu implements Screen{
 	
 	Game game;
 	
+	public static final int VIRTURAL_WIDTH = 320;
+	public static final int VIRTURAL_HEIGHT = 480;
+	public static final float ASPECT_RATIO = (float)VIRTURAL_WIDTH/VIRTURAL_HEIGHT;
+	
 	public StartMenu(Game game) {
 		this.game = game;
+		
+		guiCam = new OrthographicCamera(VIRTURAL_WIDTH, VIRTURAL_HEIGHT);
+		guiCam.position.set(VIRTURAL_WIDTH / 2, VIRTURAL_HEIGHT / 2, 0);
+		
 		Assets.startmusic.setVolume(0.7f);
 		Assets.startmusic.setLooping(true);
 		Assets.startmusic.play();
@@ -59,12 +70,15 @@ public class StartMenu implements Screen{
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
+		guiCam.update();
+		batch.setProjectionMatrix(guiCam.combined);
 		
 		batch.begin();
-		batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		batch.draw(background, 0, 0, VIRTURAL_WIDTH, VIRTURAL_HEIGHT);
 		batch.end();
 		
 		//Act & Draw Stage First
+		stage.setCamera(guiCam);
 		stage.act();
 		stage.draw();
 	}
@@ -74,31 +88,25 @@ public class StartMenu implements Screen{
 		batch = new SpriteBatch();
 		Texture.setEnforcePotImages(false);
 		
-	    //Set stage to be whole screen
-	    stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
-	    //Create a font style using libgdx font creator to make a .fnt file.
-	    font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"), false);
-	    //Set the BitmapFont color
-	    style = new LabelStyle(font, Color.BLACK);
-	    //Create a label with the style made above.
-	    label = new Label("Hop Home", style);
-	    label.setPosition(Gdx.graphics.getWidth()/2 - label.getWidth()/2, (float)(Gdx.graphics.getHeight()*0.8 - label.getHeight()));
-
-	     stage.addActor(label);
+	    label.setPosition(VIRTURAL_WIDTH/2 - label.getWidth()/2, (float)(VIRTURAL_HEIGHT*0.8 - label.getHeight()));
+	    stage.addActor(label);
 	    
 	    buttonSkin = new Skin();
-	    buttonAtlas = new TextureAtlas("buttons/LeafButton.pack");
+	    buttonAtlas = new TextureAtlas("buttons/CarrotButton.pack");
 	    buttonSkin.addRegions(buttonAtlas);
 	    
 	    buttonStyle = new TextButtonStyle();
-	    buttonStyle.up = buttonSkin.getDrawable("Leaf_3a");
-	    buttonStyle.over = buttonSkin.getDrawable("Leaf_3a");
-	    buttonStyle.down = buttonSkin.getDrawable("Leaf_3a");
-	    buttonStyle.font = font;
+	    buttonStyle.up = buttonSkin.getDrawable("carrot");
+	    buttonStyle.over = buttonSkin.getDrawable("carrot");
+	    buttonStyle.down = buttonSkin.getDrawable("carrot");
+	    buttonStyle.font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"), false);
+	    buttonStyle.font.setScale(ASPECT_RATIO);
 
-	    startButton = new TextButton("    Start Game", buttonStyle);
-	    startButton.setSize((float) (Gdx.graphics.getWidth()/(1.5)), Gdx.graphics.getHeight()/3);
-	    startButton.setPosition(Gdx.graphics.getWidth()/2 - startButton.getWidth()/2, Gdx.graphics.getHeight()/10 + startButton.getHeight() );
+	    startButton = new TextButton("Play", buttonStyle);
+	    startButton.setWidth(VIRTURAL_WIDTH/3);
+	    startButton.setHeight(VIRTURAL_HEIGHT/10);
+	    startButton.setPosition(VIRTURAL_WIDTH/2 - startButton.getWidth()/2, VIRTURAL_HEIGHT/10 + startButton.getHeight() );
+	    startButton.setScale(ASPECT_RATIO);
 	    
 	    stage.addActor(startButton);
 	    Gdx.input.setInputProcessor(stage);
@@ -136,16 +144,6 @@ public class StartMenu implements Screen{
 	 */
 	@Override
 	public void resize(int width, int height) {
-/*
-		VirtualViewport virtualViewport = multipleVirtualViewportBuilder.getVirtualViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		camera.setVirtualViewport(virtualViewport);
-		
-		camera.updateViewport();
-		// centers the camera at 0, 0 (the center of the virtual viewport)
-		camera.position.set(0f, 0f, 0f);
-
-		this.extrasButton.setPosition(virtualViewport.getVirtualWidth() * 0.5f - 80, virtualViewport.getVirtualHeight() * 0.5f - 80);
-*/
 	}
 	
 	@Override
