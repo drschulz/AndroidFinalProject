@@ -175,11 +175,11 @@ public class GameScreen implements Screen {
 	    		batch.end();
 	    		shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 	    		shapeRenderer.setColor(Color.GRAY);
-	    		shapeRenderer.rect(0,0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT/8);
+	    		shapeRenderer.rect(0,0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/8);
 	    		shapeRenderer.end();
 	    		shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
 	    		shapeRenderer.setColor(Color.BLACK);
-	    		shapeRenderer.rect(0,0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT/8);
+	    		shapeRenderer.rect(0,0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/8);
 	    		shapeRenderer.end();
 	    		batch.begin();
 	    	}
