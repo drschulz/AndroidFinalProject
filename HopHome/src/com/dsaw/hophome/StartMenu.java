@@ -4,12 +4,16 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.GL11;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -25,6 +29,7 @@ public class StartMenu implements Screen{
 	//Background
 	SpriteBatch batch;
 	Texture background;
+	Texture title;
 	
 	//Menu Screen Stuff
 	private Stage stage;
@@ -41,15 +46,15 @@ public class StartMenu implements Screen{
 	
 	Game game;
 	
-	public static final int VIRTURAL_WIDTH = 320;
-	public static final int VIRTURAL_HEIGHT = 480;
-	public static final float ASPECT_RATIO = (float)VIRTURAL_WIDTH/VIRTURAL_HEIGHT;
+	public static final int VIRTUAL_WIDTH = 480;
+	public static final int VIRTUAL_HEIGHT = 720;
+	public static final float ASPECT_RATIO = (float)VIRTUAL_WIDTH/VIRTUAL_HEIGHT;
 	
 	public StartMenu(Game game) {
 		this.game = game;
 		
-		guiCam = new OrthographicCamera(VIRTURAL_WIDTH, VIRTURAL_HEIGHT);
-		guiCam.position.set(VIRTURAL_WIDTH / 2, VIRTURAL_HEIGHT / 2, 0);
+		guiCam = new OrthographicCamera(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
+		guiCam.position.set(VIRTUAL_WIDTH / 2, VIRTUAL_HEIGHT / 2, 0);
 		
 		Assets.startmusic.setVolume(0.7f);
 		Assets.startmusic.setLooping(true);
@@ -70,13 +75,19 @@ public class StartMenu implements Screen{
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
+		batch.enableBlending();
+		Gdx.gl.glEnable(GL11.GL_BLEND);
+	    Gdx.gl.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		batch.setBlendFunction(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		
 		guiCam.update();
 		batch.setProjectionMatrix(guiCam.combined);
 		
 		batch.begin();
-		batch.draw(background, 0, 0, VIRTURAL_WIDTH, VIRTURAL_HEIGHT);
+		batch.draw(background, 0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
+		batch.draw(title, 0, VIRTUAL_HEIGHT/2, VIRTUAL_WIDTH, 300);
 		batch.end();
-		
+	    Gdx.gl.glDisable(GL11.GL_BLEND);
 		//Act & Draw Stage First
 		stage.setCamera(guiCam);
 		stage.act();
@@ -88,8 +99,8 @@ public class StartMenu implements Screen{
 		batch = new SpriteBatch();
 		Texture.setEnforcePotImages(false);
 		
-	    label.setPosition(VIRTURAL_WIDTH/2 - label.getWidth()/2, (float)(VIRTURAL_HEIGHT*0.8 - label.getHeight()));
-	    stage.addActor(label);
+	    label.setPosition(VIRTUAL_WIDTH/2 - label.getWidth()/2, (float)(VIRTUAL_HEIGHT*0.8 - label.getHeight()));
+	    //stage.addActor(label);
 	    
 	    buttonSkin = new Skin();
 	    buttonAtlas = new TextureAtlas("buttons/CarrotButton.pack");
@@ -103,9 +114,9 @@ public class StartMenu implements Screen{
 	    buttonStyle.font.setScale(ASPECT_RATIO);
 
 	    startButton = new TextButton("Play", buttonStyle);
-	    startButton.setWidth(VIRTURAL_WIDTH/3);
-	    startButton.setHeight(VIRTURAL_HEIGHT/10);
-	    startButton.setPosition(VIRTURAL_WIDTH/2 - startButton.getWidth()/2, VIRTURAL_HEIGHT/10 + startButton.getHeight() );
+	    startButton.setWidth(VIRTUAL_WIDTH/3);
+	    startButton.setHeight(VIRTUAL_HEIGHT/10);
+	    startButton.setPosition(VIRTUAL_WIDTH/2 - startButton.getWidth()/2, VIRTUAL_HEIGHT/10 + startButton.getHeight() );
 	    startButton.setScale(ASPECT_RATIO);
 	    
 	    stage.addActor(startButton);
@@ -136,7 +147,10 @@ public class StartMenu implements Screen{
 	    	}
 	    });
         */	    
-	    background = new Texture(Gdx.files.internal("background1.jpg"));
+	    background = new Texture(Gdx.files.internal("Background1.png"));
+	    //background.setFilter(TextureFilter.MipMap, TextureFilter.MipMap);
+	    title = new Texture(Gdx.files.internal("Hop_Home_title.png"));
+	    title.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 	}
 	
 	/* 

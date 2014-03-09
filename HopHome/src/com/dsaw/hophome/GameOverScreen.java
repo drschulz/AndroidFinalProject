@@ -6,7 +6,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -37,16 +39,23 @@ public class GameOverScreen implements Screen{
 	
 	OrthographicCamera guiCam;
 	
-	public static final int VIRTURAL_WIDTH = 320;
-	public static final int VIRTURAL_HEIGHT = 480;
-	public static final float ASPECT_RATIO = (float)VIRTURAL_WIDTH/VIRTURAL_HEIGHT;
+	SpriteBatch batch;
+	Texture background;
+	Texture gameOver;
+	
+	public static final int VIRTUAL_WIDTH = 480;
+	public static final int VIRTUAL_HEIGHT = 720;
+	public static final float ASPECT_RATIO = (float)VIRTUAL_WIDTH/VIRTUAL_HEIGHT;
 	
 	public GameOverScreen(Game game, int days) {
 		this.game = game;
 		this.days = days;
 		
-		guiCam = new OrthographicCamera(VIRTURAL_WIDTH, VIRTURAL_HEIGHT);
-		guiCam.position.set(VIRTURAL_WIDTH / 2, VIRTURAL_HEIGHT / 2, 0);
+		batch = new SpriteBatch();
+		Texture.setEnforcePotImages(false);
+		
+		guiCam = new OrthographicCamera(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
+		guiCam.position.set(VIRTUAL_WIDTH / 2, VIRTUAL_HEIGHT / 2, 0);
 		
 		
 		Assets.pausemusic.setVolume(0.5f);
@@ -59,6 +68,14 @@ public class GameOverScreen implements Screen{
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
+		guiCam.update();
+		batch.setProjectionMatrix(guiCam.combined);
+		
+		batch.begin();
+		batch.draw(background, 0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
+		batch.draw(gameOver, 0, 0, gameOver.getWidth(), gameOver.getHeight());
+		batch.end();
+		
 		//Act & Draw Stage First
 		stage.setCamera(guiCam);
 		stage.act();
@@ -68,7 +85,7 @@ public class GameOverScreen implements Screen{
 	@Override
 	public void show() {
 	    //Set stage to be whole screen
-	    stage = new Stage(VIRTURAL_WIDTH, VIRTURAL_HEIGHT, true);
+	    stage = new Stage(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, true);
 	    //Create a font style using libgdx font creator to make a .fnt file.
 	    font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"), false);
 	    //Set the BitmapFont color
@@ -76,7 +93,7 @@ public class GameOverScreen implements Screen{
 	    //Create a label with the style made above.
 	    label = new Label("Game Over\nYou Survived: " + days + " Days", style);
 	    label.setFontScale(ASPECT_RATIO);
-	    label.setPosition(0, VIRTURAL_HEIGHT - label.getHeight());
+	    label.setPosition(0, VIRTUAL_HEIGHT - label.getHeight());
 
 	    stage.addActor(label);
 	    
@@ -92,8 +109,9 @@ public class GameOverScreen implements Screen{
 	    
 
 	    startButton = new TextButton("Retry", buttonStyle);
-	    startButton.setSize(320f*0.5f, 480f/10.0f);
-	    startButton.setPosition(VIRTURAL_WIDTH/2 - startButton.getWidth()/2, VIRTURAL_HEIGHT/2 + startButton.getHeight());
+	    startButton.setPosition(0.0f, 0.0f);
+	    startButton.setSize(VIRTUAL_WIDTH*0.8f, VIRTUAL_HEIGHT*0.3f);
+	    startButton.setPosition(VIRTUAL_WIDTH/2 - startButton.getWidth()/2, VIRTUAL_HEIGHT/2);// + startButton.getHeight());
 	    
 	    stage.addActor(startButton);
 	    Gdx.input.setInputProcessor(stage);
@@ -107,8 +125,8 @@ public class GameOverScreen implements Screen{
 	    });
 	    
 	    extrasButton = new TextButton("Quit", buttonStyle);
-	    extrasButton.setSize(320f*0.5f, 480f/10.0f);
-	    extrasButton.setPosition(VIRTURAL_WIDTH/2 - extrasButton.getWidth()/2, VIRTURAL_HEIGHT/2 - extrasButton.getHeight());
+	    extrasButton.setSize(320f*0.8f, 480f*0.3f);
+	    extrasButton.setPosition(VIRTUAL_WIDTH/2 - extrasButton.getWidth()/2, VIRTUAL_HEIGHT/2 - extrasButton.getHeight());
 	    
 	    stage.addActor(extrasButton);
 	    Gdx.input.setInputProcessor(stage);
@@ -120,6 +138,8 @@ public class GameOverScreen implements Screen{
 	    		return true;
 	    	}
 	    });
+	    background = new Texture(Gdx.files.internal("gameOverBackground.png"));
+	    gameOver = new Texture(Gdx.files.internal("gameOver.png"));
 	}
 	
 	/* 
