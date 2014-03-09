@@ -389,8 +389,10 @@ public class GameScreen implements Screen {
 		//Changes hunger
 		hungerLabel.setText("Hunger: " + hungerLevel + "%");
 		
-		if (hungerLevel <= 0) {
+		if (hungerLevel <= 0 && world.bunny.state != Bunny.STATE_DEAD) {
 			world.bunny.mode = Bunny.MODE_DEAD;
+			world.bunny.state = Bunny.STATE_DEAD;
+			world.bunny.stateTime = 0;
 		}
 
 		//Act & Draw Stage First
