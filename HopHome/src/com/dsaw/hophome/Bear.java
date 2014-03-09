@@ -46,7 +46,7 @@ public class Bear extends DynamicGameObject {
 		if(state != STATE_DEAD) {
 			position.add(velocity.x * deltaTime, 0, velocity.z * deltaTime);
 		}
-		
+		System.out.println("Bear pos z: " + position.z);
 		this.updateBound();
 		
 		stateTime += deltaTime;

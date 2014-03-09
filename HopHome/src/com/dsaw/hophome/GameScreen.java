@@ -159,7 +159,7 @@ public class GameScreen implements Screen {
 	    style = new LabelStyle(font, Color.WHITE);
 	    //Create a label with the style made above.
 	    dayLabel = new Label("Day: ", style);
-	    font.setScale(2.0f);//   .setSize(Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/10);
+	    font.setScale(Gdx.graphics.getDensity());//   .setSize(Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/10);
 	    dayLabel.setPosition(0, (float)(Gdx.graphics.getHeight() - dayLabel.getHeight()));
 
 	    stage.addActor(dayLabel);

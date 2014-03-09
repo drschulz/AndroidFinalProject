@@ -52,6 +52,8 @@ public class Bird extends DynamicGameObject {
 			position.x = Bird.BIRD_INITIAL_POSITION_X;
 			position.y = Bird.BIRD_INITIAL_POSITION_Y;
 			position.z = Bird.BIRD_INITIAL_POSITION_Z;
+			velocity.y = Bird.BIRD_DOWN_VELOCITY;
+			velocity.z = Bird.BIRD_FORWARD_VELOCITY;
 			this.updateBound();
 		}
 	}

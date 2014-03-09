@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.decals.CameraGroupStrategy;
 import com.badlogic.gdx.graphics.g3d.decals.Decal;
 import com.badlogic.gdx.graphics.g3d.decals.DecalBatch;
+import com.badlogic.gdx.graphics.g3d.decals.SimpleOrthoGroupStrategy;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
@@ -62,13 +63,18 @@ public class WorldRenderer {
 		day = true;
 		decalBatch = new DecalBatch(new CameraGroupStrategy(this.camera));
 		logDecal = Decal.newDecal(Log.LOG_WIDTH, Log.LOG_HEIGHT, Assets.log, true);
+		logDecal.setBlending(Gdx.gl20.GL_SRC_ALPHA, Gdx.gl20.GL_ONE_MINUS_SRC_ALPHA);
 		bearDecal = Decal.newDecal(Bear.BEAR_WIDTH, Bear.BEAR_HEIGHT, Assets.bear, true);
+		bearDecal.setBlending(Gdx.gl20.GL_SRC_ALPHA, Gdx.gl20.GL_ONE_MINUS_SRC_ALPHA);
 		treeDecal = Decal.newDecal(Tree.TREE_WIDTH, Tree.TREE_HEIGHT, Assets.tree, true);
+		treeDecal.setBlending(Gdx.gl20.GL_SRC_ALPHA, Gdx.gl20.GL_ONE_MINUS_SRC_ALPHA);
 		birdDecal = Decal.newDecal(Bird.BIRD_WIDTH, Bird.BIRD_HEIGHT, Assets.bird, true);
+		birdDecal.setBlending(Gdx.gl20.GL_SRC_ALPHA, Gdx.gl20.GL_ONE_MINUS_SRC_ALPHA);
 		groundDecal = Decal.newDecal(FRUSTUM_WIDTH*2.5f, FRUSTUM_HEIGHT*4, Assets.grass, true);
 		groundDecal.rotateX(90);
 		groundDecal.translate(5, 0, -12);
-		landDecal = Decal.newDecal(FRUSTUM_WIDTH*3f, FRUSTUM_HEIGHT*3, Assets.background, true);
+		groundDecal.setBlending(Gdx.gl20.GL_SRC_ALPHA, Gdx.gl20.GL_ONE_MINUS_SRC_ALPHA);
+		landDecal = Decal.newDecal(FRUSTUM_WIDTH*3, FRUSTUM_HEIGHT*3, Assets.background, true);
 		lr = lg = lb = 1;
 		//mb.begin();
 		//ground = mb.createCylinder(FRUSTUM_)
@@ -78,15 +84,16 @@ public class WorldRenderer {
 	public void render() {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 		Gdx.gl.glEnable(GL20.GL_DEPTH_TEST);
+		//Gdx.gl.glEnable(GL20.GL_BLEND);
 		camera.update();
 		shapeRenderer.setProjectionMatrix(camera.combined);
 		batch.setProjectionMatrix(camera.combined);
 		renderBackground();
 		renderLandscape();
+		renderBunny();
+		renderTree();
 		renderLog();
 		renderBear();
-		renderTree();
-		renderBunny();
 		renderBird();
 		decalBatch.flush();
 		//renderCarrot();
@@ -179,10 +186,12 @@ public class WorldRenderer {
 			break;
 		}
 		bunnyDecal = Decal.newDecal(Bunny.BUNNY_WIDTH, Bunny.BUNNY_HEIGHT, keyFrame, true);
-		Vector3 pos = world.bunny.bound.getMin();
+		//bunnyDecal.setBlending(Gdx.gl20.GL_SRC_ALPHA, Gdx.gl20.GL_ONE_MINUS_SRC_ALPHA);
+		//Vector3 pos = world.bunny.bound.getMin();
 		bunnyDecal.setPosition(world.bunny.position.x, world.bunny.position.y, world.bunny.position.z);
 		//bunnyDecal.setColor(Color.CYAN);
 		decalBatch.add(bunnyDecal);
+		//decalBatch.flush();
 	}
 	
 	public void renderBear() {

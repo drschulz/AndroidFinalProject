@@ -48,6 +48,8 @@ public class Assets {
 		log = new TextureRegion(temp);
 		temp = loadTexture("data/bird.png");
 		bird = new TextureRegion(temp);
+		temp = loadTexture("data/bush.png");
+		tree = new TextureRegion(temp);
 		TextureRegion[][] tmp = TextureRegion.split(bunny, bunnyWidth, bunnyHeight);
 
 		int idx = 0;
@@ -60,8 +62,7 @@ public class Assets {
 		carrot = loadTexture("data/carrot.png");
 		temp = loadTexture("data/Background.png");
 		background = new TextureRegion(temp);
-		temp = loadTexture("data/bush.png");
-		tree = new TextureRegion(temp);
+		
 		temp = loadTexture("data/Grass Pattern.png");
 		grass = new TextureRegion(temp);
 		

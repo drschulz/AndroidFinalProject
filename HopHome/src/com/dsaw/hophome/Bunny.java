@@ -104,7 +104,7 @@ public class Bunny extends DynamicGameObject {
 			position.add(velocity.x * deltaTime, velocity.y * deltaTime, 0);
 		}
 		else {
-			System.out.println("here!");
+			//System.out.println("here!");
 			position.x = this.groundPos;//Bunny.HORIZ_LIMIT;
 			position.y = Bunny.GROUND_LIMIT;
 			if(state == Bunny.BUNNY_STATE_DUCK) {
