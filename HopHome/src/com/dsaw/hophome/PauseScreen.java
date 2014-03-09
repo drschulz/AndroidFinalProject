@@ -88,7 +88,7 @@ public class PauseScreen implements Screen{
 	    
 	    buttonStyle = new TextButtonStyle();
 	    buttonStyle.up = buttonSkin.getDrawable("button");
-	    buttonStyle.over = buttonSkin.getDrawable("buttonPressed");
+	    buttonStyle.over = buttonSkin.getDrawable("button");
 	    buttonStyle.down = buttonSkin.getDrawable("buttonPressed");
 	    buttonStyle.font = font;
 
@@ -101,9 +101,12 @@ public class PauseScreen implements Screen{
 	    startButton.addListener(new InputListener(){
 	    	@Override
 	    	public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+	    		return true;
+	    	}
+	    	@Override
+	    	public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 	    		Assets.pausemusic.stop();
 	    		game.setScreen(new GameScreen(game, days));
-	    		return true;
 	    	}
 	    });
 	    
@@ -116,9 +119,13 @@ public class PauseScreen implements Screen{
 	    extrasButton.addListener(new InputListener(){
 	    	@Override
 	    	public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+	    		return true;
+	    	}
+	    	
+	    	@Override
+	    	public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 	    		Assets.pausemusic.stop();
 	    		game.setScreen(new StartMenu(game));
-	    		return true;
 	    	}
 	    });
 	}

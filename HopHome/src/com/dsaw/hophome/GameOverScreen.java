@@ -103,7 +103,7 @@ public class GameOverScreen implements Screen{
 	    
 	    buttonStyle = new TextButtonStyle();
 	    buttonStyle.up = buttonSkin.getDrawable("button");
-	    buttonStyle.over = buttonSkin.getDrawable("buttonPressed");
+	    buttonStyle.over = buttonSkin.getDrawable("button");
 	    buttonStyle.down = buttonSkin.getDrawable("buttonPressed");
 	    buttonStyle.font = font;
 	    buttonStyle.font.scale(0.1f);
@@ -119,9 +119,12 @@ public class GameOverScreen implements Screen{
 	    startButton.addListener(new InputListener(){
 	    	@Override
 	    	public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+	    		return true;
+	    	}	    	
+	    	@Override
+	    	public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 	    		Assets.pausemusic.stop();
 	    		game.setScreen(new GameScreen(game, 0));
-	    		return true;
 	    	}
 	    });
 	    
@@ -134,9 +137,13 @@ public class GameOverScreen implements Screen{
 	    extrasButton.addListener(new InputListener(){
 	    	@Override
 	    	public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+	    		return true;
+	    	}
+	    	
+	    	@Override
+	    	public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 	    		Assets.pausemusic.stop();
 	    		game.setScreen(new StartMenu(game));
-	    		return true;
 	    	}
 	    });
 	    background = new Texture(Gdx.files.internal("gameOverBackground.png"));
