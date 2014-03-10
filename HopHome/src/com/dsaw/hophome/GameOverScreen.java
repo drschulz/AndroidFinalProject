@@ -52,6 +52,8 @@ public class GameOverScreen implements Screen{
 		this.days = days;
 		if (days > Assets.highscore) {
 			Assets.highscore = days;
+			HopHome.pref.putInteger("highscore", Assets.highscore);
+			HopHome.pref.flush();
 		}
 		batch = new SpriteBatch();
 		Texture.setEnforcePotImages(false);

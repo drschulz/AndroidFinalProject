@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class HopHome extends Game implements ApplicationListener {
 
-	Preferences pref;
+	public static Preferences pref;
 	
 	@Override
 	public void create() {
