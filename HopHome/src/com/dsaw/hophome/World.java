@@ -159,8 +159,10 @@ public class World {
 			bunny.duck();
 			break;
 		case Bunny.ACT_UP:
+			if(bunny.state == Bunny.BUNNY_STATE_STATIC) {
+				listener.jump();	
+			}
 			bunny.jumpUp();
-			listener.jump();
 			break;
 		case Bunny.ACT_LEFT:
 			bunny.dodgeLeft();

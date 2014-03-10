@@ -50,7 +50,7 @@ public class GameOverScreen implements Screen{
 	public GameOverScreen(Game game, int days) {
 		this.game = game;
 		this.days = days;
-		
+		System.out.println("got here!");
 		batch = new SpriteBatch();
 		Texture.setEnforcePotImages(false);
 		
@@ -96,7 +96,7 @@ public class GameOverScreen implements Screen{
 	    label.setPosition(20 , VIRTUAL_HEIGHT - 300);
 
 	    stage.addActor(label);
-	    
+	    System.out.println("got here!");
 	    buttonSkin = new Skin();
 	    buttonAtlas = new TextureAtlas("buttons/button.pack");
 	    buttonSkin.addRegions(buttonAtlas);
@@ -113,7 +113,7 @@ public class GameOverScreen implements Screen{
 	    startButton.setPosition(0.0f, 0.0f);
 	    startButton.setSize(VIRTUAL_WIDTH*0.8f, VIRTUAL_HEIGHT*0.3f);
 	    startButton.setPosition(VIRTUAL_WIDTH/2 - startButton.getWidth()/2, 200);// + startButton.getHeight());
-	    
+	    System.out.println("Got to start button");
 	    stage.addActor(startButton);
 	    Gdx.input.setInputProcessor(stage);
 	    startButton.addListener(new InputListener(){
@@ -131,7 +131,7 @@ public class GameOverScreen implements Screen{
 	    extrasButton = new TextButton("Quit ", buttonStyle);
 	    extrasButton.setSize(VIRTUAL_WIDTH*0.8f, VIRTUAL_HEIGHT*0.3f);
 	    extrasButton.setPosition(VIRTUAL_WIDTH/2 - extrasButton.getWidth()/2, 30);
-	    
+	    System.out.println("Got to quit buttn");
 	    stage.addActor(extrasButton);
 	    Gdx.input.setInputProcessor(stage);
 	    extrasButton.addListener(new InputListener(){
@@ -147,7 +147,9 @@ public class GameOverScreen implements Screen{
 	    	}
 	    });
 	    background = new Texture(Gdx.files.internal("gameOverBackground.png"));
-	    gameOver = new Texture(Gdx.files.internal("gameOver.png"));
+	    System.out.println("got to end of show");
+	    gameOver = new Texture(Gdx.files.internal("gameover.png"));
+	    
 	}
 	
 	/* 

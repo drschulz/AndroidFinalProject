@@ -6,7 +6,7 @@ public class Tree extends DynamicGameObject {
 	public static final float TREE_DEPTH = 0.5f;
 	public static final float TREE_UP_VELOCITY = 8;
 	public static final float TREE_FORWARD_VELOCITY = -6;
-	public static final float TREE_INITIAL_POSITION_X = 1f;//0f;
+	public static final float TREE_INITIAL_POSITION_X = 1.5f;//0f;
 	public static final float TREE_INITIAL_POSITION_Y = 4;
 	public static final float TREE_INITIAL_POSITION_Z = 5;
 	

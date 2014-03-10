@@ -74,12 +74,12 @@ public class Assets {
 		//music.play();
 		
 		
-		jumpsound = Gdx.audio.newSound(Gdx.files.internal("data/highjump.wav"));
+		jumpsound = Gdx.audio.newSound(Gdx.files.internal("data/jumpsound.wav"));
 	}
 	
 	public static void playSound (Sound sound) {
 		//if (Settings.soundEnabled) sound.play(1);
-		sound.play(0.5f);
+		sound.play(1.0f);
 	}
 	
 	
