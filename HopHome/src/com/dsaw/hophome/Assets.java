@@ -3,9 +3,17 @@ package com.dsaw.hophome;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 
 public class Assets {
 
@@ -21,6 +29,8 @@ public class Assets {
 	public static TextureRegion grass;
 	public static Texture carrot;
 	public static TextureRegion log;
+	public static Texture startmenubackground;
+	public static Texture title;
 	public static Music gamemusic;
 	public static Music startmusic;
 	public static Music pausemusic;
@@ -30,12 +40,79 @@ public class Assets {
 	public static final int BUNNY_COLS = 7;
 	public static final int BUNNY_ROWS = 6;
 	public static TextureRegion[] bunnyFrames;
+	public static BitmapFont font;
+	public static LabelStyle whitestyle;
+	public static LabelStyle blackstyle;
+	public static TextButtonStyle pausebuttonStyle;
+	public static TextButtonStyle buttonStyle;
+	public static TextButtonStyle startbuttonStyle;
 	
 	public static Texture loadTexture (String file) {
 		return new Texture(Gdx.files.internal(file));
 	}
 	
 	public static void load() {
+		loadGameScreenTextures();
+		loadTitleTextures();
+		loadButtonStyles();
+		loadMusicandSound();
+	}
+	
+	private static void loadTitleTextures() {
+		startmenubackground = loadTexture("Background1.png");
+	    title = loadTexture("Hop_Home_title.png");
+	}
+	
+	private static void loadMusicandSound() {
+		gamemusic = Gdx.audio.newMusic(Gdx.files.internal("data/HopHome.mp3"));
+		startmusic = Gdx.audio.newMusic(Gdx.files.internal("data/hophometitle.mp3"));
+		pausemusic = Gdx.audio.newMusic(Gdx.files.internal("data/hophomedeathandpause.mp3"));
+		jumpsound = Gdx.audio.newSound(Gdx.files.internal("data/jumpsound.wav"));
+	}
+	
+	private static void loadButtonStyles() {
+		font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"), false);
+	    //Set the BitmapFont color
+	    whitestyle = new LabelStyle(font, Color.WHITE);
+	    blackstyle = new LabelStyle(font, Color.BLACK);
+	    TextureAtlas buttonAtlas; 
+		//TextButtonStyle buttonStyle; //Font, Color of text in button
+		Skin buttonSkin;
+	     
+		buttonSkin = new Skin();
+	    buttonAtlas = new TextureAtlas("buttons/pause.pack");
+	    buttonSkin.addRegions(buttonAtlas);
+	    
+	    pausebuttonStyle = new TextButtonStyle();
+	    pausebuttonStyle.up = buttonSkin.getDrawable("Pause");
+	    pausebuttonStyle.over = buttonSkin.getDrawable("Pause");
+	    pausebuttonStyle.down = buttonSkin.getDrawable("Pause");
+	    pausebuttonStyle.font = font;
+		
+	    buttonSkin = new Skin();
+	    buttonAtlas = new TextureAtlas("buttons/button.pack");
+	    buttonSkin.addRegions(buttonAtlas);
+	    
+	    buttonStyle = new TextButtonStyle();
+	    buttonStyle.up = buttonSkin.getDrawable("button");
+	    buttonStyle.over = buttonSkin.getDrawable("button");
+	    buttonStyle.down = buttonSkin.getDrawable("buttonPressed");
+	    buttonStyle.font = font;
+	    buttonStyle.font.scale(0.1f);
+	    
+	    buttonSkin = new Skin();
+	    buttonAtlas = new TextureAtlas("buttons/CarrotButton.pack");
+	    buttonSkin.addRegions(buttonAtlas);
+	    
+	    startbuttonStyle = new TextButtonStyle();
+	    startbuttonStyle.up = buttonSkin.getDrawable("carrot");
+	    startbuttonStyle.over = buttonSkin.getDrawable("carrot");
+	    startbuttonStyle.down = buttonSkin.getDrawable("carrot");
+	    startbuttonStyle.font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"), false);
+	    startbuttonStyle.font.setScale(0.3f);
+	}
+	
+	private static void loadGameScreenTextures() {
 		bunnyFrames = new TextureRegion[BUNNY_COLS*BUNNY_ROWS];
 		Texture temp;
 		Texture.setEnforcePotImages(false);
@@ -66,16 +143,6 @@ public class Assets {
 		
 		temp = loadTexture("data/Grass Pattern.png");
 		grass = new TextureRegion(temp);
-		
-		gamemusic = Gdx.audio.newMusic(Gdx.files.internal("data/HopHome.mp3"));
-		startmusic = Gdx.audio.newMusic(Gdx.files.internal("data/hophometitle.mp3"));
-		pausemusic = Gdx.audio.newMusic(Gdx.files.internal("data/hophomedeathandpause.mp3"));
-		//music.setLooping(true);
-		//music.setVolume(0.5f);
-		//music.play();
-		
-		
-		jumpsound = Gdx.audio.newSound(Gdx.files.internal("data/jumpsound.wav"));
 	}
 	
 	public static void vibrate() {

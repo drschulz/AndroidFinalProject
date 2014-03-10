@@ -28,8 +28,8 @@ public class StartMenu implements Screen{
 	OrthographicCamera guiCam;
 	//Background
 	SpriteBatch batch;
-	Texture background;
-	Texture title;
+	//Texture background;
+	//Texture title;
 	
 	//Menu Screen Stuff
 	private Stage stage;
@@ -56,18 +56,11 @@ public class StartMenu implements Screen{
 		guiCam = new OrthographicCamera(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
 		guiCam.position.set(VIRTUAL_WIDTH / 2, VIRTUAL_HEIGHT / 2, 0);
 		
-		Assets.startmusic.setVolume(0.7f);
-		Assets.startmusic.setLooping(true);
-		Assets.startmusic.play();
+		//Assets.startmusic.setVolume(0.7f);
+		//Assets.startmusic.setLooping(true);
+		Assets.playMusic(Assets.startmusic);
 		
-		//Set stage to be whole screen
 	    stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
-	    //Create a font style using libgdx font creator to make a .fnt file.
-	    font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"), false);
-	    //Set the BitmapFont color
-	    style = new LabelStyle(font, Color.BLACK);
-	    //Create a label with the style made above.
-	    label = new Label("Hop Home", style);
 	}
 	
 	@Override
@@ -84,8 +77,8 @@ public class StartMenu implements Screen{
 		batch.setProjectionMatrix(guiCam.combined);
 		
 		batch.begin();
-		batch.draw(background, 0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
-		batch.draw(title, 0, VIRTUAL_HEIGHT - 300, VIRTUAL_WIDTH, 300);
+		batch.draw(Assets.startmenubackground, 0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
+		batch.draw(Assets.title, 0, VIRTUAL_HEIGHT - 300, VIRTUAL_WIDTH, 300);
 		batch.end();
 	    Gdx.gl.glDisable(GL11.GL_BLEND);
 		//Act & Draw Stage First
@@ -98,19 +91,8 @@ public class StartMenu implements Screen{
 	public void show() {
 		batch = new SpriteBatch();
 		Texture.setEnforcePotImages(false);
-		
-	    buttonSkin = new Skin();
-	    buttonAtlas = new TextureAtlas("buttons/CarrotButton.pack");
-	    buttonSkin.addRegions(buttonAtlas);
-	    
-	    buttonStyle = new TextButtonStyle();
-	    buttonStyle.up = buttonSkin.getDrawable("carrot");
-	    buttonStyle.over = buttonSkin.getDrawable("carrot");
-	    buttonStyle.down = buttonSkin.getDrawable("carrot");
-	    buttonStyle.font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"), false);
-	    buttonStyle.font.setScale(0.3f);
 
-	    startButton = new TextButton("Play", buttonStyle);
+	    startButton = new TextButton("Play", Assets.startbuttonStyle);
 	    startButton.setWidth(VIRTUAL_WIDTH/2);
 	    startButton.setHeight(VIRTUAL_HEIGHT/7);
 	    startButton.setPosition(VIRTUAL_WIDTH/2 - startButton.getWidth()/2, VIRTUAL_HEIGHT/10 + startButton.getHeight() );
@@ -147,8 +129,8 @@ public class StartMenu implements Screen{
 	    	}
 	    });
         */	    
-	    background = new Texture(Gdx.files.internal("Background1.png"));
-	    title = new Texture(Gdx.files.internal("Hop_Home_title.png"));
+	    //background = new Texture(Gdx.files.internal("Background1.png"));
+	    //title = new Texture(Gdx.files.internal("Hop_Home_title.png"));
 	}
 	
 	/* 

@@ -18,21 +18,25 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 
 public class GameOverScreen implements Screen{
-
+	public static final int VIRTUAL_WIDTH = 480;
+	public static final int VIRTUAL_HEIGHT = 720;
+	public static final float ASPECT_RATIO = (float)VIRTUAL_WIDTH/VIRTUAL_HEIGHT;
+	
 	//Menu Screen Stuff
 	private Stage stage;
 	private Label label;
-	private LabelStyle style;
+	//private LabelStyle style;
 	private BitmapFont font;
 	
 	//Button
-	TextureAtlas buttonAtlas; 
-	TextButtonStyle buttonStyle; //Font, Color of text in button
+	//TextureAtlas buttonAtlas; 
+	//TextButtonStyle buttonStyle; //Font, Color of text in button
 	TextButton startButton;
 	TextButton extrasButton;
-	Skin buttonSkin;
+	//Skin buttonSkin;
 	
 	Game game;
 	int days;
@@ -42,10 +46,6 @@ public class GameOverScreen implements Screen{
 	SpriteBatch batch;
 	Texture background;
 	Texture gameOver;
-	
-	public static final int VIRTUAL_WIDTH = 480;
-	public static final int VIRTUAL_HEIGHT = 720;
-	public static final float ASPECT_RATIO = (float)VIRTUAL_WIDTH/VIRTUAL_HEIGHT;
 	
 	public GameOverScreen(Game game, int days) {
 		this.game = game;
@@ -62,9 +62,9 @@ public class GameOverScreen implements Screen{
 		guiCam.position.set(VIRTUAL_WIDTH / 2, VIRTUAL_HEIGHT / 2, 0);
 		
 		
-		Assets.pausemusic.setVolume(0.5f);
-		Assets.pausemusic.setLooping(true);
-		Assets.pausemusic.play();
+		//Assets.pausemusic.setVolume(0.5f);
+		//Assets.pausemusic.setLooping(true);
+		Assets.playMusic(Assets.pausemusic);
 	}
 	
 	@Override
@@ -91,33 +91,21 @@ public class GameOverScreen implements Screen{
 	    //Set stage to be whole screen
 	    stage = new Stage(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, true);
 	    //Create a font style using libgdx font creator to make a .fnt file.
-	    font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"), false);
+	    font = Assets.font;//new BitmapFont(Gdx.files.internal("fonts/font.fnt"), false);
 	    font.setScale(0.2f);
 	    //Set the BitmapFont color
-	    style = new LabelStyle(font, Color.BLACK);
+	    //style = Assets.blackstyle;//new LabelStyle(font, Color.BLACK);
 	    //Create a label with the style made above.
-	    label = new Label("You Survived: " + days + " Days\nBest is " + Assets.highscore, style);
-	    label.setPosition(20 , VIRTUAL_HEIGHT - 300);
+	    label = new Label("You Survived: " + days + " Days\nBest is " + Assets.highscore, Assets.blackstyle);
+	    label.setPosition(VIRTUAL_WIDTH/2 - label.getWidth()/2, VIRTUAL_HEIGHT - 300);
+	    label.setAlignment(Align.center);
 
 	    stage.addActor(label);
-	    System.out.println("got here!");
-	    buttonSkin = new Skin();
-	    buttonAtlas = new TextureAtlas("buttons/button.pack");
-	    buttonSkin.addRegions(buttonAtlas);
-	    
-	    buttonStyle = new TextButtonStyle();
-	    buttonStyle.up = buttonSkin.getDrawable("button");
-	    buttonStyle.over = buttonSkin.getDrawable("button");
-	    buttonStyle.down = buttonSkin.getDrawable("buttonPressed");
-	    buttonStyle.font = font;
-	    buttonStyle.font.scale(0.1f);
-	    
 
-	    startButton = new TextButton("Retry", buttonStyle);
+	    startButton = new TextButton("Retry", Assets.buttonStyle);
 	    startButton.setPosition(0.0f, 0.0f);
 	    startButton.setSize(VIRTUAL_WIDTH*0.8f, VIRTUAL_HEIGHT*0.3f);
 	    startButton.setPosition(VIRTUAL_WIDTH/2 - startButton.getWidth()/2, 200);// + startButton.getHeight());
-	    System.out.println("Got to start button");
 	    stage.addActor(startButton);
 	    Gdx.input.setInputProcessor(stage);
 	    startButton.addListener(new InputListener(){
@@ -132,10 +120,9 @@ public class GameOverScreen implements Screen{
 	    	}
 	    });
 	    
-	    extrasButton = new TextButton("Quit ", buttonStyle);
+	    extrasButton = new TextButton("Quit ", Assets.buttonStyle);
 	    extrasButton.setSize(VIRTUAL_WIDTH*0.8f, VIRTUAL_HEIGHT*0.3f);
 	    extrasButton.setPosition(VIRTUAL_WIDTH/2 - extrasButton.getWidth()/2, 30);
-	    System.out.println("Got to quit buttn");
 	    stage.addActor(extrasButton);
 	    Gdx.input.setInputProcessor(stage);
 	    extrasButton.addListener(new InputListener(){

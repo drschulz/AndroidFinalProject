@@ -26,11 +26,11 @@ public class PauseScreen implements Screen{
 	private BitmapFont font;
 	
 	//Button
-	TextureAtlas buttonAtlas; 
-	TextButtonStyle buttonStyle; //Font, Color of text in button
+	//TextureAtlas buttonAtlas; 
+	//TextButtonStyle buttonStyle; //Font, Color of text in button
 	TextButton startButton;
 	TextButton extrasButton;
-	Skin buttonSkin;
+	//Skin buttonSkin;
 	
 	Game game;
 	int days;
@@ -50,9 +50,9 @@ public class PauseScreen implements Screen{
 		guiCam = new OrthographicCamera(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
 		guiCam.position.set(VIRTUAL_WIDTH / 2, VIRTUAL_HEIGHT / 2, 0);
 		
-		Assets.pausemusic.setVolume(0.5f);
-		Assets.pausemusic.setLooping(true);
-		Assets.pausemusic.play();
+		//Assets.pausemusic.setVolume(0.5f);
+		//Assets.pausemusic.setLooping(true);
+		Assets.playMusic(Assets.pausemusic);
 		curScreen = gameScreen;
 	}
 	
@@ -74,27 +74,19 @@ public class PauseScreen implements Screen{
 	    //Set stage to be whole screen
 	    stage = new Stage(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, true);
 	    //Create a font style using libgdx font creator to make a .fnt file.
-	    font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"), false);
+	    font = Assets.font;//new BitmapFont(Gdx.files.internal("fonts/font.fnt"), false);
+	    style = Assets.blackstyle;
 	    font.setScale(0.2f);
+	    font.setColor(Color.BLACK);
 	    //Set the BitmapFont color
-	    style = new LabelStyle(font, Color.BLACK);
+	    //style = Assets.whitestyle;//new LabelStyle(font, Color.BLACK);
 	    //Create a label with the style made above.
 	    label = new Label("Days survived: " + days, style);
 	    label.setPosition(VIRTUAL_WIDTH/2 - label.getWidth()/2, VIRTUAL_HEIGHT - label.getHeight());
 
 	    stage.addActor(label);
-	    
-	    buttonSkin = new Skin();
-	    buttonAtlas = new TextureAtlas("buttons/button.pack");
-	    buttonSkin.addRegions(buttonAtlas);
-	    
-	    buttonStyle = new TextButtonStyle();
-	    buttonStyle.up = buttonSkin.getDrawable("button");
-	    buttonStyle.over = buttonSkin.getDrawable("button");
-	    buttonStyle.down = buttonSkin.getDrawable("buttonPressed");
-	    buttonStyle.font = font;
 
-	    startButton = new TextButton("Continue", buttonStyle);
+	    startButton = new TextButton("Continue", Assets.buttonStyle);
 	    startButton.setSize(VIRTUAL_WIDTH*0.8f, VIRTUAL_HEIGHT*0.3f);
 	    startButton.setPosition(VIRTUAL_WIDTH/2 - startButton.getWidth()/2, VIRTUAL_HEIGHT/2);
 	    
@@ -112,7 +104,7 @@ public class PauseScreen implements Screen{
 	    	}
 	    });
 	    
-	    extrasButton = new TextButton("Quit", buttonStyle);
+	    extrasButton = new TextButton("Quit", Assets.buttonStyle);
 	    extrasButton.setSize(VIRTUAL_WIDTH*0.8f, VIRTUAL_HEIGHT*0.3f);
 	    extrasButton.setPosition(VIRTUAL_WIDTH/2 - extrasButton.getWidth()/2, VIRTUAL_HEIGHT/2 - extrasButton.getHeight());
 	    

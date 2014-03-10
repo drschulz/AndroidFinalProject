@@ -38,32 +38,30 @@ public class GameScreen implements Screen {
 	static final int GAME_PAUSED = 2;
 	static final int GAME_LEVEL_END = 3;
 	static final int GAME_OVER = 4;
-	static final int ACT_STATIC = 0;
-	static final int ACT_LEFT = 1;
-	static final int ACT_RIGHT = 2;
-	static final int ACT_UP = 3;
-	static final int ACT_DOWN = 4;
 	static final int BUNNY = 0;
 	static final int LOG = 1;
 	static final int BEAR = 2;
 	static final int TREE = 3;
 	static final int BIRD = 4;
-	
+	public static final int VIRTUAL_WIDTH = 480;
+	public static final int VIRTUAL_HEIGHT = 720;
+	public static final float ASPECT_RATIO = (float)VIRTUAL_WIDTH/VIRTUAL_HEIGHT;
 	
 	private Game game;
 	private int state;
-	OrthographicCamera guiCam;
-	Vector3 touchPoint;
-	SpriteBatch batcher;
-	WorldListener worldListener;
-	ShapeRenderer shapeRenderer;
-	World world;
-	WorldRenderer wRenderer;
-	int[] actions;
-	float bufferTime;
-	Random rand;
-	boolean triggered;
-	int act;
+	private OrthographicCamera guiCam;
+	private Vector3 touchPoint;
+	private SpriteBatch batcher;
+	private WorldListener worldListener;
+	private ShapeRenderer shapeRenderer;
+	private World world;
+	private WorldRenderer wRenderer;
+	
+	private int[] actions;
+	private float bufferTime;
+	private Random rand;
+	private boolean triggered;
+	private int act;
 	
 	private Stage stage;
 	private int days;
@@ -73,21 +71,13 @@ public class GameScreen implements Screen {
 	private BitmapFont font;
 	private int hungerLevel = 100;
 	
+	private Button pauseButton;
+	private Image carrotImg;
 	//Button
-	TextureAtlas buttonAtlas; 
-	TextButtonStyle buttonStyle; //Font, Color of text in button
-	Button pauseButton;
-	Skin buttonSkin;
 	
-	Texture carrot;
-	TextureRegion carrotRegion;
-	Image carrotImg;
-	Rectangle carrotRect;
-	GameScreen curScreen;
+	private GameScreen curScreen;
 	
-	public static final int VIRTUAL_WIDTH = 480;
-	public static final int VIRTUAL_HEIGHT = 720;
-	public static final float ASPECT_RATIO = (float)VIRTUAL_WIDTH/VIRTUAL_HEIGHT;
+
 	
 	public GameScreen(final Game game, int numdays) {
 		this.game = game;
@@ -117,16 +107,20 @@ public class GameScreen implements Screen {
 	}
 	
 	public void setUpStage() {
+		Texture carrot;
+		TextureRegion carrotRegion;
+		
 		//Set stage to be whole screen
 	    stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
 	    //Create a font style using libgdx font creator to make a .fnt file.
-	    font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"), false);
+	    font = Assets.font;
 	    //Set the BitmapFont color
-	    style = new LabelStyle(font, Color.WHITE);
+	    style = Assets.whitestyle;
 	    //Create a label with the style made above.
+	    font.setScale(0.2f);
 	    dayLabel = new Label("Day: ", style);
-	    font.setScale(0.2f);//   .setSize(Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/10);
-	    dayLabel.setPosition(0, VIRTUAL_HEIGHT - 120);
+	    //   .setSize(Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/10);
+	    dayLabel.setPosition(0, VIRTUAL_HEIGHT - 38);
 	    stage.addActor(dayLabel);
 	    
 	    stage.addActor(new Actor() {
@@ -147,17 +141,7 @@ public class GameScreen implements Screen {
 	    	}
 	    });
 	    
-	    buttonSkin = new Skin();
-	    buttonAtlas = new TextureAtlas("buttons/pause.pack");
-	    buttonSkin.addRegions(buttonAtlas);
-	    
-	    buttonStyle = new TextButtonStyle();
-	    buttonStyle.up = buttonSkin.getDrawable("Pause");
-	    buttonStyle.over = buttonSkin.getDrawable("Pause");
-	    buttonStyle.down = buttonSkin.getDrawable("Pause");
-	    buttonStyle.font = font;
-
-	    pauseButton = new Button(buttonStyle);
+	    pauseButton = new Button(Assets.pausebuttonStyle);
 	    pauseButton.setSize(50, 50);
 	    pauseButton.setPosition(VIRTUAL_WIDTH - pauseButton.getWidth(), VIRTUAL_HEIGHT - pauseButton.getHeight() );
 	    pauseButton.addListener(new InputListener(){
