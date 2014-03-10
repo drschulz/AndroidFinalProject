@@ -50,7 +50,9 @@ public class GameOverScreen implements Screen{
 	public GameOverScreen(Game game, int days) {
 		this.game = game;
 		this.days = days;
-		System.out.println("got here!");
+		if (days > Assets.highscore) {
+			Assets.highscore = days;
+		}
 		batch = new SpriteBatch();
 		Texture.setEnforcePotImages(false);
 		
@@ -92,7 +94,7 @@ public class GameOverScreen implements Screen{
 	    //Set the BitmapFont color
 	    style = new LabelStyle(font, Color.BLACK);
 	    //Create a label with the style made above.
-	    label = new Label("You Survived: " + days + " Days", style);
+	    label = new Label("You Survived: " + days + " Days\nBest is " + Assets.highscore, style);
 	    label.setPosition(20 , VIRTUAL_HEIGHT - 300);
 
 	    stage.addActor(label);

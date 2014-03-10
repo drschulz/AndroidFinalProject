@@ -11,6 +11,7 @@ public class Assets {
 
 	public static TextureRegion background;
 	
+	public static int highscore;
 	public static Texture bunny;
 	public static TextureRegion bear;
 	public static Animation bunnyAnim;
