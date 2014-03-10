@@ -34,6 +34,7 @@ public class PauseScreen implements Screen{
 	
 	Game game;
 	int days;
+	Screen curScreen;
 	
 	OrthographicCamera guiCam;
 	
@@ -42,7 +43,7 @@ public class PauseScreen implements Screen{
 	public static final float ASPECT_RATIO = (float)VIRTUAL_WIDTH/VIRTUAL_HEIGHT;
 	
 	
-	public PauseScreen(Game game, int days) {
+	public PauseScreen(Game game, int days, Screen gameScreen) {
 		this.game = game;
 		this.days = days;
 		
@@ -52,6 +53,7 @@ public class PauseScreen implements Screen{
 		Assets.pausemusic.setVolume(0.5f);
 		Assets.pausemusic.setLooping(true);
 		Assets.pausemusic.play();
+		curScreen = gameScreen;
 	}
 	
 	@Override
@@ -106,7 +108,7 @@ public class PauseScreen implements Screen{
 	    	@Override
 	    	public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 	    		Assets.pausemusic.stop();
-	    		game.setScreen(new GameScreen(game, days));
+	    		game.setScreen(curScreen);//new GameScreen(game, days));
 	    	}
 	    });
 	    

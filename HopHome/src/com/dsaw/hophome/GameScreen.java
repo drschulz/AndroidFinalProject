@@ -83,6 +83,7 @@ public class GameScreen implements Screen {
 	TextureRegion carrotRegion;
 	Image carrotImg;
 	Rectangle carrotRect;
+	GameScreen curScreen;
 	
 	public static final int VIRTUAL_WIDTH = 480;
 	public static final int VIRTUAL_HEIGHT = 720;
@@ -91,8 +92,9 @@ public class GameScreen implements Screen {
 	public GameScreen(final Game game, int numdays) {
 		this.game = game;
 
-		state = GAME_READY;
+		state = GAME_RUNNING;
 		this.days = numdays;
+		curScreen = this;
 		//this.hungerLevel = hunger;
 		guiCam = new OrthographicCamera(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
 		guiCam.position.set(VIRTUAL_WIDTH / 2, VIRTUAL_HEIGHT / 2, 0);
@@ -127,6 +129,7 @@ public class GameScreen implements Screen {
 
 			@Override
 			public void hitLog() {
+				
 				Assets.gamemusic.stop();
 				game.setScreen(new GameOverScreen(game, days));
 				
@@ -209,8 +212,8 @@ public class GameScreen implements Screen {
 	    	
 	    	@Override
 	    	public void touchUp(InputEvent event, float x, float y, int pointer, int button) {		
-		    	Assets.gamemusic.stop();
-		    	game.setScreen(new PauseScreen(game, days));
+		    	//Assets.gamemusic.stop();
+		    	game.setScreen(new PauseScreen(game, days, curScreen));
 	    	}
 	    });
 	    
@@ -288,31 +291,35 @@ public class GameScreen implements Screen {
 			}
 		}
 		else {
-			if(bufferTime > 3.0) {
+			if(bufferTime > 1.0) {
 				bufferTime = 0;
 				act = rand.nextInt()%4 + 1;
 				switch(act) {
 				case LOG:
 					if(world.log.state == Log.STATE_DEAD) {
-						world.bunny.mode = Bunny.MODE_BUGEYE;
+						world.bunny.bugEyes();
+						//world.bunny.mode = Bunny.MODE_BUGEYE;
 						triggered = true;
 					}
 					break;
 				case BEAR:
 					if(world.bear.state == Bear.STATE_DEAD) {
-						world.bunny.mode = Bunny.MODE_LOOKRIGHT;
+						world.bunny.lookRight();
+						//world.bunny.mode = Bunny.MODE_LOOKRIGHT;
 						triggered = true;
 					}
 					break;
 				case TREE:
 					if(world.tree.state == Tree.STATE_DEAD) {
-						world.bunny.mode = Bunny.MODE_LOOKLEFT;
+						world.bunny.lookLeft();
+						//world.bunny.mode = Bunny.MODE_LOOKLEFT;
 						triggered = true;
 					}
 					break;
 				case BIRD:
 					if(world.bird.state == Bird.STATE_DEAD) {
-						world.bunny.mode = Bunny.MODE_CLOSEEYE;
+						world.bunny.closeEyes();
+						//world.bunny.mode = Bunny.MODE_CLOSEEYE;
 						triggered = true;
 					}
 					break;
@@ -417,12 +424,14 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void show() {
+		Assets.gamemusic.play();
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void hide() {
+		Assets.gamemusic.pause();
 		// TODO Auto-generated method stub
 		
 	}
