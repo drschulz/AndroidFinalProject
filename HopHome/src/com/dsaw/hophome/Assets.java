@@ -78,9 +78,29 @@ public class Assets {
 		jumpsound = Gdx.audio.newSound(Gdx.files.internal("data/jumpsound.wav"));
 	}
 	
+	public static void vibrate() {
+		if(Settings.vibrateEnabled()) {
+			Gdx.input.vibrate(200);
+		}
+	}
+	
+	public static void playMusic(Music music) {
+		if(Settings.musicEnabled()) {
+			music.setVolume(0.5f);
+			music.setLooping(true);
+			music.play();
+		}
+	}
+	
+	public static void stopMusic(Music music) {
+		music.stop();
+	}
+	
 	public static void playSound (Sound sound) {
 		//if (Settings.soundEnabled) sound.play(1);
-		sound.play(1.0f);
+		if(Settings.soundEnabled()) {
+			sound.play(1.0f);
+		}
 	}
 	
 	

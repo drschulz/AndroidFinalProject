@@ -91,74 +91,33 @@ public class GameScreen implements Screen {
 	
 	public GameScreen(final Game game, int numdays) {
 		this.game = game;
-
 		state = GAME_RUNNING;
 		this.days = numdays;
 		curScreen = this;
-		//this.hungerLevel = hunger;
-		guiCam = new OrthographicCamera(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
-		guiCam.position.set(VIRTUAL_WIDTH / 2, VIRTUAL_HEIGHT / 2, 0);
-		touchPoint = new Vector3();
-		batcher = new SpriteBatch();
-		shapeRenderer = new ShapeRenderer();
-		worldListener = new WorldListener() {
-
-			@Override
-			public void jump() {
-				Assets.playSound(Assets.jumpsound);
-				
-			}
-
-			@Override
-			public void duck() {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void dodgeLeft() {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void dodgeRight() {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void hitLog() {
-				
-				Assets.gamemusic.stop();
-				game.setScreen(new GameOverScreen(game, days));
-				
-			}
-
-			@Override
-			public void incDay() {
-				days++;
-				hungerLevel -= 20;
-				// TODO Auto-generated method stub
-				
-			}
-
-			
-		};
-		Gdx.app.debug("GameScreen", "Initialized the screen!");
-		
-		world = new World(worldListener);
-		wRenderer = new WorldRenderer(batcher, world);
 		actions = new int[5];
 		rand = new Random();
 		bufferTime = 0;
 		triggered = false;
 		act = 0;
-		Assets.gamemusic.setVolume(0.5f);
-		Assets.gamemusic.setLooping(true);
-		Assets.gamemusic.play();
 		
-	    //Set stage to be whole screen
+		initWorldListener();
+		world = new World(worldListener);
+		
+		guiCam = new OrthographicCamera(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
+		guiCam.position.set(VIRTUAL_WIDTH / 2, VIRTUAL_HEIGHT / 2, 0);
+		
+		touchPoint = new Vector3();
+		batcher = new SpriteBatch();
+		shapeRenderer = new ShapeRenderer();
+		wRenderer = new WorldRenderer(batcher, world);
+	    setUpStage();
+	    
+		Assets.stopMusic(Assets.gamemusic);
+		Assets.playMusic(Assets.gamemusic);
+	}
+	
+	public void setUpStage() {
+		//Set stage to be whole screen
 	    stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
 	    //Create a font style using libgdx font creator to make a .fnt file.
 	    font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"), false);
@@ -201,24 +160,26 @@ public class GameScreen implements Screen {
 	    pauseButton = new Button(buttonStyle);
 	    pauseButton.setSize(50, 50);
 	    pauseButton.setPosition(VIRTUAL_WIDTH - pauseButton.getWidth(), VIRTUAL_HEIGHT - pauseButton.getHeight() );
-	    
-	    stage.addActor(pauseButton);
-	    Gdx.input.setInputProcessor(stage);
 	    pauseButton.addListener(new InputListener(){
 	    	@Override
 	    	public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+	    		System.out.println("in touch down!");
+	    		
 	    		return true;
 	    	}
 	    	
 	    	@Override
 	    	public void touchUp(InputEvent event, float x, float y, int pointer, int button) {		
 		    	//Assets.gamemusic.stop();
-		    	game.setScreen(new PauseScreen(game, days, curScreen));
+	    		game.setScreen(new PauseScreen(game, days, curScreen));
 	    	}
 	    });
+	    stage.addActor(pauseButton);
+	   
+	    
 	    
 	  //Create a label with the style made above.
-	    hungerLabel = new Label("Hunger: 100%", style);
+	    hungerLabel = new Label("Energy: 100%", style);
 	    hungerLabel.setPosition(VIRTUAL_WIDTH - 250, VIRTUAL_HEIGHT - 38);
 	    stage.addActor(hungerLabel);
 	    
@@ -227,7 +188,8 @@ public class GameScreen implements Screen {
 	    carrotImg = new Image(carrotRegion);
 	    carrotImg.setSize(VIRTUAL_WIDTH/3, VIRTUAL_HEIGHT/8);
 	    carrotImg.setPosition(VIRTUAL_WIDTH/2 - carrotImg.getWidth()/2, 0);
-	    carrotImg.addListener(new InputListener(){
+	    
+		carrotImg.addListener(new InputListener(){
 	    	@Override
 	    	public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 	    		carrotImg.setColor(carrotImg.getColor().sub(0.1f, 0.1f, 0.1f, 0));
@@ -239,7 +201,59 @@ public class GameScreen implements Screen {
 	    		hungerLevel = 100;
 	    	}
 	    });
-	    stage.addActor(carrotImg);
+		stage.addActor(carrotImg);
+	}
+	
+	public void initWorldListener() {
+		worldListener = new WorldListener() {
+
+			@Override
+			public void jump() {
+				Assets.playSound(Assets.jumpsound);
+				
+			}
+
+			@Override
+			public void duck() {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void dodgeLeft() {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void dodgeRight() {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void hitObject() {
+				Assets.stopMusic(Assets.gamemusic);
+				Assets.vibrate();
+				
+			}
+
+			@Override
+			public void incDay() {
+				days++;
+				hungerLevel -= 20;
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void bunnyDie() {
+				game.setScreen(new GameOverScreen(game, days));
+				
+			}
+
+			
+		};
 	}
 	
 	public void update (float deltaTime) {
@@ -274,7 +288,6 @@ public class GameScreen implements Screen {
 	}
 
 	private void updatePaused() {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -394,7 +407,13 @@ public class GameScreen implements Screen {
         dayLabel.setText("Days: " + days);
 		
 		//Changes hunger
-		hungerLabel.setText("Hunger: " + hungerLevel + "%");
+        if (hungerLevel < 100) {
+        	hungerLabel.setColor(Color.RED);
+        }
+        else {
+        	hungerLabel.setColor(Color.WHITE);
+        }
+		hungerLabel.setText("Energy: " + hungerLevel + "%");
 		
 		if (hungerLevel <= 0 && world.bunny.state != Bunny.STATE_DEAD) {
 			world.bunny.mode = Bunny.MODE_DEAD;
@@ -413,7 +432,9 @@ public class GameScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		update(delta);
-		draw();	
+		if(state == GAME_RUNNING) {
+			draw();
+		}
 	}
 
 	@Override
@@ -425,21 +446,31 @@ public class GameScreen implements Screen {
 	@Override
 	public void show() {
 		Assets.gamemusic.play();
+		//pauseButton.setDisabled(false);
+		//pauseButton.clearListeners();
+		//pauseButton.setChecked(false);
+		System.out.println("is pressed?: " + pauseButton.isPressed());
+		state = GAME_RUNNING;
+		
+		 Gdx.input.setInputProcessor(stage);
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void hide() {
+		System.out.println("Disabled?: " + pauseButton.isDisabled() + ", Pressed?: " + pauseButton.isPressed());
 		Assets.gamemusic.pause();
+		state = GAME_PAUSED;
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void pause() {
-		if (state == GAME_RUNNING) 
-			state = GAME_PAUSED;
+		game.setScreen(new PauseScreen(game, days, this));
+		//if (state == GAME_RUNNING) 
+			//state = GAME_PAUSED;
 		
 	}
 

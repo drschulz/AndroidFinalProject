@@ -15,9 +15,11 @@ public class World {
 
 		public void dodgeRight ();
 		
-		public void hitLog ();
+		public void hitObject ();
 		
 		public void incDay ();
+		
+		public void bunnyDie();
 	}
 	
 	public static final int WORLD_STATE_RUNNING = 0;
@@ -60,7 +62,7 @@ public class World {
 	
 	private void checkCollisions() {
 		if(bunny.bound.intersects(log.bound)) {
-			Gdx.input.vibrate(200);
+			listener.hitObject();
 			bunnyHit = true;
 			bunny.mode = Bunny.MODE_DEAD;
 			bunny.state = Bunny.STATE_DEAD;
@@ -68,7 +70,7 @@ public class World {
 			//listener.hitLog();
 		}
 		else if(bunny.bound.intersects(bear.bound)) {
-			Gdx.input.vibrate(200);
+			listener.hitObject();
 			bunnyHit = true;
 			bunny.mode = Bunny.MODE_DEAD;
 			bunny.state = Bunny.STATE_DEAD;
@@ -76,14 +78,14 @@ public class World {
 			//listener.hitLog();
 		}
 		else if(bunny.bound.intersects(tree.bound)) {
-			Gdx.input.vibrate(200);
+			listener.hitObject();
 			bunnyHit = true;
 			bunny.mode = Bunny.MODE_DEAD;
 			bunny.state = Bunny.STATE_DEAD;
 			bunny.stateTime = 0;
 		}
 		else if(bunny.bound.intersects(bird.bound)) {
-			Gdx.input.vibrate(200);
+			listener.hitObject();
 			bunnyHit = true;
 			bunny.mode = Bunny.MODE_DEAD;
 			bunny.state = Bunny.STATE_DEAD;

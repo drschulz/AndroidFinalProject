@@ -109,6 +109,7 @@ public class Bunny extends DynamicGameObject {
 			}
 			break;
 		default:
+			position.y = Bunny.GROUND_LIMIT;
 			//velocity.x = 0;
 			velocity.y = 0;
 			break;
