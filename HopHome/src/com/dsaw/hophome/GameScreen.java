@@ -429,7 +429,7 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void show() {
-		Assets.gamemusic.play();
+		//Assets.gamemusic.play();
 		//pauseButton.setDisabled(false);
 		//pauseButton.clearListeners();
 		//pauseButton.setChecked(false);

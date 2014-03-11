@@ -56,9 +56,7 @@ public class OptionsScreen implements Screen{
 		guiCam.position.set(VIRTUAL_WIDTH / 2, VIRTUAL_HEIGHT / 2, 0);
 		
 		
-		Assets.pausemusic.setVolume(0.5f);
-		Assets.pausemusic.setLooping(true);
-		Assets.pausemusic.play();
+		Assets.playMusic(Assets.startmusic);
 	}
 	
 	@Override
@@ -99,7 +97,8 @@ public class OptionsScreen implements Screen{
 	    	}	    	
 	    	@Override
 	    	public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-	    	   game.setScreen(new StartMenu(game));
+	    		Assets.stopMusic(Assets.startmusic);
+	    		game.setScreen(new StartMenu(game));
 	    	}
 	    });
 	    
@@ -125,10 +124,12 @@ public class OptionsScreen implements Screen{
 	    	   if (Settings.musicEnabled()) {
 	    		   Settings.setMusicEnabled(false);
 	    		   musicButton.setText("Music On");
+	    		   Assets.stopMusic(Assets.startmusic);
 	    	   }
 	    	   else {
 	    		   Settings.setMusicEnabled(true);
 	    		   musicButton.setText("Music Off");
+	    		   Assets.playMusic(Assets.startmusic);
 	    	   }
 	    	}
 	    });
