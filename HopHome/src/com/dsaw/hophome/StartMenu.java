@@ -33,9 +33,6 @@ public class StartMenu implements Screen{
 	
 	//Menu Screen Stuff
 	private Stage stage;
-	private Label label;
-	private LabelStyle style;
-	private BitmapFont font;
 	
 	//Button
 	TextureAtlas buttonAtlas; 
@@ -113,22 +110,28 @@ public class StartMenu implements Screen{
 	    	}
 	    });
 	    
-	    //extrasButton = new TextButton("    Extras", buttonStyle);
-	    //extrasButton.setSize((float) (Gdx.graphics.getWidth()/(1.5)), Gdx.graphics.getHeight()/3);
-	    //extrasButton.setPosition(Gdx.graphics.getWidth()/2 - extrasButton.getWidth()/2, Gdx.graphics.getHeight()/10);
+	    extrasButton = new TextButton("Options", Assets.startbuttonStyle);
+	    extrasButton.setWidth(VIRTUAL_WIDTH/2);
+	    extrasButton.setHeight(VIRTUAL_HEIGHT/7);
+	    extrasButton.setPosition(VIRTUAL_WIDTH/2 - extrasButton.getWidth()/2, VIRTUAL_HEIGHT/10);
 	    
-	    //stage.addActor(extrasButton);
+	    stage.addActor(extrasButton);
 	    Gdx.input.setInputProcessor(stage);
-	    /*
-	    extrasButton.addListener(new InputListener(){
 	    
+	    extrasButton.addListener(new InputListener(){
 	    	@Override
 	    	public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-	    		//TODO
+	    		extrasButton.setColor(startButton.getColor().sub(0.1f, 0.1f, 0.1f, 0));
 	    		return true;
 	    	}
+	    	
+	    	@Override
+	    	public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+	    		Assets.startmusic.stop();
+	    		game.setScreen(new OptionsScreen(game));
+	    	}
 	    });
-        */	    
+        	    
 	    //background = new Texture(Gdx.files.internal("Background1.png"));
 	    //title = new Texture(Gdx.files.internal("Hop_Home_title.png"));
 	}

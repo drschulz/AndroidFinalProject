@@ -3,7 +3,6 @@ package com.dsaw.hophome;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -23,18 +22,13 @@ public class OptionsScreen implements Screen{
 
 	//Menu Screen Stuff
 	private Stage stage;
-	private Label label;
-	private LabelStyle style;
 	private BitmapFont font;
 	
 	//Button
-	TextureAtlas buttonAtlas; 
-	TextButtonStyle buttonStyle; //Font, Color of text in button
 	TextButton soundButton;
 	TextButton vibsButton;
 	TextButton musicButton;
 	TextButton returnButton;
-	Skin buttonSkin;
 	
 	String soundText;
 	String musicText;
@@ -53,9 +47,8 @@ public class OptionsScreen implements Screen{
 	public static final int VIRTUAL_HEIGHT = 720;
 	public static final float ASPECT_RATIO = (float)VIRTUAL_WIDTH/VIRTUAL_HEIGHT;
 	
-	public OptionsScreen(Game game, int days) {
+	public OptionsScreen(Game game) {
 		this.game = game;
-		this.days = days;
 		batch = new SpriteBatch();
 		Texture.setEnforcePotImages(false);
 		
@@ -90,22 +83,10 @@ public class OptionsScreen implements Screen{
 	    //Set stage to be whole screen
 	    stage = new Stage(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, true);
 	    //Create a font style using libgdx font creator to make a .fnt file.
-	    font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"), false);
+	    font = Assets.font;
 	    font.setScale(0.2f);
-	    //Set the BitmapFont color
-	    style = new LabelStyle(font, Color.BLACK);
-	    buttonSkin = new Skin();
-	    buttonAtlas = new TextureAtlas("buttons/button.pack");
-	    buttonSkin.addRegions(buttonAtlas);
 	    
-	    buttonStyle = new TextButtonStyle();
-	    buttonStyle.up = buttonSkin.getDrawable("button");
-	    buttonStyle.over = buttonSkin.getDrawable("button");
-	    buttonStyle.down = buttonSkin.getDrawable("buttonPressed");
-	    buttonStyle.font = font;
-	    buttonStyle.font.scale(0.1f);
-	    
-	    returnButton = new TextButton(musicText, buttonStyle);
+	    returnButton = new TextButton(musicText, Assets.buttonStyle);
 	    returnButton.setSize(VIRTUAL_WIDTH*0.5f, VIRTUAL_HEIGHT*0.3f);
 	    returnButton.setPosition(-40, VIRTUAL_HEIGHT - returnButton.getHeight() + 50);
 	    returnButton.setText("Return");
@@ -118,7 +99,7 @@ public class OptionsScreen implements Screen{
 	    	}	    	
 	    	@Override
 	    	public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-	    	   game.setScreen(new GameScreen(game, days));
+	    	   game.setScreen(new StartMenu(game));
 	    	}
 	    });
 	    
@@ -128,7 +109,7 @@ public class OptionsScreen implements Screen{
 	    else {
 	    	musicText = "Music Off";
 	    }
-	    musicButton = new TextButton(musicText, buttonStyle);
+	    musicButton = new TextButton(musicText, Assets.buttonStyle);
 	    musicButton.setPosition(0.0f, 0.0f);
 	    musicButton.setSize(VIRTUAL_WIDTH*0.88f, VIRTUAL_HEIGHT*0.3f);
 	    musicButton.setPosition(VIRTUAL_WIDTH/2 - musicButton.getWidth()/2, 370);// + startButton.getHeight());
@@ -158,7 +139,7 @@ public class OptionsScreen implements Screen{
 	    else {
 	    	soundText = "Sound Off";
 	    }
-	    soundButton = new TextButton(soundText, buttonStyle);
+	    soundButton = new TextButton(soundText, Assets.buttonStyle);
 	    soundButton.setPosition(0.0f, 0.0f);
 	    soundButton.setSize(VIRTUAL_WIDTH*0.88f, VIRTUAL_HEIGHT*0.3f);
 	    soundButton.setPosition(VIRTUAL_WIDTH/2 - soundButton.getWidth()/2, 200);// + startButton.getHeight());
@@ -188,7 +169,7 @@ public class OptionsScreen implements Screen{
 	    else {
 	    	vibText = "Vibrate Off";
 	    }
-	    vibsButton = new TextButton(vibText, buttonStyle);
+	    vibsButton = new TextButton(vibText, Assets.buttonStyle);
 	    vibsButton.setSize(VIRTUAL_WIDTH*0.88f, VIRTUAL_HEIGHT*0.3f);
 	    vibsButton.setPosition(VIRTUAL_WIDTH/2 - vibsButton.getWidth()/2, 30);
 	    stage.addActor(vibsButton);
@@ -235,6 +216,7 @@ public class OptionsScreen implements Screen{
 
 	@Override
 	public void dispose() {
+		Assets.pausemusic.stop();
 		stage.dispose();
 	}
 }
