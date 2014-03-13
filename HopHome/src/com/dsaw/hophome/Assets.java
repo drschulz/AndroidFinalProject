@@ -145,9 +145,9 @@ public class Assets {
 		grass = new TextureRegion(temp);
 	}
 	
-	public static void vibrate() {
+	public static void vibrate(int millis) {
 		if(Settings.vibrateEnabled()) {
-			Gdx.input.vibrate(200);
+			Gdx.input.vibrate(millis);
 		}
 	}
 	

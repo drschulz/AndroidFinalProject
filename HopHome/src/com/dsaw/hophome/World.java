@@ -20,13 +20,15 @@ public class World {
 		public void incDay ();
 		
 		public void bunnyDie();
+		
+		public void incObsRate();
 	}
 	
 	public static final int WORLD_STATE_RUNNING = 0;
 	public static final int WORLD_STATE_GAME_OVER = 2;
 	public static final int CREATE_NEW = 0;
 	public static final int STAY_AS_IS = 1;
-	public static final Vector2 gravity = new Vector2(10, -12);
+	public static final Vector2 gravity = new Vector2(16, -12);
 	
 	public final Bunny bunny;
 	public final Bear bear;

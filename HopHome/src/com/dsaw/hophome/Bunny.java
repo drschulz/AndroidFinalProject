@@ -13,7 +13,7 @@ public class Bunny extends DynamicGameObject {
 	public static final int BUNNY_STATE_DUCK = 7;
 	public static final int BUNNY_STATE_FLOAT = 8;
 	public static final float BUNNY_JUMP_VELOCITY = 10;
-	public static final float BUNNY_MOVE_VELOCITY = 12;
+	public static final float BUNNY_MOVE_VELOCITY = 14;
 	public static final float BUNNY_WIDTH = 3;//5.0f;
 	public static final float BUNNY_HEIGHT = 5;//8.0f;
 	public static final float BUNNY_DEPTH = .5f;

@@ -121,7 +121,7 @@ public class StartMenu implements Screen{
 	    extrasButton.addListener(new InputListener(){
 	    	@Override
 	    	public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-	    		extrasButton.setColor(startButton.getColor().sub(0.1f, 0.1f, 0.1f, 0));
+	    		extrasButton.setColor(extrasButton.getColor().sub(0.1f, 0.1f, 0.1f, 0));
 	    		return true;
 	    	}
 	    	

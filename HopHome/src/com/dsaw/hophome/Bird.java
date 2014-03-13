@@ -7,7 +7,7 @@ public class Bird extends DynamicGameObject {
 	public static final float BIRD_HEIGHT = 3.0f;
 	public static final float BIRD_DEPTH = 0.5f;
 	public static final float BIRD_UP_VELOCITY = 8;
-	public static final float BIRD_FORWARD_VELOCITY = -10;
+	public static final float BIRD_FORWARD_VELOCITY = -15;
 	public static final float BIRD_DOWN_VELOCITY = -6;
 	public static final float BIRD_INITIAL_POSITION_X = 5f;
 	public static final float BIRD_INITIAL_POSITION_Y = 8;

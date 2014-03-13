@@ -70,6 +70,7 @@ public class GameScreen implements Screen {
 	private LabelStyle style;
 	private BitmapFont font;
 	private int hungerLevel = 100;
+	private float ObsRate;
 	
 	private Button pauseButton;
 	private Image carrotImg;
@@ -89,6 +90,7 @@ public class GameScreen implements Screen {
 		bufferTime = 0;
 		triggered = false;
 		act = 0;
+		ObsRate = 3.0f;
 		
 		initWorldListener();
 		world = new World(worldListener);
@@ -177,11 +179,13 @@ public class GameScreen implements Screen {
 	    	@Override
 	    	public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 	    		carrotImg.setColor(carrotImg.getColor().sub(0.1f, 0.1f, 0.1f, 0));
+	    		Assets.vibrate(100);
 	    		return true;
 	    	}
 	    	@Override
 	    	public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 	    		carrotImg.setColor(carrotImg.getColor().add(0.1f, 0.1f, 0.1f, 0));
+	    		//Assets.vibrate();
 	    		hungerLevel = 100;
 	    	}
 	    });
@@ -218,7 +222,7 @@ public class GameScreen implements Screen {
 			@Override
 			public void hitObject() {
 				Assets.stopMusic(Assets.gamemusic);
-				Assets.vibrate();
+				Assets.vibrate(200);
 				
 			}
 
@@ -226,6 +230,7 @@ public class GameScreen implements Screen {
 			public void incDay() {
 				days++;
 				hungerLevel -= 20;
+				incObsRate();
 				// TODO Auto-generated method stub
 				
 			}
@@ -234,6 +239,13 @@ public class GameScreen implements Screen {
 			public void bunnyDie() {
 				game.setScreen(new GameOverScreen(game, days));
 				
+			}
+
+			@Override
+			public void incObsRate() {
+				if(ObsRate > 0.2) {
+					ObsRate -= 0.4f;
+				}
 			}
 
 			
@@ -288,7 +300,7 @@ public class GameScreen implements Screen {
 			}
 		}
 		else {
-			if(bufferTime > 1.0) {
+			if(bufferTime > ObsRate) {
 				bufferTime = 0;
 				act = rand.nextInt()%4 + 1;
 				switch(act) {
@@ -429,6 +441,7 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void show() {
+		Assets.playMusic(Assets.gamemusic);
 		//Assets.gamemusic.play();
 		//pauseButton.setDisabled(false);
 		//pauseButton.clearListeners();

@@ -8,7 +8,7 @@ public class Bear extends DynamicGameObject {
 	public static final int BEAR_STATE_RETREAT = 3;
 	public static final float BEAR_FORWARD_VELOCITY = -2;
 	public static final float BEAR_ATTACK_ACCEL = -10;
-	public static final float BEAR_RETURN_VELOCITY = 5;
+	public static final float BEAR_RETURN_VELOCITY = 8;
 	public static final float BEAR_INIT_VEL = -20;
 	public static final float BEAR_INITIAL_POSITION_X = 20f;
 	public static final float BEAR_INITIAL_POSITION_Y = 4;

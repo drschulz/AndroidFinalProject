@@ -194,13 +194,13 @@ public class WorldRenderer {
 		place += 0.01f;
 		
 		groundDecal.setColor(new Color(lb, lb, lb, 1));
-		groundDecal.translateZ(-0.2f);
+		groundDecal.translateZ(-0.3f);
 		if(groundDecal.getZ() < -70) {
 			groundDecal.setZ(-12 + FRUSTUM_HEIGHT*4);
 		}
 		decalBatch.add(groundDecal);
 		groundDecal2.setColor(new Color(lb, lb, lb, 1));
-		groundDecal2.translateZ(-0.2f);
+		groundDecal2.translateZ(-0.3f);
 		if(groundDecal2.getZ() < -70) {
 			groundDecal2.setZ(-12 + FRUSTUM_HEIGHT*4);
 		}
@@ -254,6 +254,9 @@ public class WorldRenderer {
 		decalBatch.add(bunnyShadow);
 		decalBatch.flush();
 		decalBatch.add(bunnyDecal);
+		if(world.bunny.state == Bunny.STATE_DEAD) {
+			decalBatch.flush();
+		}
 		
 		ang += 0.1f;
 		if(ang > 180) {

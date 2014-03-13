@@ -123,22 +123,22 @@ public class OptionsScreen implements Screen{
 	    	public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 	    	   if (Settings.musicEnabled()) {
 	    		   Settings.setMusicEnabled(false);
-	    		   musicButton.setText("Music On");
+	    		   musicButton.setText("Turn Music On");
 	    		   Assets.stopMusic(Assets.startmusic);
 	    	   }
 	    	   else {
 	    		   Settings.setMusicEnabled(true);
-	    		   musicButton.setText("Music Off");
+	    		   musicButton.setText("Turn Music Off");
 	    		   Assets.playMusic(Assets.startmusic);
 	    	   }
 	    	}
 	    });
 	    
 	    if (!Settings.soundEnabled()) {
-	    	soundText = "Sound On";
+	    	soundText = "Turn Sound On";
 	    }
 	    else {
-	    	soundText = "Sound Off";
+	    	soundText = "Turn Sound Off";
 	    }
 	    soundButton = new TextButton(soundText, Assets.buttonStyle);
 	    soundButton.setPosition(0.0f, 0.0f);
@@ -155,20 +155,21 @@ public class OptionsScreen implements Screen{
 	    	public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 	    	   if (Settings.soundEnabled()) {
 	    		   Settings.setSoundEnabled(false);
-	    		   soundButton.setText("Sound On");
+	    		   soundButton.setText("Turn Sound On");
 	    	   }
 	    	   else {
 	    		   Settings.setSoundEnabled(true);
-	    		   soundButton.setText("Sound Off");
+	    		   Assets.playSound(Assets.jumpsound);
+	    		   soundButton.setText("Turn Sound Off");
 	    	   }
 	    	};
 	    });
 	    
 	    if (!Settings.vibrateEnabled()) {
-	    	vibText = "Vibrate On";
+	    	vibText = "Turn Vibrate On";
 	    }
 	    else {
-	    	vibText = "Vibrate Off";
+	    	vibText = "Turn Vibrate Off";
 	    }
 	    vibsButton = new TextButton(vibText, Assets.buttonStyle);
 	    vibsButton.setSize(VIRTUAL_WIDTH*0.88f, VIRTUAL_HEIGHT*0.3f);
@@ -185,11 +186,12 @@ public class OptionsScreen implements Screen{
 	    	public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 	    		if (Settings.vibrateEnabled()) {
 		    		   Settings.setVibrateEnabled(false);
-		    		   vibsButton.setText("Vibrate On");
+		    		   vibsButton.setText("Set Vibrate On");
 		    	   }
 		    	   else {
 		    		   Settings.setVibrateEnabled(true);
-		    		   vibsButton.setText("Vibrate Off");
+		    		   Assets.vibrate(100);
+		    		   vibsButton.setText("Set Vibrate Off");
 		    	   }
 	    	}
 	    });
